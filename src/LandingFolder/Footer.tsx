@@ -4,7 +4,7 @@ import { BsFacebook, BsGitlab, BsInstagram, BsTwitter } from 'react-icons/bs';
 export default function Footer():JSX.Element {
   return (
     <FlowbiteFooter>
-    <div className="footerDiv w-full">
+    <div className="footerDiv w-full bg-customBeige">
       <div className="grid w-full grid-cols-2 px-6 py-8 md:grid-cols-4 text-center space-y-10 md:space-y-0">
         <div>
           <FooterTitle title="Company" className='mt-12 md:mt-0'/>
