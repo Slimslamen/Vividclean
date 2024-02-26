@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.footerDiv li{
+    margin-right: 0 !important;
+}
