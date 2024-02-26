@@ -1,9 +1,10 @@
-import { Button } from 'flowbite-react';
+import Landing from "./LandingFolder/Landing";
+
 
 function App() {
   return (
     <>
-      <Button>Click me</Button>
+        <Landing />
     </>
   );
 }
