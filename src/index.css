@@ -4,6 +4,9 @@
 @tailwind components;
 @tailwind utilities;
 
+.TipsDiv img{
+    height: 12em;
+}
 
 .footerDiv li{
     margin-right: 0 !important;

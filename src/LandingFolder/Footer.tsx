@@ -42,7 +42,7 @@ export default function Footer():JSX.Element {
           </FooterLinkGroup>
         </div>
       </div>
-      <hr />
+      <hr/>
       <div className="w-full px-4 py-4 flex items-center justify-between flex-col space-y-5">  
         <div className="mt-4 flex space-x-6 sm:mt-0 justify-center">
           <FooterIcon href="#" icon={BsFacebook} className='text-black' />
