@@ -1,4 +1,5 @@
 import Landing from "./LandingFolder/Landing";
+import './index.css'
 
 
 function App() {
