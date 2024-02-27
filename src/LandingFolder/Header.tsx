@@ -4,7 +4,7 @@ import { Checkbox, Label } from 'flowbite-react';
 
 export default function Header() {
   return (
-    <div className="relative w-full h-screen">
+    <div>
       <div className="relative">
         <img
           className="w-full h-auto object-cover opacity-60"
