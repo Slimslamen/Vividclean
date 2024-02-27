@@ -20,10 +20,11 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
   };
 
   return (
-    <div className="w-48 overflow-hidden">
+    <div className="w-60 overflow-hidden">
       <div className="relative">
         <div className="flex">
           {images.map((image, index) => (
+            <div className="bg-customBeige h-[360px] rounded-xl mb-20">
             <img
               key={index}
               src={image}
@@ -32,8 +33,10 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
                 index === currentImageIndex ? "block" : "hidden"
               }`}
             />
+            </div>
           ))}
         </div>
+        
         <button
           className="absolute left-0 top-1/2 transform -translate-y-1/2 text-black px-3 py-1 rounded-l"
           onClick={goToPreviousImage}
@@ -52,4 +55,3 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
 };
 
 export default Carousel;
-
