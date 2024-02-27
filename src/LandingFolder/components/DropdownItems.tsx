@@ -1,4 +1,4 @@
-import { DropdownItem } from "./MenuItems"
+import { DropdownItem } from "./MenuItems";
 
 //Describes the structure of props for the DropdownItems component, containing an array of DropdownItemProps called items and an id
 interface DropdownProps {
@@ -24,8 +24,25 @@ export default function DropdownItems({
           <div className="font-semibold text-gray-900 dark:text-white">
             {dropdownItem.label}
           </div>
+
           <span className="text-sm text-customDark dark:text-gray-400">
             {dropdownItem.description}
+            <span className=" inline-flex">
+              <svg
+                className="w-2.5 h-2.5 ms-2.5"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 7 10"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M1 1l4 4-4 4"
+                />
+              </svg>
+            </span>
           </span>
         </a>
       ))}

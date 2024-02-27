@@ -14,10 +14,10 @@ export const menuItems: MenuItem[] = [
   {
     label: "Städning",
     dropdownItems: [
-      { label: "Fönsterputs", description: "Miljövänliga metoder för kristallklara fönster och planeten." },
-      { label: "Diamanttvätt", description: "Miljövänlig glans med ansvar och innovation." },
-      { label: "Basic städning", description: "Enkelhet med omtanke för miljön och hälsa." },
-      { label: "Toppstädning", description: "Kvalitet och omsorg med miljöhänsyn i fokus." },
+      { label: "Fönsterputs", description: "Miljövänliga metoder för kristallklara fönster och planeten" },
+      { label: "Diamanttvätt", description: "Miljövänlig glans med ansvar och innovation" },
+      { label: "Basic städning", description: "Enkelhet med omtanke för miljön och hälsa" },
+      { label: "Toppstädning", description: "Kvalitet och omsorg med miljöhänsyn i fokus" },
       { label: "Flyttstädning", description: "Miljövänlig service för smidig och ren övergång" },
     ],
   },
@@ -32,7 +32,7 @@ export const menuItems: MenuItem[] = [
   {
     label: "För Företag",
     dropdownItems: [
-      { label: "Kontorsstädning", description: "Renare miljö med omtanke om planeten och arbetsplatsen." },
+      { label: "Kontorsstädning", description: "Renare miljö med omtanke om planeten och arbetsplatsen" },
       { label: "Lösningar", description: "Skräddarsydda lösningar för företagskunder" },
       { label: "Städning som löneförmån", description: "Främjar välbefinnande med omtanke om miljön" },
     ],
