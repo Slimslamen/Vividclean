@@ -10,7 +10,7 @@ export default function Landing() {
         <Navbar />
         <Header />
         <Main />
-        <Footer/>
+        <Footer />
     </>
   )
 }
