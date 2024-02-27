@@ -10,7 +10,7 @@ export default function Tips(): JSX.Element {
         <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 md:space-x-5 justify-center items-center my-10">
       <Card
         className=" size-4/6 md:size-[400px] rounded-none"
-        imgAlt="Meaningful alt text for an image that is not purely decorative"
+        imgAlt="A sponge"
         imgSrc={Sponge}
       >
         <h5 className="text-2xl tracking-tight text-gray-900 dark:text-white mt-[-20px]">
@@ -22,7 +22,7 @@ export default function Tips(): JSX.Element {
       </Card>
       <Card
         className="size-4/6 md:size-[400px] rounded-none"
-        imgAlt="Meaningful alt text for an image that is not purely decorative"
+        imgAlt="A vaccum"
         imgSrc={Vaccum}
       >
         <h5 className="text-2xl  tracking-tight text-gray-900 dark:text-white">
@@ -34,7 +34,7 @@ export default function Tips(): JSX.Element {
       </Card>
       <Card
         className="size-4/6 md:size-[400px] rounded-none"
-        imgAlt="Meaningful alt text for an image that is not purely decorative"
+        imgAlt="Cleaning a desktop"
         imgSrc={CleanDesktop}
       >
         <h5 className="text-2xl  tracking-tight text-gray-900 dark:text-white">
