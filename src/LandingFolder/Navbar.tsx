@@ -6,13 +6,13 @@ export default function Navbar(): JSX.Element {
 
   const toggleMegaMenu = () => {
     setIsMegaMenuOpen((prev) => !prev);
-    // Close the second dropdown when toggling the "Company" dropdown
+    // Close the dropdown when toggling the "Städning" dropdown
     setIsSecondDropdownOpen(false);
   };
 
   const toggleSecondDropdown = () => {
     setIsSecondDropdownOpen((prev) => !prev);
-    // Close the "Company" dropdown when toggling the second dropdown
+    // Close the second dropdown when toggling the "Vivid clean" dropdown
     setIsMegaMenuOpen(false);
   };
 
