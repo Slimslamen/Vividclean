@@ -12,10 +12,10 @@ export default function Header() {
         />
         <div className="absolute top-0 w-full h-full flex justify-end items-end p-4 md:p-12">
           <div className="text-center md:mb-56">
-            <h1 className="text-2xl mr-5 text-black font-DM md:mt-5">
+            <h1 className="text-2xl md:text-5xl mr-5 text-black font-DM md:mt-5">
               Välkommen till VividClean
             </h1>
-            <p className="text-l md:mb-12 font-DM ">
+            <p className="text-l md:text-lg md:mb-12 font-DM ">
               FÅ 15% RABATT PÅ DIN FÖRSTA BOKNING
             </p>
             <div className="mt-5 flex max-w-md flex-col gap-4" id="checkbox">
