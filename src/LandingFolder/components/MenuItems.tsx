@@ -1,10 +1,10 @@
-import React from "react";
 
+//describe the structure of an item inside the dropdown menu
 export interface DropdownItem {
   label: string;
   description: string;
 }
-
+//Describes the structure of a menu item,
 export interface MenuItem {
   label: string;
   dropdownItems: DropdownItem[];

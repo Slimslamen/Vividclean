@@ -6,18 +6,21 @@ export default function Navbar(): JSX.Element {
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
 
-  const toggleMegaMenu = () => {
+  const toggleMegaMenu = () => { //Toggles the visibility of the mega menu and resets the active dropdown.
     setIsMegaMenuOpen((prev) => !prev);
     setActiveDropdown(null);
   };
 
-  const toggleDropdown = (index: number) => {
+  //function toggles the visibility of a specific dropdown based on its index and closes the mega menu.
+  //If the dropdown is the same as the index of the item clicked on, its being set to null and closes, since its already open.
+  //Otherwise, set the active dropdown to the index, effectively toggling and opening the corresponding dropdown.
+  const toggleDropdown = (index: number) => { 
     setActiveDropdown((prev) => (prev === index ? null : index));
-    setIsMegaMenuOpen(false);
+    setIsMegaMenuOpen(false); // Close mega menu when toggling individual dropdowns
   };
 
   return (
-    <nav className="sticky top-0 bg-customBeige border-gray-200 dark:border-gray-600 dark:bg-gray-900">
+    <nav className=" z-10 sticky top-0 bg-customBeige border-gray-200 dark:border-gray-600 dark:bg-gray-900">
       <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-0">
         <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse">
           <img
@@ -32,11 +35,11 @@ export default function Navbar(): JSX.Element {
         <button
           onClick={toggleMegaMenu}
           type="button"
-          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-customHover focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
           aria-controls="mega-menu-full"
           aria-expanded={isMegaMenuOpen}
         >
-          <span className="sr-only">Open main menu</span>
+          <span className="sr-only">Open main menu</span>{/*  For screen readers */}
           <svg
             className="w-5 h-5"
             aria-hidden="true"
@@ -66,7 +69,7 @@ export default function Navbar(): JSX.Element {
                   onClick={() => toggleDropdown(index)}
                   aria-expanded={activeDropdown === index}
                   className={
-                    "flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded md:w-auto hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"
+                    "flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded md:w-auto hover:bg-customHover md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"
                   }
                   id={`dropdown-button-${index}`}
                 >
