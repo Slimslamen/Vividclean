@@ -7,13 +7,13 @@ export default {
   ],
   theme: {
     extend: {
-        colors: {
-          customBeige: '#E9D8DA',
-          customDark: '#5D576B'
-        }, 
-        fontFamily: {
-          DM: ['dm-serif display-regular']
-        }
+      colors: {
+        customBeige: '#E9D8DA',
+        customDark: '#5D576B'
+      }, 
+      fontFamily: {
+        DM: ['dm-serif display-regular']
+      }
     },
   },
   plugins: [
