@@ -1,16 +1,17 @@
 import Footer from "./LandingFolder/Footer";
 import Landing from "./LandingFolder/Landing";
-import Navbar from "./LandingFolder/Navbar";
-import "./index.css";
-import Register from "./LoginFolder/Register";
+import './index.css'
+import LogIn from "./LoginFolder/LogIn";
+import { ProductContextProvider } from "./ProductContext";
+
 
 function App() {
   return (
     <>
-      <Navbar />
-      <Register />
-      <Landing />
-      <Footer />
+<ProductContextProvider>
+        <Landing />
+        <LogIn />
+        </ProductContextProvider>
     </>
   );
 }

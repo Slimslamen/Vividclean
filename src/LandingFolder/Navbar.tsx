@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { menuItems } from "./components/MenuItems";
 import DropdownItems from "./components/DropdownItems";
+import { ProductContext } from "../ProductContext";
+import LogIn from "../LoginFolder/LogIn";
 
 export default function Navbar(): JSX.Element {
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
@@ -11,6 +13,8 @@ export default function Navbar(): JSX.Element {
     setActiveDropdown(null);
   };
 
+  const { loginVisible, handleMenuItemClick } = useContext(ProductContext)!
+
   //function toggles the visibility of a specific dropdown based on its index and closes the mega menu.
   //If the dropdown is the same as the index of the item clicked on, its being set to null and closes, since its already open.
   //Otherwise, set the active dropdown to the index, effectively toggling and opening the corresponding dropdown.
@@ -18,6 +22,7 @@ export default function Navbar(): JSX.Element {
     setActiveDropdown((prev) => (prev === index ? null : index));
     setIsMegaMenuOpen(false); // Close mega menu when toggling individual dropdowns
   };
+
 
   return (
     <nav className=" z-10 sticky top-0 bg-customBeige border-gray-200 dark:border-gray-600 dark:bg-gray-900">
@@ -97,9 +102,11 @@ export default function Navbar(): JSX.Element {
       </div>
 
       {/* Single dropdown component outside the loop */}
-      {activeDropdown !== null && (
-        <DropdownItems items={menuItems[activeDropdown].dropdownItems} id={`dropdown-${activeDropdown}`} />
-      )}
+     
+
+        {activeDropdown !== null && (
+          <DropdownItems handleMenuItemClick={handleMenuItemClick} items={menuItems[activeDropdown].dropdownItems} id={`dropdown-${activeDropdown}`} />
+        )}
     </nav>
   );
 }
