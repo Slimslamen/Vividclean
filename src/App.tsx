@@ -5,8 +5,8 @@ import Register from "./LoginFolder/Register";
 function App() {
   return (
     <>
+    <Register />
         <Landing />
-        <Register />
     </>
   );
 }
