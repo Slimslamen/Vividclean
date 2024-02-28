@@ -9,8 +9,7 @@ export default {
     extend: {
       colors: {
         customBeige: '#E9D8DA',
-        customDark: '#5D576B',
-        customHover: '#F2DFDF'
+        customDark: '#6f6a7ac4'
       }, 
       fontFamily: {
         DM: ['dm-serif display-regular']
