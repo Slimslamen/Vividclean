@@ -12,9 +12,10 @@ export default function LogIn() {
     const [rememberMe, setRememberMe] = useState<boolean>(false);
     
 
+
   //get saveUser function from TodoContext
   const { saveUser } = React.useContext(ProductContext) as ContextType;
-  const { loginVisible } = React.useContext(ProductContext)! as ContextType;
+  const { loginVisible, handleMenuItemClick } = React.useContext(ProductContext)! as ContextType;
 
 
   const usernameIcon = (
@@ -41,17 +42,29 @@ export default function LogIn() {
     }
    // navigate("#");
   }
+  function handleHideLogin() {
+    handleMenuItemClick("Min Profil");
+    setRememberMe(false); // Återställa eventuella värden när du döljer LogIn
+    // Dölj LogIn genom att anropa saveUser med tomma värden
+    saveUser("", "");
+  }
 
   if (!loginVisible) {
     return null;
   }
   return (
-    <main className="flex justify-center right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] fixed">
-      <form onSubmit={handleSubmit} className="border rounded-lg bg-customDark px-52 py-16 flex flex-col gap-4">
-        <div className="max-w-md">
-          <div className="mb-2 block">
-            <Label htmlFor="username3" value="Username" className="text-white" />
-          </div>
+    <main className="grid place-items-center w-full h-full">
+    <div className="grid top-40 justify-center items-center right-0 left-0 z-50 md:inset-0 fixed">
+      <form onSubmit={handleSubmit} className="relative border grid grid-cols-1 gap-4 rounded-lg bg-customDark w-full max-w-md p-8 md:p-20">
+        <button
+          className="absolute top-0 right-0 bg-customBeige text-black hover:bg-customHover hover:text-slate-700 rounded-md p-1 font-semibold mt-2 mr-2"
+          type="button"
+          onClick={handleHideLogin}
+        >
+          <img className="h-4 w-4" src="src/assets/close-round-icon.png" alt="" />
+        </button>
+        <div>
+          <Label htmlFor="username3" value="Username" className="text-white" />
           <TextInput
             id="username3"
             placeholder="Användarnamn"
@@ -62,9 +75,7 @@ export default function LogIn() {
           />
         </div>
         <div>
-          <div className="mb-2 block">
-            <Label htmlFor="password1" value="Your password" className="text-white"/>
-          </div>
+          <Label htmlFor="password1" value="Your password" className="text-white" />
           <TextInput
             id="password1"
             placeholder="Lösenord"
@@ -75,17 +86,25 @@ export default function LogIn() {
           />
         </div>
         <div className="flex items-center gap-2">
-          <Checkbox className="bg-customBeige" id="remember"   checked={rememberMe}
-            onChange={() => setRememberMe(!rememberMe)} />
-          <Label className="text-white" htmlFor="remember">Kom ihåg mig</Label>
+          <Checkbox
+            className="bg-customBeige"
+            id="remember"
+            checked={rememberMe}
+            onChange={() => setRememberMe(!rememberMe)}
+          />
+          <Label className="text-white" htmlFor="remember">
+            Kom ihåg mig
+          </Label>
         </div>
         <button
-          className=" bg-customBeige text-dark hover:bg-customHover rounded-md p-2 font-semibold"
+          className="bg-customBeige text-dark hover:bg-customHover rounded-md p-2 font-semibold"
           type="submit"
         >
           Logga in
         </button>
       </form>
-    </main>
+    </div>
+  </main>
+  
   );
 }
