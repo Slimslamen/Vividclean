@@ -14,10 +14,10 @@ export default function Tips(): JSX.Element {
         imgSrc={Sponge}
       >
         <div className="p-2 space-y-2">
-          <h3 className="text-3xl tracking-tight text-gray-900 dark:text-white mt-[-20px]">
+          <h3 className="text-2xl tracking-tight text-gray-900 dark:text-white mt-[-20px]">
           Städning
           </h3>
-          <h4 className="text-xl">Rengör din ugn snabbt och enkelt</h4>
+          <h4 className="text-2xl">Rengör din ugn snabbt och enkelt</h4>
           <p className="font-normal text-gray-700 dark:text-gray-400 line-clamp-2">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus, velit.
           </p>

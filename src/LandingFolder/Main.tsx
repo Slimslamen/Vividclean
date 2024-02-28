@@ -1,22 +1,27 @@
 import React from "react";
 import Carousel from "./Carousel";
-import Tips from "./Tips";
 import Info from "./Info";
 import Review from "./Review";
+import Tips from "./Tips";
 
-export default function Main() {
-  const images: string[] = [
-    "src/assets/dammsugare.jpg.png",
-    "src/assets/heroimage2.jpg",
-    "src/assets/heroimage3.jpg",
-  ];
+export default function Main(): JSX.Element {
+  const images = [
+    ["src/assets/bildkarusell6.jpg.png", "Hemstäd"],
+    ["src/assets/bildkarusell8.jpg.png", "Storstäd"],
+    ["src/assets/bildkarusell9.jpg.png", "Fönsterputs"],
+    ["src/assets/bildkarusell3.jpg.png", "Flyttstäd"],
+    ["src/assets/bildkarusell4.jpg.png", "Veckostäd"],
+    ["src/assets/bildkarusell5.jpg.png", "Företagsstäd"],
+  ].map(([url, title]) => ({ url, title }));
+
   return (
     <>
-      <Carousel images={images} />
+      <div className="container mx-auto">
+        <Carousel images={images} />
+      </div>
       <Info />
       <Review />
       <Tips />
     </>
   );
 }
-
