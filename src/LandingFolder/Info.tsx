@@ -4,7 +4,7 @@ import bathRoom from "../assets/bathRoom.jpg";
 
 export default function Info(): JSX.Element {
   return (
-    <div className="flex flex-col my-20 w-5/6 mx-auto">
+    <div className="flex flex-col my-40 w-5/6 mx-auto">
       <div className="flex flex-col md:flex-row justify-center items-center">
         <img src={sofa} alt="livingroom" className="w-full md:w-1/2 h-1/4" />
         <div className="p-10 space-y-5 w-5/6">

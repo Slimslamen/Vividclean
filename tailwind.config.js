@@ -11,6 +11,7 @@ export default {
         customBeige: '#E9D8DA',
         customDark: '#6f6a7ac4',
         customHover: '#F2DFDF',
+        customHoverDark: '#6f6a7a9c'
       }, 
       fontFamily: {
         DM: ['dm-serif display-regular']

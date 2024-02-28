@@ -3,6 +3,8 @@ import Landing from "./LandingFolder/Landing";
 import Navbar from "./LandingFolder/Navbar";
 import "./index.css";
 import Register from "./LoginFolder/Register";
+import KundSida from "./Sidor/KundSida";
+
 
 function App() {
   return (
@@ -10,6 +12,7 @@ function App() {
       <Navbar />
       <Register />
       <Landing />
+      <KundSida />
       <Footer />
     </>
   );
