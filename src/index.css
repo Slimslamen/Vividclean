@@ -9,11 +9,31 @@ body{
 }
 
 .TipsDiv img{
-    height: 14em;
+    height: 13em;
     border-radius: 2px;
 }
 
 
 .footerDiv li{
     margin-right: 0 !important;
+}
+
+.ReviewAnimation{
+    animation: Review 5s ease;
+    outline: none;
+}
+
+@keyframes Review {
+    0%{
+        opacity: 0;
+ 
+    }
+    50%{
+        opacity: 1;
+
+    }
+    100%{
+        opacity: 0;
+    }
+
 }

@@ -1,3 +1,4 @@
+import Footer from "./LandingFolder/Footer";
 import Landing from "./LandingFolder/Landing";
 import './index.css'
 import LogIn from "./LoginFolder/LogIn";

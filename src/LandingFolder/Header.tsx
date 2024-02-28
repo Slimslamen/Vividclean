@@ -27,7 +27,6 @@ export default function Header() {
                   type="checkbox"
                   id="filled-checkbox"
                   className="hidden"
-                  checked
                 />
                 <label
                   htmlFor="filled-checkbox"
@@ -49,7 +48,6 @@ export default function Header() {
                   type="checkbox"
                   id="filled-checkbox"
                   className="hidden"
-                  checked
                 />
                 <label
                   htmlFor="filled-checkbox"
@@ -71,7 +69,6 @@ export default function Header() {
                   type="checkbox"
                   id="filled-checkbox"
                   className="hidden"
-                  checked
                 />
                 <label
                   htmlFor="filled-checkbox"
@@ -94,7 +91,6 @@ export default function Header() {
                     type="checkbox"
                     id="filled-checkbox"
                     className="hidden"
-                    checked
                   />
                   <label
                     htmlFor="filled-checkbox"
@@ -113,7 +109,7 @@ export default function Header() {
                 </div>
               </div>
             </div>
-            <button className="bg-customDark hover:bg-gray-700 rounded p-1 md:p-2 font-DM text-white flex items-center ml-20 md:ml-36 md:mt-10">
+            <button className="bg-customDark duration-300 ease-in-out hover:bg-gray-700 rounded p-1 md:p-2 font-DM text-white flex items-center ml-20 md:ml-36 md:mt-10">
               Ta del av erbjudandet nu
             </button>
           </div>
