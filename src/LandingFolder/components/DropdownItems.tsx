@@ -4,11 +4,13 @@ import { DropdownItem } from "./MenuItems";
 interface DropdownProps {
   items: DropdownItem[];
   id: string;
+  handleMenuItemClick: (label: string) => void;
 }
 
 export default function DropdownItems({
   items,
   id,
+  handleMenuItemClick,
 }: DropdownProps): JSX.Element {
   return (
     <div
@@ -20,6 +22,9 @@ export default function DropdownItems({
           key={i}
           href="#"
           className="block ml-24 p-3 border-b-2 rounded-lg hover:bg-customHover dark:hover:bg-gray-700"
+          onClick={() => {
+            handleMenuItemClick(dropdownItem.label);
+          }}
         >
           <div className="font-semibold text-gray-900 dark:text-white">
             {dropdownItem.label}
