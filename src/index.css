@@ -4,9 +4,15 @@
 @tailwind components;
 @tailwind utilities;
 
-.TipsDiv img{
-    height: 12em;
+body{
+    background-color: #F7F3F3;
 }
+
+.TipsDiv img{
+    height: 14em;
+    border-radius: 2px;
+}
+
 
 .footerDiv li{
     margin-right: 0 !important;
