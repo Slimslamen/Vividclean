@@ -1,6 +1,3 @@
-import React from "react";
-import { Checkbox, Label } from "flowbite-react";
-
 export default function Header() {
   return (
     <div>
@@ -24,7 +21,6 @@ export default function Header() {
                   type="checkbox"
                   id="filled-checkbox"
                   className="hidden"
-                  checked
                 />
                 <label
                   htmlFor="filled-checkbox"
@@ -46,7 +42,6 @@ export default function Header() {
                   type="checkbox"
                   id="filled-checkbox"
                   className="hidden"
-                  checked
                 />
                 <label
                   htmlFor="filled-checkbox"
@@ -68,7 +63,6 @@ export default function Header() {
                   type="checkbox"
                   id="filled-checkbox"
                   className="hidden"
-                  checked
                 />
                 <label
                   htmlFor="filled-checkbox"
@@ -91,7 +85,6 @@ export default function Header() {
                     type="checkbox"
                     id="filled-checkbox"
                     className="hidden"
-                    checked
                   />
                   <label
                     htmlFor="filled-checkbox"

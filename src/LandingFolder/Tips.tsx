@@ -5,8 +5,8 @@ import livingRoom from '../assets/livingRoom.jpg'
 
 export default function Tips(): JSX.Element {
   return (
-    <div className="TipsDiv flex flex-col justify-center items-center font-DM">
-        <h2 className="text-4xl md:text-5xl font-DM">Tips och Inspiration</h2>
+    <div className="TipsDiv flex flex-col justify-center items-center font-DM my-40">
+        <h2 className="text-4xl md:text-4xl font-DM">Tips och Inspiration</h2>
         <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 md:space-x-5 justify-center items-center my-10">
       <Card
         className=" size-4/6 md:size-[450px] rounded-none cursor-pointer"

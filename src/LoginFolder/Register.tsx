@@ -1,7 +1,7 @@
 import { Button, Checkbox, Label, TextInput } from "flowbite-react";
 import { useState } from "react";
 
-export default function Register(): JSX.Element {
+export default function Register():JSX.Element{
 
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
