@@ -4,7 +4,7 @@ import Main from './Main'
 import Header from './Header'
 import Navbar from './Navbar'
 
-export default function Landing() {
+export default function Landing():JSX.Element {
   return (
     <>
         <Navbar />
