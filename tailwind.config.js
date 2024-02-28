@@ -15,8 +15,11 @@ export default {
       fontFamily: {
         DM: ['dm-serif display-regular']
       }
+      
     },
+    
   },
+  
   plugins: [
     import('flowbite/plugin')
   ],

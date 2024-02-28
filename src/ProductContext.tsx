@@ -1,32 +1,48 @@
-import { createContext, useReducer, useContext } from "react";
+import React, { createContext, useState, ReactNode } from "react";
+import { ContextType, User } from "./types/types";
+import { v4 as getId } from "uuid";
 
-const ProductContext = createContext()
+import LogIn from "./LoginFolder/LogIn";
 
-export const ProductContextProvider = ({children}) => {
-    const [dropdownState, dispatch] = useReducer(dropdownReducer, {
-firstDropdownOpen: false,
-secondDropdownOpen: false,
-thirdDropdownOpen: false,
-fourthdropdownOpen: false,
-    });
-    return( <ProductContext.Provider value={{dropdownState, dispatch}}>
-        {children}
-    </ProductContext.Provider>
-    );
+const ProductContext = createContext<ContextType | null>(null);
+
+interface ProductContextProviderProps {
+  children: ReactNode;
 }
-export const useDropdown = () => useContext(ProductContext);
 
-const dropdownReducer = (state, action) => {
-  switch (action.type) {
-    case "TOGGLE_FIRST_DROPDOWN":
-      return { ...state, firstDropdownOpen: !state.firstDropdownOpen };
-    case "TOGGLE_SECOND_DROPDOWN":
-      return { ...state, secondDropdownOpen: !state.secondDropdownOpen };
-    case "TOGGLE_THIRD_DROPDOWN":
-      return { ...state, thirdDropdownOpen: !state.thirdDropdownOpen };
-    case "TOGGLE_FOURTH_DROPDOWN":
-      return { ...state, fourthDropdownOpen: !state.fourthDropdownOpen };
-    default:
-      return state;
-  }
+const ProductContextProvider = ({ children }: ProductContextProviderProps) => {
+  const [user, setUser] = useState<User>({ id: "", username: "", password: "" });
+  const [loginVisible, setLoginVisible] = useState(false);
+
+  const saveUser = (username: string, password: string) => {
+    const newUser: User = {
+      id: getId(),
+      username,
+      password,
+    };
+    setUser(newUser);
+  };
+  const handleMenuItemClick = (label: string) => {
+    if (label === "Min Profil") {
+      setLoginVisible(!loginVisible); // Toggle visibility
+    } else {
+      // Handle other menu items as needed
+    }
+  };
+
+  const LoginValue: ContextType = {
+    saveUser,
+    user,
+    handleMenuItemClick,
+    loginVisible
+  };
+
+  return (
+    <ProductContext.Provider value={LoginValue}>
+      {/* Render other components or content */}
+      {children}
+    </ProductContext.Provider>
+  );
 };
+
+export { ProductContext, ProductContextProvider };
