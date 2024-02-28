@@ -69,7 +69,7 @@ export default function Navbar(): JSX.Element {
                   onClick={() => toggleDropdown(index)}
                   aria-expanded={activeDropdown === index}
                   className={
-                    "flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded md:w-auto hover:bg-customHover md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"
+                    "flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded md:w-auto hover:bg-customHover md:hover:bg-transparent md:border-0 md:hover:text-customDark md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"
                   }
                   id={`dropdown-button-${index}`}
                 >
