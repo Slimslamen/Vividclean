@@ -1,8 +1,6 @@
 
 import Main from './Main'
 import Header from './Header'
-import Navbar from './Navbar'
-import LogIn from '../LoginFolder/LogIn'
 import { ProductContext } from "../ProductContext";
 import { ContextType } from "../types/types";
 import React from "react";
