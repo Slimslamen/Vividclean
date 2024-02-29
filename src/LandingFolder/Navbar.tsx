@@ -105,7 +105,7 @@ export default function Navbar(): JSX.Element {
      
 
         {activeDropdown !== null && (
-          <DropdownItems handleMenuItemClick={handleMenuItemClick} items={menuItems[activeDropdown].dropdownItems} id={`dropdown-${activeDropdown}`} />
+          <DropdownItems toggleMegaMenu={toggleMegaMenu} handleMenuItemClick={handleMenuItemClick} items={menuItems[activeDropdown].dropdownItems} id={`dropdown-${activeDropdown}`} />
         )}
     </nav>
   );
