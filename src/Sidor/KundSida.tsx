@@ -1,5 +1,7 @@
-import { Dropdown, DropdownItem, Datepicker } from "flowbite-react";
-import { useState } from "react";
+import { Dropdown, DropdownItem  } from "flowbite-react";
+import DatePicker from "react-datepicker";
+
+import { FormEvent, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 
 interface Ioptions {
@@ -10,7 +12,7 @@ interface Ioptions {
 interface Ibooking{
   id:string;
   name:string;
-  date: Date;
+  date: Date
   time: number;
   service: string
 }
@@ -43,14 +45,16 @@ const options: Ioptions[] = [
   },
 ];
 
-
 export default function KundSida():JSX.Element {
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [selectedTime, setSelectedTime] = useState<string>("")
+  const [booking, setBooking] = useState<Ibooking>({id:uuidv4(), name:"Sofia", date:selectedDate, time:selectedTime, service:"" })
 
-  const [booking, setBooking] = useState<Ibooking>({id:uuidv4(), name:"Sofia", date:new Date(), time:0, service:"" })
+  
 
-  const handleSubmit = () => {
-
-    
+  const handleSubmit = (e:FormEvent) => {
+    e.preventDefault()
+    console.log(selectedTime);
   }
 
   return (
@@ -60,19 +64,14 @@ export default function KundSida():JSX.Element {
           <h1 className="text-5xl font-DM">{`${"Sofia"}s`} bokningar</h1>
           <div>
             <h2 className="text-3xl font-DM">Boka städning</h2>
-            <div className="py-5 flex flex-row justify-between">
-              <Datepicker
-                minDate={new Date()}
-                maxDate={new Date(2024, 12, 31)}
-                className=" w-5/12"
-                required
-              />
-              <input required id="time" type="time" min='08:00' max= '15:00' step="3600" className="p-1 rounded-lg w-5/12" />
+            <div className="flex flex-row justify-between py-5">
+              <DatePicker onChange={(date:Date) => setSelectedDate(date)} filterDate={date => { return date.getDay() !== 0 && date.getDay() !== 6;}}/* Disable weekends (Saturday and Sunday) */ minDate={new Date()} selected={selectedDate} />
+              <input onChange={e => setSelectedTime(e.target.value)} value={selectedTime} id="time" type="time" min='08:00' max= '15:00' step="3600" className="p-1 rounded-lg w-5/12" />
             </div>
-            <Dropdown label="Städare" className="w-1/3" inline>
+            <Dropdown label="Städare" className="w-1/3" inline value={booking.service}>
               <DropdownItem value="estelle">Estelle</DropdownItem>
               <DropdownItem value="Marta">Märta</DropdownItem>
-              <DropdownItem value="Jimmy">Jimmy</DropdownItem>
+              <DropdownItem value="Jimmy">Jimmy</DropdownItem>  
             </Dropdown>
             <ul className="mt-2 items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
               {options.map((option) => (
@@ -108,6 +107,6 @@ export default function KundSida():JSX.Element {
           {}
         </div>
       </div>
-    </>
+      </>
   );
 }
