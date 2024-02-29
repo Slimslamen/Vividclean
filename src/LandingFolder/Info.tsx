@@ -40,7 +40,7 @@ export default function Info(): JSX.Element {
       </div>
       <div className="flex flex-col md:flex-row justify-center items-center ">
         <div className="flex flex-col space-y-2 items-center p-10 w-5/6">
-          <h3 className="text-center text-4xl font-DM mb-10">
+          <h3 className="text-center text-4xl md:text-5xl font-DM mb-10">
             I vår värld är det detaljerna som gör skillnaden.
           </h3>
           <p className="font-DM">
@@ -57,7 +57,7 @@ export default function Info(): JSX.Element {
         <img src={bathRoom} alt="bathroom" className="w-full md:w-1/2 h-[40em]" />
         <div className="flex flex-col p-10 space-y-2 justify-center w-5/6 md:w-1/2">
           <div className="space-y-5 mb-5 flex justify-center items-center flex-col">
-            <h3 className="text-center text-4xl font-DM">
+            <h3 className="text-center text-4xl md:text-5xl font-DM">
               Allt du behöver på ett ställe.
             </h3>
             <p className="font-DM">
@@ -65,7 +65,7 @@ export default function Info(): JSX.Element {
               ett och samma tak i vår app.
             </p>
           </div>
-          <ul className="list-disc">
+          <ul className="list-disc font-DM">
             <li>Se dina städtillfällen</li>
             <li>Av- eller omboka din städtillfälle</li>
             <li>Hantera din städbeskrivning</li>
