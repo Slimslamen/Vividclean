@@ -1,8 +1,6 @@
 import React, { createContext, useState, ReactNode } from "react";
-import { ContextType, User } from "./types/types";
+import { ContextType, User, RegisterUser } from "./types/types";
 import { v4 as getId } from "uuid";
-
-import LogIn from "./LoginFolder/LogIn";
 
 const ProductContext = createContext<ContextType | null>(null);
 
@@ -12,6 +10,7 @@ interface ProductContextProviderProps {
 
 const ProductContextProvider = ({ children }: ProductContextProviderProps) => {
   const [user, setUser] = useState<User>({ id: "", username: "", password: "" });
+  const [registerUser, setRegisterUser] = useState<RegisterUser>({ id: "", firstname: "", lastname: "", adress: "", postalcode: "", city: "", phonenumber: "" , email: "", password: "", repeatpassword: "", });
   const [loginVisible, setLoginVisible] = useState(false);
 
   const saveUser = (username: string, password: string) => {
@@ -22,19 +21,25 @@ const ProductContextProvider = ({ children }: ProductContextProviderProps) => {
     };
     setUser(newUser);
   };
+
+
+
   const handleMenuItemClick = (label: string) => {
     if (label === "Min Profil") {
       setLoginVisible(!loginVisible); // Toggle visibility
-    } else {
-      // Handle other menu items as needed - TILL MÄRTA
-    }
+    } else if 
+      (label === "Skapa nytt konto"){
+        setLoginVisible(!loginVisible);
+      }
+    
   };
 
   const LoginValue: ContextType = {
     saveUser,
     user,
     handleMenuItemClick,
-    loginVisible
+    loginVisible,
+    registerUser
   };
 
   return (

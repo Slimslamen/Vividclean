@@ -1,11 +1,13 @@
 import React from "react";
 import LogIn from "../LoginFolder/LogIn";
+import Register from "../LoginFolder/Register";
 
 export default function Header() {
   return (
     
     <div>
       <LogIn/>
+      <Register />
       <div className="relative">
         <img
           className="w-full h-auto object-cover opacity-60"

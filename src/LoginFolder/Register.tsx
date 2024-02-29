@@ -1,10 +1,12 @@
 import { Checkbox, Label, TextInput } from "flowbite-react";
 import { useState } from "react";
-import { menuItems } from "../LandingFolder/components/MenuItems";
+import { ProductContext } from "../ProductContext";
+import React from "react";
+import { ContextType } from "../types/types";
 
 
 export default function Register():JSX.Element{
-    const [modal, setModal] = useState<boolean>(false);
+    const { loginVisible, handleMenuItemClick } = React.useContext(ProductContext)! as ContextType;
 
     const [firstName, setFirstName] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
@@ -18,10 +20,6 @@ export default function Register():JSX.Element{
     const [agreeTerms, setAgreeTerms] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
     
-  
-    const toggleModal = () =>{
-      setModal(!modal);
-    }
   
     const handleFirstNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setFirstName(e.target.value);
@@ -96,6 +94,7 @@ export default function Register():JSX.Element{
       
   
       // Återställ alla fält
+      
       setFirstName("");
       setLastName("");
       setAddress("");
@@ -106,15 +105,21 @@ export default function Register():JSX.Element{
       setPassword("");
       setRepeatPassword("");
       setAgreeTerms(false);
-  
-      // Återställ felmeddelande
       setError("");
     };
     
 
+    function handleHideRegister() {
+        handleMenuItemClick("Skapa nytt konto");
+      }
+    
+      if (!loginVisible) {
+        return null;
+      }
+
   return (
     <div className="w-96 h-100 border border-solid bg-customBeige">
-        <button>stäng</button>
+        <button onClick={handleHideRegister}>stäng</button>
       <div className="w-96 flex items-center justify-center">
         <form className="flex max-w-md flex-col gap-4" onSubmit={handleSubmit}>
           <div>
