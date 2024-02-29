@@ -24,4 +24,5 @@ export interface User {
     handleMenuItemClick: (label: string) => void;
     loginVisible: boolean
     registerUser: RegisterUser;
+    registerVisible: boolean
   };
