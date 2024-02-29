@@ -5,13 +5,19 @@ interface DropdownProps {
   items: DropdownItem[];
   id: string;
   handleMenuItemClick: (label: string) => void;
+  toggleMegaMenu: () => void
 }
 
 export default function DropdownItems({
   items,
   id,
-  handleMenuItemClick,
+  handleMenuItemClick, toggleMegaMenu
 }: DropdownProps): JSX.Element {
+
+  function ToggleMenues (items: string) {
+    handleMenuItemClick(items);
+    toggleMegaMenu();
+  };
   return (
     <div
       id={id}
@@ -23,7 +29,7 @@ export default function DropdownItems({
           href="#"
           className="block ml-24 p-3 border-b-2 rounded-lg hover:bg-customHover dark:hover:bg-gray-700"
           onClick={() => {
-            handleMenuItemClick(dropdownItem.label);
+            ToggleMenues(dropdownItem.label);
           }}
         >
           <div className="font-semibold text-gray-900 dark:text-white">
