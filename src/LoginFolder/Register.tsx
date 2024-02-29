@@ -6,7 +6,7 @@ import { ContextType } from "../types/types";
 
 
 export default function Register():JSX.Element{
-    const { loginVisible, handleMenuItemClick } = React.useContext(ProductContext)! as ContextType;
+    const { registerVisible, handleMenuItemClick } = React.useContext(ProductContext)! as ContextType;
 
     const [firstName, setFirstName] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
@@ -113,15 +113,31 @@ export default function Register():JSX.Element{
         handleMenuItemClick("Skapa nytt konto");
       }
     
-      if (!loginVisible) {
+      if (!registerVisible) {
         return null;
       }
 
   return (
-    <div className="w-96 h-100 border border-solid bg-customBeige">
-        <button onClick={handleHideRegister}>stäng</button>
+    <div className="flex justify-center items-center mt-10 mb-10 h-full">
+    <div className="w-96 h-auto border border-solid bg-customBeige">
+    <button onClick={handleHideRegister} className="bg-transparent border-none cursor-pointer ml-[92%] mt-2">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    className="h-6 w-6"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M6 18L18 6M6 6l12 12"
+    />
+  </svg>
+</button>
       <div className="w-96 flex items-center justify-center">
-        <form className="flex max-w-md flex-col gap-4" onSubmit={handleSubmit}>
+        <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <div>
             <div className="mb-2 block">
               <Label htmlFor="förnamn2" value="Förnamn:" />
@@ -163,6 +179,7 @@ export default function Register():JSX.Element{
             <TextInput
               id="postnummer2"
               type="postnummer"
+              placeholder="123 45"
               value={postalCode}
               onChange={handlePostalCodeChange}
               required
@@ -185,6 +202,7 @@ export default function Register():JSX.Element{
             <TextInput
               id="telefonnummer2"
               type="telefonnummer"
+              placeholder="123-45678910"
               value={phoneNumber}
               onChange={handlePhoneNumberChange}
               required
@@ -209,6 +227,7 @@ export default function Register():JSX.Element{
           <TextInput
             id="password2"
             type="password"
+            placeholder="********"
             value={password}
             onChange={handlePasswordChange}
             required
@@ -219,7 +238,8 @@ export default function Register():JSX.Element{
           </div>
           <TextInput
             id="repeat-password"
-            type="password"
+            type="repeatpassword"
+            placeholder="********"
             value={repeatPassword}
             onChange={handleRepeatPasswordChange}
             required
@@ -241,6 +261,7 @@ export default function Register():JSX.Element{
           </button>
         </form>
       </div>
+    </div>
     </div>
   );
 }

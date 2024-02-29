@@ -2,11 +2,12 @@ import React, { useState, useContext } from "react";
 import { menuItems } from "./components/MenuItems";
 import DropdownItems from "./components/DropdownItems";
 import { ProductContext } from "../ProductContext";
-import LogIn from "../LoginFolder/LogIn";
+
 
 export default function Navbar(): JSX.Element {
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
+
 
   const toggleMegaMenu = () => { //Toggles the visibility of the mega menu and resets the active dropdown.
     setIsMegaMenuOpen((prev) => !prev);
@@ -14,6 +15,9 @@ export default function Navbar(): JSX.Element {
   };
 
   const { loginVisible, handleMenuItemClick } = useContext(ProductContext)!
+
+
+
 
   //function toggles the visibility of a specific dropdown based on its index and closes the mega menu.
   //If the dropdown is the same as the index of the item clicked on, its being set to null and closes, since its already open.
@@ -68,10 +72,13 @@ export default function Navbar(): JSX.Element {
           }`}
         >
           <ul className="flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-customBeige md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-customBeige dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-            {menuItems.map((item, index) => (
+          {menuItems.map((item, index) => (
               <li key={index}>
                 <button
-                  onClick={() => toggleDropdown(index)}
+                  onClick={() => {
+                    toggleDropdown(index);
+                    // Om "Kontakta oss" klickas, hantera det särskilt
+                  }}
                   aria-expanded={activeDropdown === index}
                   className={
                     "flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded md:w-auto hover:bg-customHover md:hover:bg-transparent md:border-0 md:hover:text-customDark md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"
