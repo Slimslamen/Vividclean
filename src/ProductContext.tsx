@@ -26,7 +26,7 @@ const ProductContextProvider = ({ children }: ProductContextProviderProps) => {
     if (label === "Min Profil") {
       setLoginVisible(!loginVisible); // Toggle visibility
     } else {
-      // Handle other menu items as needed
+      // Handle other menu items as needed - TILL MÄRTA
     }
   };
 
