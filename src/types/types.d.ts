@@ -10,4 +10,5 @@ export interface User {
     user: User; // Interface for user object
     handleMenuItemClick: (label: string) => void;
     loginVisible: boolean
+
   };

@@ -2,7 +2,6 @@ import React, { createContext, useState, ReactNode } from "react";
 import { ContextType, User } from "./types/types";
 import { v4 as getId } from "uuid";
 
-import LogIn from "./LoginFolder/LogIn";
 
 const ProductContext = createContext<ContextType | null>(null);
 
@@ -34,7 +33,7 @@ const ProductContextProvider = ({ children }: ProductContextProviderProps) => {
     saveUser,
     user,
     handleMenuItemClick,
-    loginVisible
+    loginVisible,
   };
 
   return (

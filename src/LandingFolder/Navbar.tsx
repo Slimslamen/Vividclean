@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { menuItems } from "./components/MenuItems";
 import DropdownItems from "./components/DropdownItems";
 import { ProductContext } from "../ProductContext";
-import LogIn from "../LoginFolder/LogIn";
+
 
 export default function Navbar(): JSX.Element {
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
@@ -13,7 +13,7 @@ export default function Navbar(): JSX.Element {
     setActiveDropdown(null);
   };
 
-  const { loginVisible, handleMenuItemClick } = useContext(ProductContext)!
+  const {handleMenuItemClick } = useContext(ProductContext)!
 
   //function toggles the visibility of a specific dropdown based on its index and closes the mega menu.
   //If the dropdown is the same as the index of the item clicked on, its being set to null and closes, since its already open.
@@ -25,7 +25,7 @@ export default function Navbar(): JSX.Element {
 
 
   return (
-    <nav className=" z-10 sticky top-0 bg-customBeige border-gray-200 dark:border-gray-600 dark:bg-gray-900">
+    <nav className=" z-20 sticky top-0 bg-customBeige border-gray-200 dark:border-gray-600 dark:bg-gray-900">
       <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-0">
         <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse">
           <img

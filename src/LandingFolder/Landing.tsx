@@ -6,7 +6,7 @@ import LogIn from '../LoginFolder/LogIn'
 import { ProductContext } from "../ProductContext";
 import { ContextType } from "../types/types";
 import React from "react";
-
+import AboutUs from '../InformationPages/AboutUs';
 
 export default function Landing():JSX.Element {
   const { loginVisible } = React.useContext(ProductContext)! as ContextType;
@@ -16,6 +16,7 @@ export default function Landing():JSX.Element {
         <Header />
         <Main />
         </div>
+        <AboutUs />
     </>
   )
 }
