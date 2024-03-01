@@ -15,7 +15,6 @@ export default function Landing():JSX.Element {
         <Header />
         <Main />
         </div>
-        <AboutUs />
         </div>
     </>
   );
