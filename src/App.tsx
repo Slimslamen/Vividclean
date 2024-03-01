@@ -6,6 +6,7 @@ import KundSida from "./Sidor/KundSida";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AboutUs from "./InformationPages/AboutUs";
 import Contact from "./LandingFolder/Contact";
+import ScrollToTop from "./ScrollToTop";
 
 function App() {
 
@@ -13,9 +14,11 @@ function App() {
 
   return (
     <BrowserRouter>
+    <ScrollToTop />
     <ProductContextProvider>
       <Navbar/>
       <Routes>
+       
       <Route path="/" element={<Landing />} />
       <Route path="/AboutUs" element={<AboutUs />} />
       <Route path="/Contact" element={<Contact />} />
