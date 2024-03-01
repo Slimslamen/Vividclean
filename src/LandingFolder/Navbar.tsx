@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { menuItems } from "./components/MenuItems";
 import DropdownItems from "./components/DropdownItems";
 import { ProductContext } from "../ProductContext";
+import { Link } from "react-router-dom";
 
 
 export default function Navbar(): JSX.Element {
@@ -31,7 +32,7 @@ export default function Navbar(): JSX.Element {
   return (
     <nav className=" z-20 sticky top-0 bg-customBeige border-gray-200 dark:border-gray-600 dark:bg-gray-900">
       <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-0">
-        <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse">
+        <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
           <img
             src="src/assets/Vivid.png"
             className="h-24 p-0"
@@ -40,7 +41,7 @@ export default function Navbar(): JSX.Element {
           <span className="self-center text-2xl font-semibold whitespace-nowrap text-customDark dark:text-white">
             Hållbar Renlighet, Ditt Hem i Perfekt Harmoni
           </span>
-        </a>
+        </Link>
         <button
           onClick={toggleMegaMenu}
           type="button"
