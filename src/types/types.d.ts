@@ -19,10 +19,10 @@ export interface User {
   }
 
   export type ContextType = {
-    saveUser: (username: string, password: string) => void; // to save a new user
-    user: User; // Interface for user object
-    handleMenuItemClick: (label: string) => void;
+    saveUser: (username: string, password: string) => void, // to save a new user
+    user: User, // Interface for user object
+    handleMenuItemClick: (label: string) => void,
     loginVisible: boolean
-    registerUser: RegisterUser;
+    registerUser: RegisterUser,
     registerVisible: boolean
-  };
+ };

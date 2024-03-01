@@ -11,7 +11,7 @@ export default function Landing(): JSX.Element {
     <>
       <div className={` ${!loginVisible ? "" : "bg-black bg-opacity-80 z-10"}`}>
       <div className={` ${!registerVisible ? "" : "bg-black bg-opacity-80 z-10"}`}>
-       <Contact/>
+       {/* <Contact/> */}
         <Header />
         <Main />
       </div>
