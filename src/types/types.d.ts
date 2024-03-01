@@ -26,3 +26,13 @@ export interface User {
     registerUser: RegisterUser;
     registerVisible: boolean
   };
+//Interface for kundsida component
+  export interface Ibooking{
+    id:string;
+    name:string;
+    date: Date | null;
+    cleaner: string;
+    time: string;
+    service: string;
+    status: boolean;
+  }

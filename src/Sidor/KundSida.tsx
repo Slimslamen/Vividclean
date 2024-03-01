@@ -1,24 +1,14 @@
-import { Dropdown, DropdownItem  } from "flowbite-react";
 import DatePicker from "react-datepicker";
-
+import { Ibooking } from "../types/types";
 import { FormEvent, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
+import ComingBookings from "./ComingBookings";
 
 interface Ioptions {
   id: number;
   service: string;
   type:string;
 }
-interface Ibooking{
-  id:string;
-  name:string;
-  date: Date
-  cleaner: string;
-  time: string;
-  service: string;
-  status: boolean;
-}
-
 const options: Ioptions[] = [
   {
     id: 0,
@@ -48,21 +38,24 @@ const options: Ioptions[] = [
 ];
 
 export default function KundSida():JSX.Element {
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [selectedTime, setSelectedTime] = useState<string>("")
   const [selectedCleaner, setSelectedCleaner] = useState<string>("")
+  const [selectedService, setSelectedService] = useState<string>("")
   //Storing bookings
-  const [booking, setBooking] = useState<Ibooking>({id:uuidv4(), name:"Sofia", date:selectedDate, cleaner:"", time:selectedTime, service:selectedCleaner, status:false })
+  const [booking, setBooking] = useState<Ibooking>({id:uuidv4(), name:"Sofia", date:new Date(), cleaner:"", time:"", service:"", status:false })
+  const [allBookings, setAllBookings] = useState<Ibooking[]>([])
 
   
 //Functions that submits all the values when submitted. this function is dependable of the onchanges on the inputs.
   const handleSubmit = (e:FormEvent) => {
     e.preventDefault()
-    console.log("time:",selectedTime);
-    console.log(`Date: ${selectedDate.getMonth()}/${selectedDate.getDate()}/${selectedDate.getFullYear()}`);
-    console.log("Service:", selectedCleaner);
-    
-    
+    setSelectedDate(null)
+    setSelectedTime("")
+    setSelectedCleaner("")
+    setSelectedService("")
+    setBooking({id:uuidv4(),name:"Sofia", date:selectedDate, cleaner:selectedCleaner, time:selectedTime, service:selectedService, status:false})
+    setAllBookings(prev => [...prev, {id:uuidv4(),name:"Sofia", date:selectedDate, cleaner:selectedCleaner, time:selectedTime, service:selectedService, status:false}])
   }
 
   return (
@@ -73,7 +66,7 @@ export default function KundSida():JSX.Element {
           <div>
             <h2 className="text-3xl font-DM">Boka städning</h2>
             <div className="flex flex-row justify-between py-5 space-x-3 md:space-x-0">
-              <DatePicker onChange={(date:Date) => setSelectedDate(date)} filterDate={date => { return date.getDay() !== 0 && date.getDay() !== 6;}}/* Disable weekends (Saturday and Sunday) */ minDate={new Date()} selected={selectedDate} />
+              <DatePicker onChange={(date:Date) => setSelectedDate(date)} filterDate={date => { return date.getDay() !== 0 && date.getDay() !== 6}}/* Disable weekends (Saturday and Sunday) */ minDate={new Date()} selected={selectedDate} />
               <input onChange={e => setSelectedTime(e.target.value)} value={selectedTime} id="time" type="time" min='08:00' max= '15:00' step="3600" className="p-1 rounded-lg w-5/12" />
             </div>
             <select onChange={(e) => setSelectedCleaner(e.target.value)} name="Städare" id="Städare" className="p-1 rounded-lg w-4/12 bg-transparent focus:outline-none">
@@ -84,11 +77,13 @@ export default function KundSida():JSX.Element {
             </select>
             <ul className="mt-2 items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
               {options.map((option) => (
-                <li className="w-full px-2 hover:bg-customHoverDark duration-300 ease-in-out rounded-md">
+                <li className="w-full px-2 hover:bg-customHoverDark duration-300 ease-in-out rounded-md" >
                   <div className="flex items-center ps-3">
                     <input
+                      onChange={(e) => setSelectedService(e.target.value)}
                       id={option.type}
-                      type="checkbox"
+                      type="radio"
+                      checked={selectedService === option.service}
                       value={option.service}
                       className="w-4 h-4 text-customDark bg-gray-100 border-gray-300 rounded focus:ring-customDark  "
                     />
@@ -107,14 +102,11 @@ export default function KundSida():JSX.Element {
             Boka nu
           </button>
         </form>
-        <div>
-          <h2>Kommande bokningar</h2>
-          {}
-        </div>
-        <div>
-          <h2>utförda bokningar</h2>
-          {}
-        </div>
+        <h2 className="text-3xl my-3 font-DM">Kommande bokningar</h2>
+        {allBookings.map((one) => (
+          <ComingBookings key={one.id} booking={booking}/>
+        ))}
+     
       </div>
       </>
   );
