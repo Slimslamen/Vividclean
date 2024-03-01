@@ -27,7 +27,7 @@ export const menuItems: MenuItem[] = [
     label: "Vivid Clean",
     dropdownItems: [
       { label: "Om oss", description: "Ledande, engagerade och dedikerade - vår historia driver vår framtid. Läs mer om oss", route: "/AboutUs" },
-      { label: "Kontakta oss", description: "För frågor och samarbeten, nå oss enkelt via vårt kontaktformulär", route: "" },
+      { label: "Kontakta oss", description: "För frågor och samarbeten, nå oss enkelt via vårt kontaktformulär", route: "/Contact" },
       { label: "FAQ", description: "Vanliga frågor redan besvarade", route: "" },
     ],
   },

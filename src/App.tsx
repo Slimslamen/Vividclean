@@ -5,7 +5,7 @@ import { ProductContextProvider } from "./ProductContext";
 import KundSida from "./Sidor/KundSida";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AboutUs from "./InformationPages/AboutUs";
-
+import Contact from "./LandingFolder/Contact";
 
 function App() {
 
@@ -18,6 +18,7 @@ function App() {
       <Routes>
       <Route path="/" element={<Landing />} />
       <Route path="/AboutUs" element={<AboutUs />} />
+      <Route path="/Contact" element={<Contact />} />
       <Route path="/KundSida" element={<KundSida />} />
         
         

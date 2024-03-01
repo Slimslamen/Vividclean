@@ -38,12 +38,10 @@ const ProductContextProvider = ({ children }: ProductContextProviderProps) => {
     user,
     handleMenuItemClick,
     loginVisible,
+    registerUser,
+    registerVisible
   };
 
-  // const RegisterValue: ContextType = {
-  //   registerUser,
-  //   registerVisible
-  // }
 
   return (
     <ProductContext.Provider value={LoginValue}>
