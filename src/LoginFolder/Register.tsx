@@ -114,7 +114,7 @@ export default function Register(): JSX.Element {
 
   return (
     
-      <div className="grid justify-center items-center right-0 left-0 z-50 md:inset-0 fixed w-96 h-auto ml-[20%] md:ml-[36%] bg-customBeige">
+      <div className="right-0 left-0 z-50 md:inset-0 fixed w-full ml-[20%] md:ml-[36%] ">
         <button
           onClick={handleHideRegister}
           className="bg-transparent border-none cursor-pointer ml-[92%] mt-2"
@@ -134,9 +134,9 @@ export default function Register(): JSX.Element {
             />
           </svg>
         </button>
-        <div className="w-96 flex items-center justify-center">
-          <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-            <div>
+        <div className="h-auto grid grid-cols-1 md:grid-cols-2 gap-4 justify-center items-center bg-customBeige">
+          <form className="grid grid-cols-1 md:grid-cols-2 gap-2 w-96" onSubmit={handleSubmit}>
+           
               <div className="mb-2 block">
                 <Label htmlFor="firstname" value="Förnamn:" />
               </div>
@@ -148,7 +148,7 @@ export default function Register(): JSX.Element {
                 required
                 shadow
               />
-            </div>
+           
             <div className="mb-2 block">
               <Label htmlFor="lastname" value="Efternamn:" />
             </div>
