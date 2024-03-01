@@ -36,3 +36,13 @@ export interface User {
     service: string;
     status: boolean;
   }
+  export interface Ioptions {
+    id: number;
+    service: string;
+    type:string;
+  }
+  export interface Icleaners{
+    id:string;
+    value: string;
+    name: string;
+  }
