@@ -17,8 +17,7 @@ function App() {
     <ScrollToTop />
     <ProductContextProvider>
       <Navbar/>
-      <Routes>
-       
+      <Routes> 
       <Route path="/" element={<Landing />} />
       <Route path="/AboutUs" element={<AboutUs />} />
       <Route path="/Contact" element={<Contact />} />
