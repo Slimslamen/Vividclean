@@ -3,10 +3,10 @@ import Header from "./Header";
 import { ProductContext } from "../ProductContext";
 import { ContextType } from "../types/types";
 import React from "react";
-import Contact from "./Contact";
+import AboutUs from '../InformationPages/AboutUs';
 
-export default function Landing(): JSX.Element {
-  const { loginVisible, registerVisible } = React.useContext(ProductContext)! as ContextType;
+export default function Landing():JSX.Element {
+  const { loginVisible } = React.useContext(ProductContext)! as ContextType;
   return (
     <>
       <div className={` ${!loginVisible ? "" : "bg-black bg-opacity-80 z-10"}`}>
@@ -14,8 +14,8 @@ export default function Landing(): JSX.Element {
        {/* <Contact/> */}
         <Header />
         <Main />
-      </div>
-      </div>
+        </div>
+        <AboutUs />
     </>
   );
 }

@@ -3,6 +3,8 @@ import Landing from "./LandingFolder/Landing";
 import Navbar from "./LandingFolder/Navbar";
 import { ProductContextProvider } from "./ProductContext";
 import KundSida from "./Sidor/KundSida";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import AboutUs from "./InformationPages/AboutUs";
 
 
 function App() {
@@ -10,12 +12,19 @@ function App() {
  
 
   return (
+    <BrowserRouter>
     <ProductContextProvider>
-        <Navbar />
-        <Landing />
-        <Footer />
-        <KundSida />
+      <Navbar/>
+      <Routes>
+      <Route path="/" element={<Landing />} />
+      <Route path="/AboutUs" element={<AboutUs />} />
+      <Route path="/KundSida" element={<KundSida />} />
+        
+        
+        </Routes>
     </ProductContextProvider>
+    <Footer />
+    </BrowserRouter>
   );
 }
 

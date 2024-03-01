@@ -1,7 +1,7 @@
 import React, { createContext, useState, ReactNode } from "react";
 import { ContextType, User, RegisterUser } from "./types/types";
 import { v4 as getId } from "uuid";
-import Register from "./LoginFolder/Register";
+
 
 const ProductContext = createContext<ContextType | null>(null);
 
@@ -38,8 +38,6 @@ const ProductContextProvider = ({ children }: ProductContextProviderProps) => {
     user,
     handleMenuItemClick,
     loginVisible,
-    registerUser,
-    registerVisible
   };
 
   // const RegisterValue: ContextType = {

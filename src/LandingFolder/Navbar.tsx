@@ -14,7 +14,7 @@ export default function Navbar(): JSX.Element {
     setActiveDropdown(null);
   };
 
-  const { loginVisible, handleMenuItemClick } = useContext(ProductContext)!
+  const {handleMenuItemClick } = useContext(ProductContext)!
 
 
 
@@ -29,7 +29,7 @@ export default function Navbar(): JSX.Element {
 
 
   return (
-    <nav className=" z-10 sticky top-0 bg-customBeige border-gray-200 dark:border-gray-600 dark:bg-gray-900">
+    <nav className=" z-20 sticky top-0 bg-customBeige border-gray-200 dark:border-gray-600 dark:bg-gray-900">
       <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-0">
         <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse">
           <img
