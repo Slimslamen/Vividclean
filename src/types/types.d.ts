@@ -19,30 +19,11 @@ export interface User {
   }
 
   export type ContextType = {
-    saveUser: (username: string, password: string) => void; // to save a new user
-    user: User; // Interface for user object
-    handleMenuItemClick: (label: string) => void;
+    saveUser: (username: string, password: string) => void, // to save a new user
+    user: User, // Interface for user object
+    handleMenuItemClick: (label: string) => void,
     loginVisible: boolean
-    registerUser: RegisterUser;
-    registerVisible: boolean
+    registerUser: RegisterUser
+    registerVisible: booelan
+
   };
-//Interface for kundsida component
-  export interface Ibooking{
-    id:string;
-    name:string;
-    date: Date | null;
-    cleaner: string;
-    time: string;
-    service: string;
-    status: boolean;
-  }
-  export interface Ioptions {
-    id: number;
-    service: string;
-    type:string;
-  }
-  export interface Icleaners{
-    id:string;
-    value: string;
-    name: string;
-  }

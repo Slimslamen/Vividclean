@@ -30,7 +30,7 @@ export default function LogIn() {
     </svg>
   );
 
-  //const navigate = useNavigate(); //navigate hook to navigate on the site
+  const navigate = useNavigate(); //navigate hook to navigate on the site
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -40,7 +40,7 @@ export default function LogIn() {
     if (rememberMe) {
       // Handle remember me logic
     }
-   // navigate("#");
+   navigate("/KundSida");
   }
   function handleHideLogin() {
     handleMenuItemClick("Min Profil");

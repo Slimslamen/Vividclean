@@ -2,6 +2,7 @@ import React, { createContext, useState, ReactNode } from "react";
 import { ContextType, User, RegisterUser } from "./types/types";
 import { v4 as getId } from "uuid";
 
+
 const ProductContext = createContext<ContextType | null>(null);
 
 interface ProductContextProviderProps {
@@ -40,6 +41,7 @@ const ProductContextProvider = ({ children }: ProductContextProviderProps) => {
     registerUser,
     registerVisible
   };
+
 
   return (
     <ProductContext.Provider value={LoginValue}>
