@@ -23,13 +23,31 @@ export default function AboutUs(): JSX.Element {
           Vår historia
         </h2>
 
-        <p className="flex text-xl text-left justify-center m-32 z-10">
+        <p className="flex text-xl text-left justify-center mt-16 mb-32 mx-32 z-10">
           Ledande, engagerade och dedikerade - vår historia är själva
-          drivkraften bakom vår framtid. Hos Vivid Clean tror vi på att skapa
-          skillnad genom att fokusera på detaljer, och vår passion för
-          hållbarhet genomsyrar allt vi gör. Från Åre i norr till södra Malmö
-          strävar vi efter att leverera städtjänster av absolut högsta kvalitet
-          med minimal påverkan på miljön.
+          drivkraften bakom vår framtid. <br /> <br /> Vivid Clean grundades av tre
+          vänner: Märta, Jim och Estelle. Vår historia började med en djup
+          passion för miljön och en önskan att göra en verklig skillnad. Märta,
+          med en bakgrund inom miljövetenskap och en vetskap om de potentiella
+          miljökonsekvenserna av traditionella städtjänster, inspirerade henne
+          att leta efter alternativa metoder och produkter som skulle minimera
+          påverkan på planeten. Jim, som hade arbetat inom tjänstesektorn i
+          många år, hade en inbyggd passion för kundservice och en stark
+          övertygelse om att företagande och miljöhänsyn kunde gå hand i hand.
+          Han drömde om att skapa en städtjänst där varje interaktion, från
+          första kontakten till den sista putsningen, präglades av
+          professionalism och ett hållbart förhållningssätt. Estelle, med en
+          stark affärsbakgrund och en personlig förkärlek för gröna initiativ,
+          delade samma vision om ett företag som inte bara levererar
+          kvalitetstjänster utan också sätter hållbarhet högst upp på agendan.
+          Hon var övertygad om att genom att erbjuda hållbara städlösningar
+          kunde de inte bara möta kundernas behov utan också bidra till en
+          positiv förändring.
+          <br /> <br /> Hos Vivid Clean tror vi på att skapa skillnad genom att
+          fokusera på detaljer, och vår passion för hållbarhet genomsyrar allt
+          vi gör. Från Åre i norr till södra Malmö strävar vi efter att leverera
+          städtjänster av absolut högsta kvalitet med minimal påverkan på
+          miljön.
         </p>
       </article>
       <article
