@@ -31,7 +31,7 @@ export interface User {
   export interface Ibooking{
     id:string;
     name:string;
-    date: Date;
+    selectedDate: Date;
     cleaner: string;
     time: string;
     service: string;
