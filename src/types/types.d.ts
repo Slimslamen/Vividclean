@@ -31,7 +31,7 @@ export interface User {
   export interface Ibooking{
     id:string;
     name:string;
-    date: Date | null;
+    date: Date;
     cleaner: string;
     time: string;
     service: string;
@@ -43,7 +43,13 @@ export interface User {
     type:string;
   }
   export interface Icleaners{
-    id:string;
+    id:string | number;
     value: string;
     name: string;
+  }
+  export interface IformData{
+    date:Date;
+    time:string;
+    cleaner:string;
+    service:string;
   }

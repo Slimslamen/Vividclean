@@ -3,20 +3,25 @@ import { Ioptions } from '../../types/types';
 
 interface Iservice{
     option:Ioptions;
-    selectedService: string;
-    setSelectedService: React.Dispatch<React.SetStateAction<string>>  
+    service:string;
+    setFormData:React.Dispatch<React.SetStateAction<{
+      selectedDate: Date;
+      time: string;
+      cleaner: string;
+      service: string;
+  }>>
 
 }
 
-export default function Services({option, selectedService, setSelectedService}:Iservice):JSX.Element {
+export default function Services({option, service, setFormData}:Iservice):JSX.Element {
   return (
     <li className="w-full px-2 hover:bg-customHoverDark duration-300 ease-in-out rounded-md" >
     <div className="flex items-center ps-3">
       <input
-        onChange={(e) => setSelectedService(e.target.value)}
+        onChange={(e) => setFormData(prev => ({...prev, service:e.target.value}))}
         id={option.type}
         type="radio"
-        checked={selectedService === option.service}
+        checked={service === option.service}
         value={option.service}
         className="w-4 h-4 text-customDark bg-gray-100 border-gray-300 rounded focus:ring-customDark  "
       />
@@ -30,3 +35,5 @@ export default function Services({option, selectedService, setSelectedService}:I
   </li>
   )
 }
+
+/* onChange={(e) => setSelectedService(e.target.value)} */
