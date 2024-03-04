@@ -51,3 +51,5 @@ interface UserAuthContextProps {
       </UserAuthContext.Provider>
     );
   }
+
+  export default UserAuthContext;
