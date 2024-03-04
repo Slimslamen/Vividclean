@@ -9,6 +9,7 @@ import { Icleaners } from "../types/types";
 import { ProductContext } from "../ProductContext";
 import { ContextType } from "../types/types";
 
+
 interface Ierrors {
   time:string
   cleaner: string;
@@ -68,7 +69,6 @@ export default function KundSida():JSX.Element {
   const { user } = React.useContext(ProductContext) as ContextType;
 
   const savedName = user.username
-  
 
 
   const [formData, setFormData] = useState({selectedDate:new Date(), time:"", cleaner:"", service:""})
@@ -78,7 +78,7 @@ export default function KundSida():JSX.Element {
   const [allBookings, setAllBookings] = useState<Ibooking[]>([])
 
   
-  const handleErrors = () => {
+  /* const handleErrors = () => {
     const errors:Ierrors = {time:"", cleaner:""}
     if(!booking.time){
       errors.time = "Välj en tid"
@@ -88,7 +88,7 @@ export default function KundSida():JSX.Element {
     }
     return errors
   }
-
+ */
 //Functions that submits all the values when submitted. this function is dependable of the onchanges on the inputs.
   const handleSubmit = (e:FormEvent) => {
     const { selectedDate, cleaner, time, service } = formData
@@ -105,11 +105,10 @@ export default function KundSida():JSX.Element {
     setBooking(newBooking)
     setAllBookings(prev => [...prev, newBooking])
 
-    const Errors = handleErrors()
-    setFormErrors(Errors)
+/*     const Errors = handleErrors()
+    setFormErrors(Errors) */
   }
 
-  console.log(formData.cleaner);
   
 
   return (
