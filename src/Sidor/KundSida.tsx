@@ -103,7 +103,7 @@ export default function KundSida():JSX.Element {
     //passing handleErrors to the formErrors state that I use in the JSX
     const Errors = handleErrors()
     setFormErrors(Errors)
-    setBooking({id:"", name:savedName, selectedDate:new Date(), cleaner:"", time:"", service:"", status:false })
+    
     
   }  
   //validating the form
@@ -114,7 +114,7 @@ export default function KundSida():JSX.Element {
     if(!time){
       errors.time = "Välj en tid"
     }
-    if(!cleaner){
+    if(!cleaner || cleaner === "Städare"){
       errors.cleaner = "Välj en städare"
     }
     if(!service){
@@ -125,10 +125,10 @@ export default function KundSida():JSX.Element {
     }
     return errors
   }
-  //rendering everytime the formdata updates. When all the 3 variables have a value the goodtogo becomes true and enables the submit button
+  //rendering everytime the formdata updates. When all the 3 variables have a value the goodToGo becomes true and enables the submit button
   useEffect(() => {
     const { time, cleaner, service } = formData;
-    if (time && cleaner && service) {
+    if (time && cleaner && cleaner !== "Städare" && service) {
       setgoodToGo(true);
     } else {
       setgoodToGo(false);
