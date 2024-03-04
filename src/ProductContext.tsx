@@ -39,7 +39,7 @@ const ProductContextProvider = ({ children }: ProductContextProviderProps) => {
     handleMenuItemClick,
     loginVisible,
     registerUser,
-    registerVisible
+    registerVisible,
   };
 
 

@@ -3,7 +3,6 @@ import Header from "./Header";
 import { ProductContext } from "../ProductContext";
 import { ContextType } from "../types/types";
 import React from "react";
-import AboutUs from '../InformationPages/AboutUs';
 
 export default function Landing():JSX.Element {
   const { loginVisible, registerVisible } = React.useContext(ProductContext)! as ContextType;
