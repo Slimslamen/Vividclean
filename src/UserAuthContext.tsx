@@ -14,7 +14,7 @@ interface UserAuthContextProps {
     logIn: (email: string, password: string) => void;
     signUp: (email: string, password: string) => void;
     logOut: () => void;
-    googleSignIn: () => void;
+    googleSignIn: () => Promise<void>;
   }
 
   const UserAuthContext = createContext<UserAuthContextProps | undefined>(undefined);
@@ -38,14 +38,17 @@ interface UserAuthContextProps {
       return signOut(auth);
     }
   
-    function googleSignIn() {
-      const googleAuthProvider = new GoogleAuthProvider();
-      return signInWithPopup(auth, googleAuthProvider);
-    }
+    async function googleSignIn(): Promise<void> {
+        const googleAuthProvider = new GoogleAuthProvider();
+        await signInWithPopup(auth, googleAuthProvider);
+      }
   
+    const FireBaseValues: UserAuthContextProps = {
+        user, logIn, signUp, logOut, googleSignIn,
+      };
     return (
       <UserAuthContext.Provider
-        value={{ user, logIn, signUp, logOut, googleSignIn }}
+        value={FireBaseValues}
       >
         {children}
       </UserAuthContext.Provider>

@@ -1,22 +1,35 @@
 import { Checkbox, Label, TextInput } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
-import { ContextType } from "../types/types";
-import { ProductContext } from "../ProductContext";
-import { useState } from "react";
-
+import {UserAuthContextProps } from "../types/types";
+import {UserAuthContext} from "../UserAuthContext"
+import { useState, useContext } from "react";
 import React from "react";
+import { ProductContext } from "../ProductContext";
 
 
 export default function LogIn() {
-    const [usernameValue, setUsernameValue] = useState<string>("");
-    const [passwordValue, setPasswordValue] = useState<string>("");
-    const [rememberMe, setRememberMe] = useState<boolean>(false);
-    
+  const { googleSignIn } = React.useContext(
+    UserAuthContext
+  )! as UserAuthContextProps;
 
+  const navigate = useNavigate(); //navigate hook to navigate on the site
+  
+  const handleGoogleSignIn = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    try {
+      await googleSignIn();
+      navigate("/Kundsida");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.log(error.message); // Du kan nu använda Error-metoder
+      } else {
+        console.error("Ett okänt fel inträffade:", error);
+  }
+    }}
 
   //get saveUser function from TodoContext
-  const { saveUser } = React.useContext(ProductContext) as ContextType;
-  const { loginVisible, handleMenuItemClick } = React.useContext(ProductContext)! as ContextType;
+
+  const { loginVisible, handleMenuItemClick, setRememberMe } = React.useContext(ProductContext)! as ContextType;
 
 
   const usernameIcon = (
@@ -31,23 +44,13 @@ export default function LogIn() {
     </svg>
   );
 
-  const navigate = useNavigate(); //navigate hook to navigate on the site
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    saveUser(usernameValue, passwordValue);
-    setUsernameValue("");
-    setPasswordValue("");
-    if (rememberMe) {
-      // Handle remember me logic
-    }
-   navigate("/KundSida");
-  }
+ 
   function handleHideLogin() {
     handleMenuItemClick("Min Profil");
     setRememberMe(false); // Återställa eventuella värden när du döljer LogIn
     // Dölj LogIn genom att anropa saveUser med tomma värden
-    saveUser("", "");
+   
   }
 
   if (!loginVisible) {
@@ -97,6 +100,12 @@ export default function LogIn() {
             Kom ihåg mig
           </Label>
         </div>
+        <button onClick={handleGoogleSignIn} type="button" className="text-white bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 me-2 mb-2">
+<svg className="w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 19">
+<path fill-rule="evenodd" d="M8.842 18.083a8.8 8.8 0 0 1-8.65-8.948 8.841 8.841 0 0 1 8.8-8.652h.153a8.464 8.464 0 0 1 5.7 2.257l-2.193 2.038A5.27 5.27 0 0 0 9.09 3.4a5.882 5.882 0 0 0-.2 11.76h.124a5.091 5.091 0 0 0 5.248-4.057L14.3 11H9V8h8.34c.066.543.095 1.09.088 1.636-.086 5.053-3.463 8.449-8.4 8.449l-.186-.002Z" clip-rule="evenodd"/>
+</svg>
+Sign in with Google
+</button>
         <button
           className="bg-customBeige text-dark hover:bg-customHover rounded-md p-2 font-semibold"
           type="submit"
