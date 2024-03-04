@@ -30,8 +30,8 @@ export type ContextType = {
 export type UserAuthContextProps = {
   googleSignIn: () => Promise<void>;
   logOut: () => void;
-  signUp: (email: string, password: string) => void;
-  logIn: (email: string, password: string) => void;
+  signUp: (email: string, password: string) => Promise<void>;
+  logIn: (email: string, password: string) => Promise<void>;
   user: any;
 };
 

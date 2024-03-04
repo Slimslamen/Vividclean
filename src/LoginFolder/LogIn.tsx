@@ -8,7 +8,10 @@ import { ProductContext } from "../ProductContext";
 
 
 export default function LogIn() {
-  const { googleSignIn } = React.useContext(
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const [password, setPassword] = useState("")
+  const { googleSignIn, logIn } = React.useContext(
     UserAuthContext
   )! as UserAuthContextProps;
 
@@ -27,10 +30,23 @@ export default function LogIn() {
   }
     }}
 
-  //get saveUser function from TodoContext
+   
+ 
+    
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError("");
+        try {
+          await signUp(email, password);
+          navigate("/");
+        } catch (err) {
+          setError(err.message);
+        }
+      }
 
   const { loginVisible, handleMenuItemClick, setRememberMe } = React.useContext(ProductContext)! as ContextType;
 
+  
 
   const usernameIcon = (
     <svg
@@ -68,13 +84,12 @@ export default function LogIn() {
           <img className="h-4 w-4" src="src/assets/close-round-icon.png" alt="" />
         </button>
         <div>
-          <Label htmlFor="username3" value="Username" className="text-white" />
+        <label htmlFor="email-address-icon" className="text-white" />
           <TextInput
-            id="username3"
-            placeholder="Användarnamn"
+            id="email-address-icon"
+            placeholder="Din email"
             addon={usernameIcon}
-            value={usernameValue}
-            onChange={(e) => setUsernameValue(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
         </div>
@@ -84,8 +99,7 @@ export default function LogIn() {
             id="password1"
             placeholder="Lösenord"
             type="password"
-            value={passwordValue}
-            onChange={(e) => setPasswordValue(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             required
           />
         </div>
