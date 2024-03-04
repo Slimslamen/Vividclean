@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AboutUs from "./InformationPages/AboutUs";
 import Contact from "./LandingFolder/Contact";
 import ScrollToTop from "./ScrollToTop";
+import { UserAuthContextProvider } from "./UserAuthContext";
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
     <BrowserRouter>
     <ScrollToTop />
     <ProductContextProvider>
+      <UserAuthContextProvider>
       <Navbar/>
       <Routes> 
       <Route path="/" element={<Landing />} />
@@ -25,6 +27,7 @@ function App() {
         
         
         </Routes>
+        </UserAuthContextProvider>
     </ProductContextProvider>
     <Footer />
     </BrowserRouter>
