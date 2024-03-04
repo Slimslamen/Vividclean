@@ -5,6 +5,7 @@ import { UserAuthContext } from "../UserAuthContext";
 import { useState, useContext } from "react";
 import React from "react";
 import { ProductContext } from "../ProductContext";
+import { ContextType } from "../types/types";
 
 export default function LogIn() {
   const [email, setEmail] = useState("");
@@ -35,7 +36,7 @@ export default function LogIn() {
     setError("");
     try {
       await logIn(email, password);
-      navigate("/");
+      navigate("/KundSida");
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.log(error.message); // Du kan nu använda Error-metoder
@@ -45,7 +46,7 @@ export default function LogIn() {
     }
   };
 
-  const { loginVisible, handleMenuItemClick, setRememberMe } = React.useContext(
+  const { loginVisible, handleMenuItemClick } = React.useContext(
     ProductContext
   )! as ContextType;
 
