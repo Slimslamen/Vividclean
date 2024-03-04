@@ -37,11 +37,14 @@ export default function LogIn() {
         e.preventDefault();
         setError("");
         try {
-          await signUp(email, password);
+          await logIn(email, password);
           navigate("/");
-        } catch (err) {
-          setError(err.message);
-        }
+        } catch (error: unknown) {
+          if (error instanceof Error) {
+            console.log(error.message); // Du kan nu använda Error-metoder
+          } else {
+            console.error("Ett okänt fel inträffade:", error);
+      }
       }
 
   const { loginVisible, handleMenuItemClick, setRememberMe } = React.useContext(ProductContext)! as ContextType;
