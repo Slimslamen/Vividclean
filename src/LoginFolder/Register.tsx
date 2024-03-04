@@ -12,7 +12,10 @@ export default function Register(): JSX.Element {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const { signUp } = React.useContext(UserAuthContext)! as UserAuthContextProps;
+  const { signUp } = React.useContext(
+    UserAuthContext
+  )! as UserAuthContextProps;
+  
   const navigate = useNavigate();
 
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
