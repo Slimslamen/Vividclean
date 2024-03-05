@@ -6,8 +6,8 @@ import {
   signOut,
 } from "@firebase/auth";
 import { createContext, useState, ReactNode } from "react";
-import { auth } from "./config/firebase";
-
+import { auth, db } from "./config/firebase";
+import { doc, setDoc } from 'firebase/firestore';
 
 interface UserAuthContextProps {
     user: any; // Replace 'any' with the actual type of your user object
@@ -30,8 +30,21 @@ interface UserAuthContextProps {
       await signInWithEmailAndPassword(auth, email, password);
     }
   
-    async function signUp(email: string, password: string):Promise<void> {
-      await createUserWithEmailAndPassword(auth, email, password);
+    // async function signUp(email: string, password: string):Promise<void> {
+    //   await createUserWithEmailAndPassword(auth, email, password);
+    // }
+    async function signUp(email: string, password: string): Promise<void> {
+      return createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const userId = userCredential.user.uid;
+          const userDocRef = doc(db, 'users', userId);
+          return setDoc(userDocRef, { role: 'user' }, { merge: true }); // Lägg till användarrollen 'user'
+        })
+        .catch((error) => {
+          // Hantera registreringsfel här
+          console.error("Sign up error:", error);
+          throw error; // Kasta felet vidare för att fortsätta hantera det i komponenten
+        });
     }
   
     function logOut() {
