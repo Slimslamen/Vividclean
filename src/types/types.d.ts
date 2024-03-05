@@ -37,7 +37,6 @@ export type UserAuthContextProps = {
 
 //Interface for kundsida component
 export interface Ibooking {
-  name: string;
   selectedDate: date;
   cleaner: string;
   time: string;

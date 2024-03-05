@@ -3,18 +3,11 @@ import React, { FormEvent, useEffect, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 
 import Services from "./components/Services";
-import { Ioptions, Icleaners, ContextType, Ibooking, Ifirebase } from "../types/types";
+import { Ioptions, Icleaners, ContextType, Ifirebase } from "../types/types";
 import { ProductContext } from "../ProductContext";
 import { db } from "../config/firebase";
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import { collection, getDocs, addDoc, deleteDoc, doc } from "firebase/firestore";
 import BookingPage from "./components/BookingPage";
-
-interface Ierrors {
-  time:string
-  cleaner: string;
-  service:string;
-  date: string;
-}
 
 const options: Ioptions[] = [
   {
@@ -70,15 +63,12 @@ export default function KundSida():JSX.Element {
   const { user } = React.useContext(ProductContext) as ContextType;
   const savedName = user.username
 
-  //state for the text the variables
-  const [formErrors, setFormErrors] = useState<Ierrors>({date:"", time:"", cleaner:"", service:""})
   //State to handle the form data
-
   const [formData, setFormData] = useState({selectedDate:new Date(), time:"", cleaner:"", service:""})
-  //Storing bookings
-  const [booking, setBooking] = useState<Ibooking>({id:"", name:savedName, selectedDate:formData.selectedDate, cleaner:"", time:"", service:"", status:false })
   //state with all the bookings
   const [firebaseBookings, setFirebaseBookings] = useState<Ifirebase[]>([])
+  const [reRender, setReRender] = useState(false)
+  
   
   
   const bookingsRef = collection(db, "bookings")
@@ -91,57 +81,31 @@ export default function KundSida():JSX.Element {
       
     } catch (error) {
       console.log(error);
-      
     }
   }
-  useEffect(() => {
-    getBookings()
-  }, [])
-  //validating the form
-  const handleErrors = () => {
-    const errors:Ierrors = {date:"",time:"", cleaner:"", service:""}
-    const { time, cleaner, service} = booking
-
-    if(!time){
-      errors.time = "Välj en tid"
-    }
-    if(!cleaner || cleaner === "Städare"){
-      errors.cleaner = "Välj en städare"
-    }
-    if(!service){
-      errors.service = "Välj en tjänst"
-    }  
-    return errors
-  }
-  
   const onSubmit = async(e:FormEvent) => {
-    const { selectedDate ,time, cleaner, service} = formData
-    const newBooking:Ibooking = {
-      name:savedName, 
-      selectedDate:selectedDate, 
-      cleaner:cleaner, 
-      time:time,
-      service:service, 
-      status:false 
-    }
-
     e.preventDefault()
     try {
-
-      await addDoc(bookingsRef, {date:selectedDate , time:time, cleaner:cleaner, service:service, status:false})
+      const { selectedDate ,time, cleaner, service} = formData
+      await addDoc(bookingsRef, {date:selectedDate , time:time, cleaner:cleaner, service:service, status:status})
       getBookings()
-      console.log(formData.selectedDate);
-      const dates = selectedDate.getDay()
-      console.log(dates);
-      
-      
     } catch (error) {
       console.log(error);
     }
   }
   
+  const deleteBooking =  (id:string) => {
+    const bookingDoc = doc(db, "bookings", id)
+     deleteDoc(bookingDoc)
+     setReRender(!reRender)
+  }
+
+  useEffect(() => {
+    getBookings()
+  }, [reRender])
   
   
+
   
   return (
     <>
@@ -156,7 +120,7 @@ export default function KundSida():JSX.Element {
               </div>
               <div className="w-full flex flex-col items-end space-y-2">
                 <input onChange={e => setFormData(prev => ({...prev, time:e.target.value}))} value={formData.time} id="time" type="time" min='08:00' max= '15:00' step="3600" className="p-1 rounded-lg w-5/12" />
-                {formErrors.time && <p className="px-2 py-1 bg-red-300 text-red-700 rounded-lg">{formErrors.time}</p>}
+           {/*      {formErrors.time && <p className="px-2 py-1 bg-red-300 text-red-700 rounded-lg">{formErrors.time}</p>} */}
               </div>
             </div>
             <div className="flex flex-col space-y-2 my-9">
@@ -165,7 +129,7 @@ export default function KundSida():JSX.Element {
                   <option key={clean.id} value={clean.value}>{clean.name}</option>
                   ))}
               </select>
-              {formErrors.cleaner && <p className="px-2 py-1 bg-red-300 text-red-700 rounded-lg w-52">{formErrors.cleaner}</p>}
+            {/*   {formErrors.cleaner && <p className="px-2 py-1 bg-red-300 text-red-700 rounded-lg w-52">{formErrors.cleaner}</p>} */}
             </div>
             <div className="flex flex-col space-y-2">
               <ul className="mt-2 items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
@@ -173,7 +137,7 @@ export default function KundSida():JSX.Element {
                   <Services key={option.id} option={option} formService={formData.service} setFormData={setFormData}/>    
                   ))}
               </ul>
-              {formErrors.service && <p className="px-2 py-1 bg-red-300 text-red-700 rounded-lg">{formErrors.service}</p>}
+              {/* {formErrors.service && <p className="px-2 py-1 bg-red-300 text-red-700 rounded-lg">{formErrors.service}</p>} */}
             </div>
           </div>
           <button type="submit" className="cursor-pointer bg-customDark text-white px-32 py-2 rounded-md hover:bg-customHoverDark duration-300 ease-in-out disabled:opacity-30 disabled:hover:bg-customDark disabled:cursor-auto">
@@ -182,8 +146,11 @@ export default function KundSida():JSX.Element {
         </form>
         <h2 className="text-3xl my-2 font-DM">Kommande bokningar</h2>
         {firebaseBookings.map((firebaseBooking) => (
-          <BookingPage key={firebaseBooking.id} firebaseBooking={firebaseBooking}/>
-        ))}
+          <div className="flex flex-row">
+            <BookingPage key={firebaseBooking.id} firebaseBooking={firebaseBooking}/>
+            <button onClick={() => deleteBooking(firebaseBooking.id)} className="ml-2 bg-customHoverDark rounded-lg hover:bg-customDark text-white duration-300 ease-in-out p-1 font-DM" >Ta bort</button>
+          </div>
+          ))}
       </div>
       </>
   );
@@ -195,25 +162,25 @@ export default function KundSida():JSX.Element {
 /*      {allBookings.map((one) => (
   <ComingBookings key={one.id} booking={one}/>
   ))}
-*/
-
-
-//Functions that submits all the values when submitted. this function is dependable of the onchanges on the inputs.
+  */
+ 
+ //Storing bookings
+ /*   const [booking, setBooking] = useState<Ibooking>({ selectedDate:formData.selectedDate, cleaner:"", time:"", service:"", status:false }) */
+ 
+ //Functions that submits all the values when submitted. this function is dependable of the onchanges on the inputs.
 /*   const [allBookings, setAllBookings] = useState<Ibooking[]>([]) */
 /*   const handleSubmit = (e:FormEvent) => {
   e.preventDefault()
   //destructuring the formData
   const { selectedDate, cleaner, time, service } = formData
   //Saving the written bookings in a new object
-  const newBooking:Ibooking = {
-    id:uuidv4(), 
-    name:savedName, 
-    selectedDate:selectedDate, 
-    cleaner:cleaner, 
-    time:time,
-    service:service, 
-    status:false 
-  }
+      const newBooking:Ibooking = {
+      selectedDate:selectedDate, 
+      cleaner:cleaner, 
+      time:time,
+      service:service, 
+      status:false 
+    }
   //updating the booking state with newbooking values
   if(time && cleaner && cleaner !== "Städare" && service){
     setBooking(newBooking)
