@@ -9,7 +9,7 @@ import Contact from "./LandingFolder/Contact";
 import ScrollToTop from "./ScrollToTop";
 import { UserAuthContextProvider } from "./UserAuthContext";
 import LogIn from "./LoginFolder/LogIn";
-
+import { ProtectedRoute } from "./LoginFolder/ProtectedRoute";
 function App() {
   return (
    
@@ -23,7 +23,7 @@ function App() {
             <Route path="/" element={<Landing />} />
             <Route path="/AboutUs" element={<AboutUs />} />
             <Route path="/Contact" element={<Contact />} />
-            <Route path="/KundSida" element={<KundSida />} />
+            <Route path="/KundSida"  element={<ProtectedRoute><KundSida /></ProtectedRoute>}  />
           </Routes>
         </UserAuthContextProvider>
       </ProductContextProvider>
