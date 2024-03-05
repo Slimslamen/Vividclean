@@ -4,6 +4,7 @@ import { ProductContext } from "../ProductContext";
 import React from "react";
 import { ContextType, RegisterUser } from "../types/types";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import UserAuthContext from "../UserAuthContext";
 
@@ -11,6 +12,10 @@ export default function Register(): JSX.Element {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  const { registerVisible,  handleMenuItemClick } = React.useContext(
+  ProductContext
+)! as ContextType;
 
   const { signUp } = React.useContext(
     UserAuthContext
@@ -33,10 +38,19 @@ export default function Register(): JSX.Element {
     }
   };
 
+  function handleHideRegister() {
+  handleMenuItemClick("Skapa nytt konto");
+  registerVisible(true);
+}
+
+if (!registerVisible) {
+  return null;
+}
+
   return (
     <div className="flex items-center justify-center">
-      <div className="bg-customBeige p-12">
-        <button className="bg-transparent border-none cursor-pointer ml-[100%]">
+      <div className="bg-customBeige p-12 rounded-3xl">
+        <button className="bg-transparent border-none cursor-pointer ml-[95%]" onClick={handleHideRegister}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
@@ -53,31 +67,31 @@ export default function Register(): JSX.Element {
           </svg>
         </button>
         <form
-          className="grid grid-cols-1 md:grid-cols-2 gap-2 w-96"
+          className="grid grid-cols-1 md:grid-cols-2 gap-2 w-96 m-5"
           onSubmit={handleSubmit}
         >
-          <div className="mb-2 block">
-            <Label htmlFor="email" value="E-post" />
+          <div className="mb-2 block font-DM">
+            <Label htmlFor="email" value="E-post:" className="text-xl"/>
           </div>
           <input
             type="email"
-            placeholder="Enter your email"
+            placeholder="E-post"
             onChange={(e) => setEmail(e.target.value)}
             required
-            
+            className="font-DM rounded p-2"
           />
 
-          <div className="mb-2 block">
-            <Label htmlFor="password" value="Lösenord" />
+          <div className="mb-2 block font-DM">
+            <Label htmlFor="password" value="Lösenord:" className="text-xl"/>
           </div>
           <input
             type="password"
-            placeholder="Password"
+            placeholder="Lösenord"
             onChange={(e) => setPassword(e.target.value)}
             required
-            
+            className="font-DM rounded p-2"
           />
-
+          <p className="font-DM">Har du redan ett konto? <Link to="/LogIn"><span className="text-customDark hover:underline">Logga in här</span></Link></p>
           <button
             type="submit"
             className="bg-customDark hover:bg-gray-700 rounded-lg text-white mb-10 p-2 flex items-center justify-center "
