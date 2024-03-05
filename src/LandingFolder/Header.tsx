@@ -6,7 +6,7 @@ export default function Header() {
   return (
     
     <div>
-      <LogIn/>
+
       <Register />
       <div className="relative">
         <img

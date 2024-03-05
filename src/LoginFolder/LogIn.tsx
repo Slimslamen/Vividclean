@@ -1,4 +1,4 @@
-import { Checkbox, Label, TextInput } from "flowbite-react";
+import { Label, TextInput } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 import { UserAuthContextProps } from "../types/types";
 import { UserAuthContext } from "../UserAuthContext";
@@ -6,6 +6,7 @@ import { useState, useContext } from "react";
 import React from "react";
 import { ProductContext } from "../ProductContext";
 import { ContextType } from "../types/types";
+import { Link } from "react-router-dom";
 
 export default function LogIn() {
   const [email, setEmail] = useState("");
@@ -17,7 +18,7 @@ export default function LogIn() {
 
   const navigate = useNavigate(); //navigate hook to navigate on the site
 
-  const handleGoogleSignIn = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleGoogleSignIn: React.MouseEventHandler<HTMLButtonElement> = async (e)=> {
     e.preventDefault();
     try {
       await googleSignIn();
@@ -31,7 +32,7 @@ export default function LogIn() {
     }
   };
 
-  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
     try {
@@ -64,7 +65,6 @@ export default function LogIn() {
 
   function handleHideLogin() {
     handleMenuItemClick("Min Profil");
-    setRememberMe(false); // Återställa eventuella värden när du döljer LogIn
     // Dölj LogIn genom att anropa saveUser med tomma värden
   }
 
@@ -76,10 +76,10 @@ export default function LogIn() {
       <div className="grid top-40 justify-center items-center right-0 left-0 z-50 md:inset-0 fixed">
         <form
           onSubmit={handleSubmit}
-          className="relative border grid grid-cols-1 gap-4 rounded-lg bg-customDark w-full max-w-md p-8 md:p-20"
+          className="relative border grid grid-cols-1 gap-4 rounded-lg bg-customBeige w-full max-w-md p-8 md:p-20"
         >
           <button
-            className="absolute top-0 right-0 bg-customBeige text-black hover:bg-customHover hover:text-slate-700 rounded-md p-1 font-semibold mt-2 mr-2"
+            className="absolute top-0 right-0 bg-customBeige text-black hover:bg-customHoverDark hover:text-slate-700 rounded-md p-1 font-semibold mt-2 mr-2"
             type="button"
             onClick={handleHideLogin}
           >
@@ -90,7 +90,7 @@ export default function LogIn() {
             />
           </button>
           <div>
-            <label htmlFor="email-address-icon" className="text-white" />
+            <Label value="Your email" className="text-black" />
             <TextInput
               id="email-address-icon"
               placeholder="Din email"
@@ -103,7 +103,7 @@ export default function LogIn() {
             <Label
               htmlFor="password1"
               value="Your password"
-              className="text-white"
+              className="text-black"
             />
             <TextInput
               id="password1"
@@ -113,17 +113,9 @@ export default function LogIn() {
               required
             />
           </div>
+      
           <div className="flex items-center gap-2">
-            <Checkbox
-              className="bg-customBeige"
-              id="remember"
-              checked={rememberMe}
-              onChange={() => setRememberMe(!rememberMe)}
-            />
-            <Label className="text-white" htmlFor="remember">
-              Kom ihåg mig
-            </Label>
-          </div>
+     
           <button
             onClick={handleGoogleSignIn}
             type="button"
@@ -142,14 +134,18 @@ export default function LogIn() {
                 clip-rule="evenodd"
               />
             </svg>
-            Sign in with Google
+            Logga in med Google
           </button>
+          </div>
+      
           <button
-            className="bg-customBeige text-dark hover:bg-customHover rounded-md p-2 font-semibold"
+            className="bg-customDark text-white hover:bg-customHoverDark rounded-md p-2 font-semibold"
             type="submit"
           >
             Logga in
           </button>
+
+          <p className="font-DM">Har du redan ett konto? <Link to="/Register"><span className="text-customDark hover:underline">Logga in här</span></Link></p>
         </form>
       </div>
     </main>
