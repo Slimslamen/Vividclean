@@ -50,6 +50,7 @@ if (!registerVisible) {
   return (
     <div className="flex items-center justify-center">
       <div className="bg-customBeige p-12 rounded-3xl">
+        <h1 className="font-DM text-2xl flex items-center justify-center">Skapa ett konto hos VividClean</h1>
         <button className="bg-transparent border-none cursor-pointer ml-[95%]" onClick={handleHideRegister}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -75,7 +76,7 @@ if (!registerVisible) {
           </div>
           <input
             type="email"
-            placeholder="E-post"
+            placeholder="vividclean@gmail.com"
             onChange={(e) => setEmail(e.target.value)}
             required
             className="font-DM rounded p-2"
@@ -91,10 +92,10 @@ if (!registerVisible) {
             required
             className="font-DM rounded p-2"
           />
-          <p className="font-DM">Har du redan ett konto? <Link to="/LogIn"><span className="text-customDark hover:underline">Logga in här</span></Link></p>
+          <p className="font-DM mt-5">Har du redan ett konto? <Link to="/LogIn"><span className="text-customDark hover:underline">Logga in här</span></Link></p>
           <button
             type="submit"
-            className="bg-customDark hover:bg-gray-700 rounded-lg text-white mb-10 p-2 flex items-center justify-center "
+            className="bg-customDark hover:bg-gray-700 rounded-lg text-white mb-10 p-2 flex items-center justify-center mt-5"
           >
             Skapa konto
           </button>
