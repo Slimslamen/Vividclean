@@ -26,7 +26,7 @@ const ProductContextProvider = ({ children }: ProductContextProviderProps) => {
 
 
   const handleMenuItemClick = (label: string) => {
-    if (label === "Min Profil") {
+    if (label === "Logga in") {
       setLoginVisible(!loginVisible); // Toggle visibility for login
     } else if (label === "Skapa nytt konto") {
       setRegisterVisible(!registerVisible); // Toggle visibility for register
@@ -41,6 +41,7 @@ const ProductContextProvider = ({ children }: ProductContextProviderProps) => {
     registerUser,
     registerVisible,
   };
+
 
 
   return (
