@@ -8,31 +8,27 @@ import AboutUs from "./InformationPages/AboutUs";
 import Contact from "./LandingFolder/Contact";
 import ScrollToTop from "./ScrollToTop";
 import { UserAuthContextProvider } from "./UserAuthContext";
+import LogIn from "./LoginFolder/LogIn";
 
 function App() {
-
- 
-
   return (
     <BrowserRouter>
-    <ScrollToTop />
-    <ProductContextProvider>
-      <UserAuthContextProvider>
-      <Navbar/>
-      <Routes> 
-      <Route path="/" element={<Landing />} />
-      <Route path="/AboutUs" element={<AboutUs />} />
-      <Route path="/Contact" element={<Contact />} />
-      <Route path="/KundSida" element={<KundSida />} />
-        
-        
-        </Routes>
+      <ScrollToTop />
+      <ProductContextProvider>
+        <UserAuthContextProvider>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/AboutUs" element={<AboutUs />} />
+            <Route path="/Contact" element={<Contact />} />
+            <Route path="/KundSida" element={<KundSida />} />
+            <Route path="/LogIn" element={<Landing />} />
+          </Routes>
         </UserAuthContextProvider>
-    </ProductContextProvider>
-    <Footer />
+      </ProductContextProvider>
+      <Footer />
     </BrowserRouter>
   );
 }
 
 export default App;
-
