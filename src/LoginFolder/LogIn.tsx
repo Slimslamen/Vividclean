@@ -37,6 +37,7 @@ export default function LogIn() {
     setError("");
     try {
       await logIn(email, password);
+      alert(`Välkommen ${email}!`)
       navigate("/KundSida");
     } catch (error: unknown) {
       if (error instanceof Error) {
