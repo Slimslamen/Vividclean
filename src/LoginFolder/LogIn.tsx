@@ -22,7 +22,7 @@ export default function LogIn() {
     e.preventDefault();
     try {
       await googleSignIn();
-      navigate("/Kundsida");
+      navigate("/KundSida");
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.log(error.message); // Du kan nu använda Error-metoder
@@ -64,8 +64,13 @@ export default function LogIn() {
   );
 
   function handleHideLogin() {
-    handleMenuItemClick("Min Profil");
+    handleMenuItemClick("Logga in");
     // Dölj LogIn genom att anropa saveUser med tomma värden
+  }
+
+  function AlreadyAUser() {
+    handleMenuItemClick("Skapa nytt konto")
+    handleMenuItemClick("Logga in")
   }
 
   if (!loginVisible) {
@@ -145,7 +150,7 @@ export default function LogIn() {
             Logga in
           </button>
 
-          <p className="font-DM">Har du redan ett konto? <Link to="/Register"><span className="text-customDark hover:underline">Logga in här</span></Link></p>
+          <p className="font-DM">Har du redan ett konto? <span onClick={AlreadyAUser} className="text-customDark hover:underline cursor-pointer">Logga in här</span></p>
         </form>
       </div>
     </main>

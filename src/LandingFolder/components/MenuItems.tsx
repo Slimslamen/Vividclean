@@ -85,16 +85,22 @@ export const menuItems: MenuItem[] = [
     ],
   },
   {
-    label: "Logga in",
+    label: "Konto",
     dropdownItems: [
       {
-        label: "Min Profil",
+        label: "Logga in",
         description: "Hantera din användarprofil",
         route: "",
       },
       {
         label: "Inställningar",
         description: "Anpassa dina kontoinställningar",
+        route: "",
+      },
+      {
+        label: "Logga ut",
+        description:
+          "Logga ut från ditt konto",
         route: "",
       },
       {
