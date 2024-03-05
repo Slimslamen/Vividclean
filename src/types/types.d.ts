@@ -62,3 +62,12 @@ export interface IformData {
   service: string;
 }
 
+export interface Ifirebase{
+  id: string;
+  name: string;
+  date: string;
+  cleaner: string;
+  time: string;
+  status: boolean;
+  service: string
+}

@@ -1,13 +1,13 @@
 import DatePicker from "react-datepicker";
-import { Ibooking } from "../types/types";
 import React, { FormEvent, useEffect, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import ComingBookings from "./components/ComingBookings";
 import Services from "./components/Services";
-import { Ioptions } from "../types/types";
-import { Icleaners } from "../types/types";
+import { Ioptions, Icleaners, ContextType, Ibooking, Ifirebase } from "../types/types";
 import { ProductContext } from "../ProductContext";
-import { ContextType } from "../types/types";
+import { db } from "../config/firebase";
+import { collection, getDocs, addDoc } from "firebase/firestore";
+import BookingPage from "./components/BookingPage";
 
 interface Ierrors {
   time:string
@@ -77,8 +77,24 @@ export default function KundSida():JSX.Element {
   const [booking, setBooking] = useState<Ibooking>({id:"", name:savedName, selectedDate:formData.selectedDate, cleaner:"", time:"", service:"", status:false })
   //state with all the bookings
   const [allBookings, setAllBookings] = useState<Ibooking[]>([])
+  const [firebaseBookings, setFirebaseBookings] = useState<Ifirebase[]>([])
   
+  const bookingsRef = collection(db, "bookings")
   
+  useEffect(() => {
+    const getBookings = async () => {
+      try {
+        const data = await getDocs(bookingsRef)
+        const filteredData: Ifirebase[] = data.docs.map((doc) => ({...doc.data(), id: doc.id}))         
+        setFirebaseBookings(filteredData)
+      } catch (error) {
+        console.log(error);
+        
+      }
+    }
+
+    getBookings()
+  }, [])
   //Functions that submits all the values when submitted. this function is dependable of the onchanges on the inputs.
   const handleSubmit = (e:FormEvent) => {
     e.preventDefault()
@@ -123,12 +139,21 @@ export default function KundSida():JSX.Element {
     return errors
   }
 
- 
+  const onSubmit = async() => {
+    try {
+      const { selectedDate, time, cleaner, service} = formData
+      await addDoc(bookingsRef, {date:selectedDate, time:time, cleaner:cleaner, service:service})
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const name = firebaseBookings.map((firebaseBooking) => firebaseBooking.name)
+
   return (
     <>
       <div className="bg-customBeige mx-auto w-full md:w-1/2 my-52 py-10 px-20 flex items-center justify-center flex-col space-y-10 rounded-md shadow-lg">
         <form className="flex items-center justify-center flex-col space-y-10" onSubmit={handleSubmit}>
-          <h1 className="text-5xl font-DM">{`${savedName}s`} bokningar</h1>
+          <h1 className="text-5xl font-DM">{`${name}s`} bokningar</h1>
           <div>
             <h2 className="text-3xl font-DM mb-5">Boka städning</h2>
             <div className="flex flex-row w-full justify-between">
@@ -162,10 +187,13 @@ export default function KundSida():JSX.Element {
           </button>
         </form>
         <h2 className="text-3xl my-2 font-DM">Kommande bokningar</h2>
-        {allBookings.map((one) => (
+        {firebaseBookings.map((firebaseBooking) => (
+          <BookingPage key={firebaseBooking.id} firebaseBooking={firebaseBooking}/>
+        ))}
+        {/*      {allBookings.map((one) => (
           <ComingBookings key={one.id} booking={one}/>
           ))}
-     
+      */}
       </div>
       </>
   );

@@ -42,6 +42,8 @@ interface UserAuthContextProps {
         const googleAuthProvider = new GoogleAuthProvider();
         await signInWithPopup(auth, googleAuthProvider);
       }
+
+    
   
     const FireBaseValues: UserAuthContextProps = {
         user, logIn, signUp, logOut, googleSignIn,
