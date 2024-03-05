@@ -5,45 +5,38 @@ import React from "react";
 import { ContextType, RegisterUser } from "../types/types";
 import { useNavigate } from "react-router-dom";
 
-
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import UserAuthContext from "../UserAuthContext"
-import { auth } from "../config/firebase";
-
-const { signUp } = React.useContext(UserAuthContext)! as UserAuthContextProps;
+import UserAuthContext from "../UserAuthContext";
 
 export default function Register(): JSX.Element {
-  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const { signUp } = React.useContext(
+    UserAuthContext
+  )! as UserAuthContextProps;
   
+  const navigate = useNavigate();
 
-  const onSubmit = async (e: { preventDefault: () => void; }) => {
+  const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-
-    await createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        console.log(user);
-        window.alert("successfully registered");
-        window.location.replace("http://localhost:5173/Login");
-        // ...
-      })
-      .catch((error) => {
-        const errorMessage = error.message;
-        window.alert(errorMessage);
-        // ..
-      });
+    setError("");
+    try {
+      await signUp(email, password);
+      navigate("/LogIn");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.log(error.message); // Du kan nu använda Error-metoder
+      } else {
+        console.error("Ett okänt fel inträffade:", error);
+      }
+    }
   };
 
   return (
     <div className="flex items-center justify-center">
       <div className="bg-customBeige p-12">
-        <button
-          
-          className="bg-transparent border-none cursor-pointer ml-[100%]"
-        >
+        <button className="bg-transparent border-none cursor-pointer ml-[100%]">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
@@ -61,7 +54,7 @@ export default function Register(): JSX.Element {
         </button>
         <form
           className="grid grid-cols-1 md:grid-cols-2 gap-2 w-96"
-          onSubmit={onSubmit}
+          onSubmit={handleSubmit}
         >
           <div className="mb-2 block">
             <Label htmlFor="email" value="E-post" />
@@ -71,7 +64,7 @@ export default function Register(): JSX.Element {
             placeholder="Enter your email"
             onChange={(e) => setEmail(e.target.value)}
             required
-            value={email}
+            
           />
 
           <div className="mb-2 block">
@@ -82,7 +75,7 @@ export default function Register(): JSX.Element {
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
             required
-            value={email}
+            
           />
 
           <button
@@ -97,97 +90,95 @@ export default function Register(): JSX.Element {
   );
 }
 
-
-
 // const { registerVisible,  handleMenuItemClick } = React.useContext(
-  //   ProductContext
-  // )! as ContextType;
+//   ProductContext
+// )! as ContextType;
 
-  // const [registerUser, setRegisterUser] = useState<RegisterUser>({
-  //   id: "",
-  //   firstname: "",
-  //   lastname: "",
-  //   adress: "",
-  //   postalcode: "",
-  //   city: "",
-  //   phonenumber: "",
-  //   email: "",
-  //   password: "",
-  //   repeatpassword: "",
-  // });
+// const [registerUser, setRegisterUser] = useState<RegisterUser>({
+//   id: "",
+//   firstname: "",
+//   lastname: "",
+//   adress: "",
+//   postalcode: "",
+//   city: "",
+//   phonenumber: "",
+//   email: "",
+//   password: "",
+//   repeatpassword: "",
+// });
 
-  // const navigate = useNavigate();
+// const navigate = useNavigate();
 
-  // const [error, setError] = useState<string>("");
+// const [error, setError] = useState<string>("");
 
-  // const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setRegisterUser({ ...registerUser, password: e.target.value });
-  // };
+// const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//   setRegisterUser({ ...registerUser, password: e.target.value });
+// };
 
-  // const handleRepeatPasswordChange = (
-  //   e: React.ChangeEvent<HTMLInputElement>
-  // ) => {
-  //   const repeatPasswordValue = e.target.value;
-  //   setRegisterUser({ ...registerUser, repeatpassword: repeatPasswordValue });
-  //   if (registerUser.password !== repeatPasswordValue) {
-  //     setError("Lösenorden matchar inte.");
-  //     return; // Avbryt vidare hantering om lösenorden inte matchar
-  //   }
-  // };
+// const handleRepeatPasswordChange = (
+//   e: React.ChangeEvent<HTMLInputElement>
+// ) => {
+//   const repeatPasswordValue = e.target.value;
+//   setRegisterUser({ ...registerUser, repeatpassword: repeatPasswordValue });
+//   if (registerUser.password !== repeatPasswordValue) {
+//     setError("Lösenorden matchar inte.");
+//     return; // Avbryt vidare hantering om lösenorden inte matchar
+//   }
+// };
 
-  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
+// const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+//   e.preventDefault();
 
-  //   // Validera att alla fält är ifyllda
-  //   if (
-  //     !registerUser.firstname ||
-  //     !registerUser.lastname ||
-  //     !registerUser.adress ||
-  //     !registerUser.postalcode ||
-  //     !registerUser.city ||
-  //     !registerUser.phonenumber ||
-  //     !registerUser.email ||
-  //     !registerUser.password ||
-  //     !registerUser.repeatpassword
-  //   ) {
-  //     setError("Fyll i alla fält.");
-  //     return;
-  //   }
+//   // Validera att alla fält är ifyllda
+//   if (
+//     !registerUser.firstname ||
+//     !registerUser.lastname ||
+//     !registerUser.adress ||
+//     !registerUser.postalcode ||
+//     !registerUser.city ||
+//     !registerUser.phonenumber ||
+//     !registerUser.email ||
+//     !registerUser.password ||
+//     !registerUser.repeatpassword
+//   ) {
+//     setError("Fyll i alla fält.");
+//     return;
+//   }
 
-  //   // Validera e-postadress
-  //   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  //   if (!emailPattern.test(registerUser.email)) {
-  //     setError("Vänligen fyll i en giltig e-postadress.");
-  //     return;
-  //   }
+//   // Validera e-postadress
+//   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+//   if (!emailPattern.test(registerUser.email)) {
+//     setError("Vänligen fyll i en giltig e-postadress.");
+//     return;
+//   }
 
-  //   // Validera att lösenorden matchar
-  //   if (registerUser.password !== registerUser.repeatpassword) {
-  //     setError("Lösenorden matchar inte.");
-  //     return;
-  //   }
+//   // Validera att lösenorden matchar
+//   if (registerUser.password !== registerUser.repeatpassword) {
+//     setError("Lösenorden matchar inte.");
+//     return;
+//   }
 
-  //   // Validera postnummer och telefonnummer som siffror
-  //   const numericPattern = /^\d+$/;
-  //   if (!numericPattern.test(registerUser.postalcode)) {
-  //     setError("Postnummer måste vara siffror.");
-  //     return;
-  //   }
-  //   if (!numericPattern.test(registerUser.phonenumber)) {
-  //     setError("Telefonnummer måste vara siffror.");
-  //     return;
-  //   }
+//   // Validera postnummer och telefonnummer som siffror
+//   const numericPattern = /^\d+$/;
+//   if (!numericPattern.test(registerUser.postalcode)) {
+//     setError("Postnummer måste vara siffror.");
+//     return;
+//   }
+//   if (!numericPattern.test(registerUser.phonenumber)) {
+//     setError("Telefonnummer måste vara siffror.");
+//     return;
+//   }
 
-  //   // Om allt är validerat korrekt, rensa felmeddelandet och navigera till KundSidan
-  //   navigate("/KundSida");
+//   // Om allt är validerat korrekt, rensa felmeddelandet och navigera till KundSidan
+//   navigate("/KundSida");
 
-  // };
+// };
 
-  // function handleHideRegister() {
-  //   handleMenuItemClick("Skapa nytt konto");
-  //   registerVisible(true);
-  // }
+// function handleHideRegister() {
+//   handleMenuItemClick("Skapa nytt konto");
+//   registerVisible(true);
+// }
 
-  // if (!registerVisible) {
-  //   return null;
-  // }
+// if (!registerVisible) {
+//   return null;
+// }
