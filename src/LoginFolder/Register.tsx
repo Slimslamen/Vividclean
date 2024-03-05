@@ -27,8 +27,12 @@ export default function Register(): JSX.Element {
     e.preventDefault();
     setError("");
     try {
+      // Registers the user with the email and password
       await signUp(email, password);
+      // If the registration is successful, navigate the user to the login page
       navigate("/LogIn");
+
+    // Handles errors that may happen during registration
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.log(error.message); // Du kan nu använda Error-metoder
@@ -38,11 +42,12 @@ export default function Register(): JSX.Element {
     }
   };
 
+
+  // function to close the register form 
   function handleHideRegister() {
   handleMenuItemClick("Skapa nytt konto");
   registerVisible(true);
 }
-
 if (!registerVisible) {
   return null;
 }
@@ -50,8 +55,8 @@ if (!registerVisible) {
   return (
     <div className="flex items-center justify-center">
       <div className="bg-customBeige p-12 rounded-3xl">
-        <h1 className="font-DM text-2xl flex items-center justify-center">Skapa ett konto hos VividClean</h1>
-        <button className="bg-transparent border-none cursor-pointer ml-[95%]" onClick={handleHideRegister}>
+        <h1 className="font-DM text-2xl flex items-center justify-center border-b border-black mb-4">Skapa ett konto hos VividClean</h1>
+        <button className="bg-transparent border-none cursor-pointer ml-[95%] transform hover:scale-110 transition duration-300 ease-in-out" onClick={handleHideRegister}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
