@@ -94,9 +94,9 @@ export default function KundSida():JSX.Element {
     }
   }
   
-  const deleteBooking =  (id:string) => {
+  const deleteBooking =  async(id:string) => {
     const bookingDoc = doc(db, "bookings", id)
-     deleteDoc(bookingDoc)
+    await deleteDoc(bookingDoc)
      setReRender(!reRender)
   }
 
