@@ -39,7 +39,7 @@ export type UserAuthContextProps = {
 export interface Ibooking {
   id: string;
   name: string;
-  date: Date;
+  selectedDate: Date;
   cleaner: string;
   time: string;
   service: string;
@@ -61,3 +61,4 @@ export interface IformData {
   cleaner: string;
   service: string;
 }
+

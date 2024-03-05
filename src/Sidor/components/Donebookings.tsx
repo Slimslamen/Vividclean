@@ -1,19 +1,22 @@
 import { Ibooking } from "../../types/types"
 
-
 interface Iprop{
   booking: Ibooking;
 }
-export default function Donebookings({booking}:Iprop):JSX.Element {
+
+export default function ComingBookings({booking}:Iprop):JSX.Element {
+//destructuring the booking state to access all the different types
+  const { service, time, selectedDate, cleaner, name } = booking
+
   return (
-    <div className="w-full">
+  <div className="w-full">
     <div className="flex flex-row space-x-2 w-full px-5 py-2 bg-customDark text-white text-xl rounded-lg items-center justify-between font-DM">
-      <input type="checkbox" className="size-4" checked={false} />
-      <h2>Sofia</h2>
-      <h3>{booking.service}</h3>
-      <h3>{booking.time}</h3>
-      <h3>{booking.date ? `${booking.date.getMonth()}/${booking.date.getDate()}/${booking.date.getFullYear()}`: null}</h3>
-      <h2>{booking.cleaner}</h2>
+      {/* <input type="checkbox" className="size-4" checked={false} /> */}
+      <h2>{name}</h2>
+      <h3>{service}</h3>
+      <h3>{time}</h3>
+      <h3>{selectedDate ? `${selectedDate.getMonth()}/${selectedDate.getDate()}/${selectedDate.getFullYear()}`: null}</h3>
+      <h2>{cleaner}</h2>
     </div>
   </div>
   )
