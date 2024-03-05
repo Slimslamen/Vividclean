@@ -15,8 +15,9 @@ function App() {
    
     <BrowserRouter>
       <ScrollToTop /> 
+      <UserAuthContextProvider>
       <ProductContextProvider>
-        <UserAuthContextProvider>
+        
         <LogIn />
           <Navbar />
           <Routes>
@@ -26,8 +27,9 @@ function App() {
             {/* <Route path="/KundSida"  element={<ProtectedRoute><KundSida /></ProtectedRoute>}  /> */}
             <Route path="/KundSida"  element={<KundSida />}  />
           </Routes>
-        </UserAuthContextProvider>
+      
       </ProductContextProvider>
+      </UserAuthContextProvider>
       <Footer />
     </BrowserRouter>
   );

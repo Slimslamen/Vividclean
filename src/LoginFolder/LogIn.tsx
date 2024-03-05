@@ -6,7 +6,7 @@ import { useState, useContext } from "react";
 import React from "react";
 import { ProductContext } from "../ProductContext";
 import { ContextType } from "../types/types";
-import { Link } from "react-router-dom";
+
 
 export default function LogIn() {
   const [email, setEmail] = useState("");
@@ -47,6 +47,7 @@ export default function LogIn() {
       }
     }
   };
+
 
   const { loginVisible, handleMenuItemClick } = React.useContext(
     ProductContext
