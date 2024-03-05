@@ -90,7 +90,7 @@ export const menuItems: MenuItem[] = [
       {
         label: "Min Profil",
         description: "Hantera din användarprofil",
-        route: "",
+        route: "/LogIn",
       },
       {
         label: "Inställningar",
