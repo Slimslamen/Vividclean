@@ -2,6 +2,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 
+
 interface FirebaseConfig {
   apiKey: string;
   authDomain: string;

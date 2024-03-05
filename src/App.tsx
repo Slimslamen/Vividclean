@@ -10,6 +10,7 @@ import ScrollToTop from "./ScrollToTop";
 import { UserAuthContextProvider } from "./UserAuthContext";
 import LogIn from "./LoginFolder/LogIn";
 import { ProtectedRoute } from "./LoginFolder/ProtectedRoute";
+import AdminLogin from "./LoginFolder/AdminLogin";
 function App() {
   return (
    
@@ -18,6 +19,7 @@ function App() {
       <ProductContextProvider>
         <UserAuthContextProvider>
         <LogIn />
+        <AdminLogin />
           <Navbar />
           <Routes>
             <Route path="/" element={<Landing />} />
