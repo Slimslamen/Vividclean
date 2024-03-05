@@ -74,11 +74,9 @@ export default function KundSida():JSX.Element {
   //State to handle the form data
   const [formData, setFormData] = useState({selectedDate:new Date(), time:"", cleaner:"", service:""})
   //Storing bookings
-  const [booking, setBooking] = useState<Ibooking>({id:"", name:savedName, selectedDate:new Date(), cleaner:"", time:"", service:"", status:false })
+  const [booking, setBooking] = useState<Ibooking>({id:"", name:savedName, selectedDate:formData.selectedDate, cleaner:"", time:"", service:"", status:false })
   //state with all the bookings
   const [allBookings, setAllBookings] = useState<Ibooking[]>([])
-  //state for disabling button if one of the inputs dont have a value
-  const [goodToGo, setgoodToGo] = useState<boolean>(false)
   
   
   //Functions that submits all the values when submitted. this function is dependable of the onchanges on the inputs.
@@ -97,19 +95,21 @@ export default function KundSida():JSX.Element {
       status:false 
     }
     //updating the booking state with newbooking values
-    setBooking(newBooking)
-    //updating the booking array with a new object
-    setAllBookings(prev => [...prev, newBooking])
+    if(time && cleaner && cleaner !== "Städare" && service){
+      setBooking(newBooking)
+      //updating the booking array with a new object
+      setAllBookings(prev => [...prev, newBooking])
+    }
+    
     //passing handleErrors to the formErrors state that I use in the JSX
     const Errors = handleErrors()
     setFormErrors(Errors)
-    
     
   }  
   //validating the form
   const handleErrors = () => {
     const errors:Ierrors = {date:"",time:"", cleaner:"", service:""}
-    const { time, cleaner, service, selectedDate} = booking
+    const { time, cleaner, service} = booking
 
     if(!time){
       errors.time = "Välj en tid"
@@ -120,20 +120,8 @@ export default function KundSida():JSX.Element {
     if(!service){
       errors.service = "Välj en tjänst"
     }  
-    if(selectedDate === new Date()){
-      errors.date = "Välj ett annat datum"
-    }
     return errors
   }
-  //rendering everytime the formdata updates. When all the 3 variables have a value the goodToGo becomes true and enables the submit button
-  useEffect(() => {
-    const { time, cleaner, service } = formData;
-    if (time && cleaner && cleaner !== "Städare" && service) {
-      setgoodToGo(true);
-    } else {
-      setgoodToGo(false);
-    }
-  }, [formData]);
 
  
   return (
@@ -146,7 +134,6 @@ export default function KundSida():JSX.Element {
             <div className="flex flex-row w-full justify-between">
               <div className="w-full flex flex-col items-start space-y-2">
                 <DatePicker onChange={(date: Date) => setFormData(prev => ({ ...prev, selectedDate:date }))} filterDate={date => { return date.getDay() !== 0 && date.getDay() !== 6}}/* Disable weekends (Saturday and Sunday) */ minDate={new Date()} selected={formData.selectedDate} />
-                {formErrors.date && <p className="px-2 py-1 bg-red-300 text-red-700 rounded-lg">{formErrors.date}</p>}
               </div>
               <div className="w-full flex flex-col items-end space-y-2">
                 <input onChange={e => setFormData(prev => ({...prev, time:e.target.value}))} value={formData.time} id="time" type="time" min='08:00' max= '15:00' step="3600" className="p-1 rounded-lg w-5/12" />
@@ -170,7 +157,7 @@ export default function KundSida():JSX.Element {
               {formErrors.service && <p className="px-2 py-1 bg-red-300 text-red-700 rounded-lg">{formErrors.service}</p>}
             </div>
           </div>
-          <button type="submit" disabled={!goodToGo} className="cursor-pointer bg-customDark text-white px-32 py-2 rounded-md hover:bg-customHoverDark duration-300 ease-in-out disabled:opacity-30 disabled:hover:bg-customDark disabled:cursor-auto">
+          <button type="submit" className="cursor-pointer bg-customDark text-white px-32 py-2 rounded-md hover:bg-customHoverDark duration-300 ease-in-out disabled:opacity-30 disabled:hover:bg-customDark disabled:cursor-auto">
             Boka nu
           </button>
         </form>
