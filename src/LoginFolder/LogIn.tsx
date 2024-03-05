@@ -145,7 +145,7 @@ export default function LogIn() {
             Logga in
           </button>
 
-          <p className="font-DM">Har du redan ett konto? <Link to="/Register"><span className="text-blue">Logga in här</span></Link></p>
+          <p className="font-DM">Har du redan ett konto? <Link to="/Register"><span className="text-customDark hover:underline">Logga in här</span></Link></p>
         </form>
       </div>
     </main>

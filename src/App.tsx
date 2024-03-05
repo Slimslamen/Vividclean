@@ -12,17 +12,18 @@ import LogIn from "./LoginFolder/LogIn";
 
 function App() {
   return (
+   
     <BrowserRouter>
-      <ScrollToTop />
+      <ScrollToTop /> 
       <ProductContextProvider>
         <UserAuthContextProvider>
+        <LogIn />
           <Navbar />
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/AboutUs" element={<AboutUs />} />
             <Route path="/Contact" element={<Contact />} />
             <Route path="/KundSida" element={<KundSida />} />
-            <Route path="/LogIn" element={<Landing />} />
           </Routes>
         </UserAuthContextProvider>
       </ProductContextProvider>
