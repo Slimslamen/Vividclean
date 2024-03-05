@@ -37,9 +37,8 @@ export type UserAuthContextProps = {
 
 //Interface for kundsida component
 export interface Ibooking {
-  id: string;
   name: string;
-  selectedDate: Date;
+  selectedDate: date;
   cleaner: string;
   time: string;
   service: string;
@@ -65,7 +64,7 @@ export interface IformData {
 export interface Ifirebase{
   id: string;
   name: string;
-  date: string;
+  date: date;
   cleaner: string;
   time: string;
   status: boolean;
