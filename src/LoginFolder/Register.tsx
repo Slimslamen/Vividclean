@@ -4,7 +4,6 @@ import { ProductContext } from "../ProductContext";
 import React from "react";
 import { ContextType, RegisterUser } from "../types/types";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 
 import UserAuthContext from "../UserAuthContext";
 
@@ -42,11 +41,14 @@ export default function Register(): JSX.Element {
     }
   };
 
+  function NavigateLogIn() {
+    handleMenuItemClick("Min profil");
+    handleMenuItemClick("Skapa nytt konto");
+  };
 
   // function to close the register form 
   function handleHideRegister() {
   handleMenuItemClick("Skapa nytt konto");
-  registerVisible(true);
 }
 if (!registerVisible) {
   return null;
@@ -97,7 +99,7 @@ if (!registerVisible) {
             required
             className="font-DM rounded p-2"
           />
-          <p className="font-DM mt-5">Har du redan ett konto? <Link to="/LogIn"><span className="text-customDark hover:underline">Logga in här</span></Link></p>
+          <p className="font-DM mt-5">Har du redan ett konto? <span className="text-customDark hover:underline" onClick={NavigateLogIn}>Logga in här</span></p>
           <button
             type="submit"
             className="bg-customDark hover:bg-gray-700 rounded-lg text-white mb-10 p-2 flex items-center justify-center mt-5"
