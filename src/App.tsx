@@ -11,6 +11,7 @@ import { UserAuthContextProvider } from "./UserAuthContext";
 import LogIn from "./LoginFolder/LogIn";
 import { ProtectedRoute } from "./LoginFolder/ProtectedRoute";
 import AdminLogin from "./LoginFolder/AdminLogin";
+import PersonalSida from "./Sidor/PersonalSida";
 function App() {
   return (
    
@@ -33,6 +34,7 @@ function App() {
       </ProductContextProvider>
       </UserAuthContextProvider>
       <Footer />
+      <PersonalSida />
     </BrowserRouter>
   );
 }
