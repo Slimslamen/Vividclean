@@ -68,14 +68,14 @@ export default function KundSida():JSX.Element {
   const [Bookings, setBookings] = useState<Ibooking[]>([])
   const [reRender, setReRender] = useState<boolean>(false)
   
-  
+    
   
   const bookingsRef = collection(db, "bookings")
   
   const getBookings = async () => {
     try {
       const data = await getDocs(bookingsRef)
-      const filteredData: Ibooking[] = data.docs.map((doc) => ({...doc.data(), id: doc.id}))         
+      const filteredData:Ibooking[] = data.docs.map((doc) => ({...doc.data(), id: doc.id}))         
       setBookings(filteredData)
       
     } catch (error) {
@@ -116,9 +116,11 @@ export default function KundSida():JSX.Element {
             <div className="flex flex-col md:flex-row w-full justify-between space-y-4 md:space-y-0">
               <div className="w-full flex flex-col items-start space-y-2">
                 <DatePicker onChange={(date:Date) => setFormData(prev => ({ ...prev, selectedDate:date }))} filterDate={date => { return date.getDay() !== 0 && date.getDay() !== 6}}/* Disable weekends (Saturday and Sunday) */ minDate={new Date()} selected={formData.selectedDate} />
+                <p className="px-2 py-1 bg-customDark text-white rounded-lg">Välj datum</p>
               </div>
               <div className="w-full flex flex-col md:items-end space-y-2">
                 <input onChange={e => setFormData(prev => ({...prev, time:e.target.value}))} value={formData.time} id="time" type="time" min='08:00' max= '15:00' step="3600" className="p-1 rounded-lg w-5/12" />
+                <p className="px-2 py-1 bg-customDark text-white rounded-lg">Välj tid</p>
            {/*      {formErrors.time && <p className="px-2 py-1 bg-red-300 text-red-700 rounded-lg">{formErrors.time}</p>} */}
               </div>
             </div>
@@ -128,6 +130,7 @@ export default function KundSida():JSX.Element {
                   <option key={clean.id} value={clean.value}>{clean.name}</option>
                   ))}
               </select>
+              <p className="px-2 py-1 bg-customDark text-white rounded-lg w-52">Välj en städare</p>
             {/*   {formErrors.cleaner && <p className="px-2 py-1 bg-red-300 text-red-700 rounded-lg w-52">{formErrors.cleaner}</p>} */}
             </div>
             <div className="flex flex-col space-y-2">
@@ -136,6 +139,7 @@ export default function KundSida():JSX.Element {
                   <Services key={option.id} option={option} formService={formData.service} setFormData={setFormData}/>    
                   ))}
               </ul>
+              <p className="px-2 py-1 bg-customDark text-white rounded-lg">Välj en tjänst</p>
               {/* {formErrors.service && <p className="px-2 py-1 bg-red-300 text-red-700 rounded-lg">{formErrors.service}</p>} */}
             </div>
           </div>
@@ -146,7 +150,7 @@ export default function KundSida():JSX.Element {
         <h2 className="text-3xl my-2 font-DM">Kommande bokningar</h2>
         {Bookings.map((booking) => (
           <div className="flex flex-row w-full">
-            <BookingPage key={booking.id} booking={booking}/>
+            <BookingPage key={booking.id} booking={booking} />
             <button onClick={() => deleteBooking(booking.id)} className="ml-2 bg-customHoverDark rounded-lg hover:bg-customDark text-white duration-300 ease-in-out p-1 font-DM" >Ta bort bokning</button>
           </div>
           ))}
