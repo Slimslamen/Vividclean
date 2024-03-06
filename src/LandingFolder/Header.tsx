@@ -1,13 +1,12 @@
 import React from "react";
-import LogIn from "../LoginFolder/LogIn";
-import Register from "../LoginFolder/Register";
+
 
 export default function Header() {
   return (
     
     <div>
 
-      <Register />
+   
       <div className="relative">
         <img
           className="w-full h-auto object-cover opacity-60"
@@ -32,7 +31,7 @@ export default function Header() {
                 />
                 <label
                   htmlFor="filled-checkbox"
-                  className="font-bold font-DM flex items-center cursor-not-allowed"
+                  className="font-bold font-DM flex items-center "
                 >
                   <span className="w-6 h-6 bg-green-500 rounded-md flex justify-center items-center mr-2">
                     <svg
@@ -54,7 +53,7 @@ export default function Header() {
                 />
                 <label
                   htmlFor="filled-checkbox"
-                  className="font-bold font-DM flex items-center cursor-not-allowed"
+                  className="font-bold font-DM flex items-center"
                 >
                   <span className="w-6 h-6 bg-green-500 rounded-md flex justify-center items-center mr-2">
                     <svg
@@ -76,7 +75,7 @@ export default function Header() {
                 />
                 <label
                   htmlFor="filled-checkbox"
-                  className="font-bold font-DM flex items-center cursor-not-allowed"
+                  className="font-bold font-DM flex items-center"
                 >
                   <span className="w-6 h-6 bg-green-500 rounded-md flex justify-center items-center mr-2">
                     <svg
@@ -99,7 +98,7 @@ export default function Header() {
                   />
                   <label
                     htmlFor="filled-checkbox"
-                    className="flex items-center cursor-not-allowed font-DM font-bold"
+                    className="flex items-center font-DM font-bold"
                   >
                     <span className="w-6 h-6 bg-green-500 rounded-md flex justify-center items-center mr-2">
                       <svg
