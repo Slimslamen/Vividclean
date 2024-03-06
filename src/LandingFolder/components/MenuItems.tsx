@@ -115,6 +115,12 @@ export const menuItems: MenuItem[] = [
           "Skapa konto för smidig tillgång till städtjänster och erbjudanden",
         route: "",
       },
+      {
+        label: "Personalsida",
+        description:
+          "Sida för personalen att kunna se sina bokningar",
+        route: "",
+      },
     ],
   },
 ];

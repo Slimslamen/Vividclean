@@ -1,9 +1,14 @@
 import React, { createContext, useState, ReactNode } from "react";
 import { ContextType, User, RegisterUser } from "./types/types";
 import { v4 as getId } from "uuid";
+import { UserAuthContextProps } from "./types/types";
+import { UserAuthContext } from "./UserAuthContext";
+import { auth } from "./config/firebase";
+
 
 
 const ProductContext = createContext<ContextType | null>(null);
+
 
 interface ProductContextProviderProps {
   children: ReactNode;
@@ -16,6 +21,10 @@ const ProductContextProvider = ({ children }: ProductContextProviderProps) => {
   const [adminVisible, setAdminVisible] = useState(false);
 
   const [registerVisible, setRegisterVisible] = useState(false);
+
+  const { logOut } = React.useContext(
+    UserAuthContext
+  )! as UserAuthContextProps;
 
   const saveUser = (username: string, password: string) => {
     const newUser: User = {

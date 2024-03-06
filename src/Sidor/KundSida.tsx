@@ -1,20 +1,12 @@
 import DatePicker from "react-datepicker";
-import { Ibooking } from "../types/types";
 import React, { FormEvent, useEffect, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
-import ComingBookings from "./components/ComingBookings";
 import Services from "./components/Services";
-import { Ioptions } from "../types/types";
-import { Icleaners } from "../types/types";
-import { ProductContext } from "../ProductContext";
-import { ContextType } from "../types/types";
-
-interface Ierrors {
-  time:string
-  cleaner: string;
-  service:string;
-  date: string;
-}
+import { Ioptions, Icleaners, UserAuthContextProps, IformData, Ibooking } from "../types/types";
+import { db } from "../config/firebase";
+import { collection, getDocs, addDoc, deleteDoc, doc } from "firebase/firestore";
+import BookingPage from "./components/BookingPage";
+import UserAuthContext from "../UserAuthContext";
 
 const options: Ioptions[] = [
   {
@@ -66,78 +58,68 @@ const cleaners:Icleaners[] = [
   }
 ]
 export default function KundSida():JSX.Element {
-  //getting the saved username from productcontext
-  const { user } = React.useContext(ProductContext) as ContextType;
-  const savedName = user.username
-  //state for the text the variables
-  const [formErrors, setFormErrors] = useState<Ierrors>({date:"", time:"", cleaner:"", service:""})
-  //State to handle the form data
-  const [formData, setFormData] = useState({selectedDate:new Date(), time:"", cleaner:"", service:""})
-  //Storing bookings
-  const [booking, setBooking] = useState<Ibooking>({id:"", name:savedName, selectedDate:formData.selectedDate, cleaner:"", time:"", service:"", status:false })
-  //state with all the bookings
-  const [allBookings, setAllBookings] = useState<Ibooking[]>([])
-  
-  
-  //Functions that submits all the values when submitted. this function is dependable of the onchanges on the inputs.
-  const handleSubmit = (e:FormEvent) => {
-    e.preventDefault()
-    //destructuring the formData
-    const { selectedDate, cleaner, time, service } = formData
-    //Saving the written bookings in a new object
-    const newBooking:Ibooking = {
-      id:uuidv4(), 
-      name:savedName, 
-      selectedDate:selectedDate, 
-      cleaner:cleaner, 
-      time:time,
-      service:service, 
-      status:false 
-    }
-    //updating the booking state with newbooking values
-    if(time && cleaner && cleaner !== "Städare" && service){
-      setBooking(newBooking)
-      //updating the booking array with a new object
-      setAllBookings(prev => [...prev, newBooking])
-    }
-    
-    //passing handleErrors to the formErrors state that I use in the JSX
-    const Errors = handleErrors()
-    setFormErrors(Errors)
-    
-  }  
-  //validating the form
-  const handleErrors = () => {
-    const errors:Ierrors = {date:"",time:"", cleaner:"", service:""}
-    const { time, cleaner, service} = booking
 
-    if(!time){
-      errors.time = "Välj en tid"
+  const { logIn } = React.useContext(UserAuthContext)! as UserAuthContextProps;
+
+
+  //State to handle the form data
+  const [formData, setFormData] = useState<IformData>({selectedDate:"", time:"", cleaner:"", service:""})
+  //state with all the bookings
+  const [Bookings, setBookings] = useState<Ibooking[]>([])
+  const [reRender, setReRender] = useState<boolean>(false)
+  
+  
+  
+  const bookingsRef = collection(db, "bookings")
+  
+  const getBookings = async () => {
+    try {
+      const data = await getDocs(bookingsRef)
+      const filteredData: Ibooking[] = data.docs.map((doc) => ({...doc.data(), id: doc.id}))         
+      setBookings(filteredData)
+      
+    } catch (error) {
+      console.log(error);
     }
-    if(!cleaner || cleaner === "Städare"){
-      errors.cleaner = "Välj en städare"
+  }
+  const onSubmit = async(e:FormEvent) => {
+    e.preventDefault()
+    try {
+      const { selectedDate ,time, cleaner, service} = formData
+      await addDoc(bookingsRef, {date:selectedDate , time:time, cleaner:cleaner, service:service, status:status})
+      getBookings()
+    } catch (error) {
+      console.log(error);
     }
-    if(!service){
-      errors.service = "Välj en tjänst"
-    }  
-    return errors
+  }
+  
+  const deleteBooking =  async(id:string) => {
+    const bookingDoc = doc(db, "bookings", id)
+    await deleteDoc(bookingDoc)
+     setReRender(!reRender)
   }
 
- 
+  useEffect(() => {
+    getBookings()
+  }, [reRender])
+  
+  
+
+  
   return (
     <>
       <div className="bg-customBeige mx-auto w-full md:w-1/2 my-52 py-10 px-20 flex items-center justify-center flex-col space-y-10 rounded-md shadow-lg">
-        <form className="flex items-center justify-center flex-col space-y-10" onSubmit={handleSubmit}>
-          <h1 className="text-5xl font-DM">{`${savedName}s`} bokningar</h1>
+        <form className="flex items-center justify-center flex-col space-y-10" onSubmit={onSubmit}>
+          <h1 className="text-5xl font-DM">{`Jimmys`} bokningar</h1>
           <div>
             <h2 className="text-3xl font-DM mb-5">Boka städning</h2>
-            <div className="flex flex-row w-full justify-between">
+            <div className="flex flex-col md:flex-row w-full justify-between space-y-4 md:space-y-0">
               <div className="w-full flex flex-col items-start space-y-2">
-                <DatePicker onChange={(date: Date) => setFormData(prev => ({ ...prev, selectedDate:date }))} filterDate={date => { return date.getDay() !== 0 && date.getDay() !== 6}}/* Disable weekends (Saturday and Sunday) */ minDate={new Date()} selected={formData.selectedDate} />
+                <DatePicker onChange={(date:Date) => setFormData(prev => ({ ...prev, selectedDate:date }))} filterDate={date => { return date.getDay() !== 0 && date.getDay() !== 6}}/* Disable weekends (Saturday and Sunday) */ minDate={new Date()} selected={formData.selectedDate} />
               </div>
-              <div className="w-full flex flex-col items-end space-y-2">
+              <div className="w-full flex flex-col md:items-end space-y-2">
                 <input onChange={e => setFormData(prev => ({...prev, time:e.target.value}))} value={formData.time} id="time" type="time" min='08:00' max= '15:00' step="3600" className="p-1 rounded-lg w-5/12" />
-                {formErrors.time && <p className="px-2 py-1 bg-red-300 text-red-700 rounded-lg">{formErrors.time}</p>}
+           {/*      {formErrors.time && <p className="px-2 py-1 bg-red-300 text-red-700 rounded-lg">{formErrors.time}</p>} */}
               </div>
             </div>
             <div className="flex flex-col space-y-2 my-9">
@@ -146,7 +128,7 @@ export default function KundSida():JSX.Element {
                   <option key={clean.id} value={clean.value}>{clean.name}</option>
                   ))}
               </select>
-              {formErrors.cleaner && <p className="px-2 py-1 bg-red-300 text-red-700 rounded-lg w-52">{formErrors.cleaner}</p>}
+            {/*   {formErrors.cleaner && <p className="px-2 py-1 bg-red-300 text-red-700 rounded-lg w-52">{formErrors.cleaner}</p>} */}
             </div>
             <div className="flex flex-col space-y-2">
               <ul className="mt-2 items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
@@ -154,7 +136,7 @@ export default function KundSida():JSX.Element {
                   <Services key={option.id} option={option} formService={formData.service} setFormData={setFormData}/>    
                   ))}
               </ul>
-              {formErrors.service && <p className="px-2 py-1 bg-red-300 text-red-700 rounded-lg">{formErrors.service}</p>}
+              {/* {formErrors.service && <p className="px-2 py-1 bg-red-300 text-red-700 rounded-lg">{formErrors.service}</p>} */}
             </div>
           </div>
           <button type="submit" className="cursor-pointer bg-customDark text-white px-32 py-2 rounded-md hover:bg-customHoverDark duration-300 ease-in-out disabled:opacity-30 disabled:hover:bg-customDark disabled:cursor-auto">
@@ -162,11 +144,17 @@ export default function KundSida():JSX.Element {
           </button>
         </form>
         <h2 className="text-3xl my-2 font-DM">Kommande bokningar</h2>
-        {allBookings.map((one) => (
-          <ComingBookings key={one.id} booking={one}/>
+        {Bookings.map((booking) => (
+          <div className="flex flex-row w-full">
+            <BookingPage key={booking.id} booking={booking}/>
+            <button onClick={() => deleteBooking(booking.id)} className="ml-2 bg-customHoverDark rounded-lg hover:bg-customDark text-white duration-300 ease-in-out p-1 font-DM" >Ta bort bokning</button>
+          </div>
           ))}
-     
       </div>
       </>
   );
 }
+
+
+
+

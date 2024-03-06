@@ -1,22 +1,4 @@
 // types.ts
-export interface User {
-  id: string;
-  username: string;
-  password: string;
-}
-
-export interface RegisterUser {
-  id: string;
-  firstname: string;
-  lastname: string;
-  adress: string;
-  postalcode: string;
-  city: string;
-  phonenumber: string;
-  email: string;
-  password: string;
-  repeatpassword: string;
-}
 
 export type ContextType = {
   saveUser: (username: string, password: string) => void; // to save a new user
@@ -37,15 +19,7 @@ export type UserAuthContextProps = {
 };
 
 //Interface for kundsida component
-export interface Ibooking {
-  id: string;
-  name: string;
-  selectedDate: Date;
-  cleaner: string;
-  time: string;
-  service: string;
-  status: boolean;
-}
+
 export interface Ioptions {
   id: number;
   service: string;
@@ -57,9 +31,18 @@ export interface Icleaners {
   name: string;
 }
 export interface IformData {
-  date: Date;
+  selectedDate: date;
   time: string;
   cleaner: string;
   service: string;
 }
 
+export interface Ibooking{
+  id: string;
+  name: string;
+  date: date;
+  cleaner: string;
+  time: string;
+  status: boolean;
+  service: string
+}
