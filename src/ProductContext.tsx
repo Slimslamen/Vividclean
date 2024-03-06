@@ -44,7 +44,9 @@ const ProductContextProvider = ({ children }: ProductContextProviderProps) => {
     }
     else if (label === "Medarbetar Portal") {
       setAdminVisible(!adminVisible); // Toggle visibility for admin
-    }
+    } else if (label === "Logga ut")
+    logOut();
+    console.log(auth?.currentUser?.email)
   };
 
   const LoginValue: ContextType = {
