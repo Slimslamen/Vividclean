@@ -12,11 +12,12 @@ import { doc, setDoc } from 'firebase/firestore';
 interface UserAuthContextProps {
     user: any; // Replace 'any' with the actual type of your user object
     logIn: (email: string, password: string) => Promise<void>;
-    signUp: (email: string, username:string, password: string) => void;
+    signUp: (email: string, name:string, password: string) => void;
     logOut: () => void;
     googleSignIn: () => Promise<void>;
     name:string;
     setName: React.Dispatch<React.SetStateAction<string>>;
+    handleName: (name:string) => Promise<void>;
   }
 
   export const UserAuthContext = createContext<UserAuthContextProps | undefined>(undefined);
@@ -30,6 +31,9 @@ interface UserAuthContextProps {
   
     async function logIn(email: string, password: string):Promise<void> {
       await signInWithEmailAndPassword(auth, email, password);
+    }
+    async function handleName(name:string){
+       await name 
     }
 
     const [name, setName] = useState<string>("");
@@ -56,7 +60,6 @@ interface UserAuthContextProps {
           throw error; // Throw the error to continue handling it in the component
         });
     }
-  
     function logOut() {
       return signOut(auth);
     }
@@ -69,7 +72,7 @@ interface UserAuthContextProps {
     
   
     const FireBaseValues: UserAuthContextProps = {
-        user, logIn, signUp, logOut, googleSignIn, name, setName
+        user, logIn, signUp, logOut, googleSignIn, name, setName, handleName
       };
     return (
       <UserAuthContext.Provider

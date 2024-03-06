@@ -2,10 +2,11 @@ import DatePicker from "react-datepicker";
 import React, { FormEvent, useEffect, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import Services from "./components/Services";
-import { Ioptions, Icleaners, IformData, Ibooking } from "../types/types";
+import { Ioptions, Icleaners, IformData, Ibooking, UserAuthContextProps } from "../types/types";
 import { db } from "../config/firebase";
-import { collection, getDocs, addDoc, deleteDoc, doc } from "firebase/firestore";
+import { collection, getDocs, addDoc, deleteDoc, doc, getFirestore, getDoc } from "firebase/firestore";
 import BookingPage from "./components/BookingPage";
+import UserAuthContext from "../UserAuthContext";
 
 const options: Ioptions[] = [
   {
@@ -57,16 +58,17 @@ const cleaners:Icleaners[] = [
   }
 ]
 export default function KundSida():JSX.Element {
-
   
-
+  const { handleName } = React.useContext(UserAuthContext)! as UserAuthContextProps
+  
+  const placeHolderDates = new Date().toLocaleDateString()
   //State to handle the form data
   const [formData, setFormData] = useState<IformData>({selectedDate:"", time:"", cleaner:"", service:""})
   //state with all the bookings
   const [Bookings, setBookings] = useState<Ibooking[]>([])
   const [reRender, setReRender] = useState<boolean>(false)
   
-    
+  const selectedName = handleName()
   
   const bookingsRef = collection(db, "bookings")
   
@@ -86,6 +88,7 @@ export default function KundSida():JSX.Element {
       const { selectedDate ,time, cleaner, service} = formData
       await addDoc(bookingsRef, {date:selectedDate , time:time, cleaner:cleaner, service:service, status:status})
       getBookings()
+      setFormData({selectedDate:"", time:"", cleaner:cleaners[0].name, service:""})
     } catch (error) {
       console.log(error);
     }
@@ -102,7 +105,6 @@ export default function KundSida():JSX.Element {
   }, [reRender])
   
   
-
   
   return (
     <>
@@ -113,13 +115,12 @@ export default function KundSida():JSX.Element {
             <h2 className="text-3xl font-DM mb-5">Boka städning</h2>
             <div className="flex flex-col md:flex-row w-full justify-between space-y-4 md:space-y-0">
               <div className="w-full flex flex-col items-start space-y-2">
-                <DatePicker onChange={(date:Date) => setFormData(prev => ({ ...prev, selectedDate:date }))} filterDate={date => { return date.getDay() !== 0 && date.getDay() !== 6}}/* Disable weekends (Saturday and Sunday) */ minDate={new Date()} selected={formData.selectedDate} />
+                <DatePicker onChange={(date:Date) => setFormData(prev => ({ ...prev, selectedDate:date }))} placeholderText={placeHolderDates} filterDate={date => { return date.getDay() !== 0 && date.getDay() !== 6}}/* Disable weekends (Saturday and Sunday) */ minDate={new Date()} selected={formData.selectedDate} />
                 <p className="px-2 py-1 bg-customDark text-white rounded-lg">Välj datum</p>
               </div>
               <div className="w-full flex flex-col md:items-end space-y-2">
                 <input onChange={e => setFormData(prev => ({...prev, time:e.target.value}))} value={formData.time} id="time" type="time" min='08:00' max= '15:00' step="3600" className="p-1 rounded-lg w-5/12" />
                 <p className="px-2 py-1 bg-customDark text-white rounded-lg">Välj tid</p>
-           {/*      {formErrors.time && <p className="px-2 py-1 bg-red-300 text-red-700 rounded-lg">{formErrors.time}</p>} */}
               </div>
             </div>
             <div className="flex flex-col space-y-2 my-9">
@@ -129,7 +130,6 @@ export default function KundSida():JSX.Element {
                   ))}
               </select>
               <p className="px-2 py-1 bg-customDark text-white rounded-lg w-52">Välj en städare</p>
-            {/*   {formErrors.cleaner && <p className="px-2 py-1 bg-red-300 text-red-700 rounded-lg w-52">{formErrors.cleaner}</p>} */}
             </div>
             <div className="flex flex-col space-y-2">
               <ul className="mt-2 items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
@@ -138,7 +138,6 @@ export default function KundSida():JSX.Element {
                   ))}
               </ul>
               <p className="px-2 py-1 bg-customDark text-white rounded-lg">Välj en tjänst</p>
-              {/* {formErrors.service && <p className="px-2 py-1 bg-red-300 text-red-700 rounded-lg">{formErrors.service}</p>} */}
             </div>
           </div>
           <button type="submit" className="cursor-pointer bg-customDark text-white px-32 py-2 rounded-md hover:bg-customHoverDark duration-300 ease-in-out disabled:opacity-30 disabled:hover:bg-customDark disabled:cursor-auto">

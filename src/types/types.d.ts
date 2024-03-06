@@ -13,11 +13,12 @@ export type ContextType = {
 export type UserAuthContextProps = {
   googleSignIn: () => Promise<void>;
   logOut: () => void;
-  signUp: (email: string, username:string, password: string) => Promise<void>;
+  signUp: (email: string, name:string, password: string) => Promise<void>;
   logIn: (email: string, password: string) => Promise<void>;
   user: any;
   name:string;
   setName: React.Dispatch<React.SetStateAction<string>>;
+  handleName: (name:string) => Promise<void>;
 };
 
 //Interface for kundsida component

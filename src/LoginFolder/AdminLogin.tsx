@@ -3,8 +3,9 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { Label, TextInput } from "flowbite-react";
 import { ProductContext } from "../ProductContext";
-import { ContextType } from "../types/types";
+import { ContextType, UserAuthContextProps } from "../types/types";
 import React from "react";
+import UserAuthContext from "../UserAuthContext";
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
@@ -13,7 +14,7 @@ const AdminLogin = () => {
   const { adminVisible, handleMenuItemClick } = React.useContext(
     ProductContext
   )! as ContextType;
-
+  const { handleName } = React.useContext(UserAuthContext)! as UserAuthContextProps
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -27,6 +28,8 @@ const AdminLogin = () => {
       // Hämta användarens dokument från Firestore baserat på e-postadressen
       const userQuery = doc(firestore, "users", email);
       const userDocSnap = await getDoc(userQuery);
+      const userName = userDocSnap.data()?.name
+      await handleName(userName)
 
       if (userDocSnap.exists()) {
         // Kontrollera användarrollen
@@ -46,6 +49,7 @@ const AdminLogin = () => {
       setError(error.message);
     }
   };
+
   const usernameIcon = (
     <svg
       className="w-4 h-4 text-customDark dark:text-gray-400"
