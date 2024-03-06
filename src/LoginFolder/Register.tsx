@@ -41,6 +41,7 @@ export default function Register(): JSX.Element {
     }
   };
 
+  // function to navigate to login page when registers new account
   function NavigateLogIn() {
     handleMenuItemClick("Logga in");
     handleMenuItemClick("Skapa nytt konto");

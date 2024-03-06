@@ -15,8 +15,8 @@ interface ProductContextProviderProps {
 }
 
 const ProductContextProvider = ({ children }: ProductContextProviderProps) => {
-  // const [user, setUser] = useState<User>({ id: "", username: "", password: "" });
-  // const [registerUser, setRegisterUser] = useState<RegisterUser>({ id: "", firstname: "", lastname: "", adress: "", postalcode: "", city: "", phonenumber: "" , email: "", password: "", repeatpassword: "", });
+  const [user, setUser] = useState<User>({ id: "", username: "", password: "" });
+  const [registerUser, setRegisterUser] = useState<RegisterUser>({ id: "", firstname: "", lastname: "", adress: "", postalcode: "", city: "", phonenumber: "" , email: "", password: "", repeatpassword: "", });
   const [loginVisible, setLoginVisible] = useState(false);
   const [registerVisible, setRegisterVisible] = useState(false);
 
@@ -24,14 +24,14 @@ const ProductContextProvider = ({ children }: ProductContextProviderProps) => {
     UserAuthContext
   )! as UserAuthContextProps;
 
-  // const saveUser = (username: string, password: string) => {
-  //   const newUser: User = {
-  //     id: getId(),
-  //     username,
-  //     password,
-  //   };
-  //   setUser(newUser);
-  // };
+  const saveUser = (username: string, password: string) => {
+    const newUser: User = {
+      id: getId(),
+      username,
+      password,
+    };
+    setUser(newUser);
+  };
 
 
   const handleMenuItemClick = (label: string) => {
@@ -45,11 +45,11 @@ const ProductContextProvider = ({ children }: ProductContextProviderProps) => {
   };
 
   const LoginValue: ContextType = {
-    // saveUser,
-    // user,
+    saveUser,
+    user,
     handleMenuItemClick,
     loginVisible,
-    // registerUser,
+    registerUser,
     registerVisible,
   };
 
