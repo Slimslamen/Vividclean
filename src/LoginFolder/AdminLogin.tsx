@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { Label, TextInput } from "flowbite-react";
@@ -36,7 +36,7 @@ const AdminLogin = (): JSX.Element => {
           // Om användaren har rollen 'employee', logga in användaren
           console.log("User logged in as employee");
           alert(`Inloggad som medarbetare ${email}`);
-        } else if (userRole === "user") {
+        } else if (userRole === "customer") {
           setError("Du har inte rätt behörighet att logga in.");
         } else {
           setError("Användaren hittades inte");
@@ -65,7 +65,7 @@ const AdminLogin = (): JSX.Element => {
   function NavigateUserLogIn() {
     handleMenuItemClick("Logga in");
     handleMenuItemClick("Medarbetar Portal");
-  };
+  }
 
   if (!adminVisible) {
     return null;
