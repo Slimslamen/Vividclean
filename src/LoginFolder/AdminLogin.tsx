@@ -6,7 +6,7 @@ import { ProductContext } from "../ProductContext";
 import { ContextType } from "../types/types";
 import React from "react";
 
-const AdminLogin = (): JSX.Element => {
+const AdminLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);

@@ -11,28 +11,32 @@ import { UserAuthContextProvider } from "./UserAuthContext";
 import LogIn from "./LoginFolder/LogIn";
 import { ProtectedRoute } from "./LoginFolder/ProtectedRoute";
 import AdminLogin from "./LoginFolder/AdminLogin";
+import React from "react";
+import BackgroundOpacity from "./LandingFolder/components/BackgroundOpacity";
+import Register from "./LoginFolder/Register";
+
 function App() {
   return (
-   
     <BrowserRouter>
-      <ScrollToTop /> 
+      <ScrollToTop />
       <UserAuthContextProvider>
-      <ProductContextProvider>
-        
+        <ProductContextProvider>
         <LogIn />
-        <AdminLogin />
+          <AdminLogin />
+          <Register />
+          <BackgroundOpacity>   
           <Navbar />
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/AboutUs" element={<AboutUs />} />
             <Route path="/Contact" element={<Contact />} />
             {/* <Route path="/KundSida"  element={<ProtectedRoute><KundSida /></ProtectedRoute>}  /> */}
-            <Route path="/KundSida"  element={<KundSida />}  />
+            <Route path="/KundSida" element={<KundSida />} />
           </Routes>
-      
-      </ProductContextProvider>
+          <Footer />
+          </BackgroundOpacity>
+        </ProductContextProvider>
       </UserAuthContextProvider>
-      <Footer />
     </BrowserRouter>
   );
 }
