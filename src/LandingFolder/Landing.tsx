@@ -4,20 +4,15 @@ import { ProductContext } from "../ProductContext";
 import { ContextType } from "../types/types";
 import React from "react";
 
+export default function Landing(): JSX.Element {
+  const { loginVisible, registerVisible, adminVisible } = React.useContext(
+    ProductContext
+  )! as ContextType;
 
-export default function Landing():JSX.Element {
-  const { loginVisible, registerVisible, adminVisible } = React.useContext(ProductContext)! as ContextType;
   return (
     <>
-      <div className={` ${!loginVisible ? "" : "bg-black bg-opacity-80 z-10"}`}>
-      <div className={` ${!registerVisible ? "" : "bg-black bg-opacity-80 z-10"}`}>
-      <div className={` ${!adminVisible ? "" : "bg-black bg-opacity-80 z-10"}`}>
-     
-        <Header />
-        <Main />
-        </div>
-        </div>
-        </div>
+      <Header />
+      <Main />
     </>
   );
 }

@@ -7,7 +7,7 @@ import { ContextType, UserAuthContextProps } from "../types/types";
 
 import UserAuthContext from "../UserAuthContext";
 
-export default function Register(): JSX.Element {
+export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");

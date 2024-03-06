@@ -5,26 +5,36 @@ import { UserAuthContextProps } from "./types/types";
 import { UserAuthContext } from "./UserAuthContext";
 import { auth } from "./config/firebase";
 
-
-
 const ProductContext = createContext<ContextType | null>(null);
-
 
 interface ProductContextProviderProps {
   children: ReactNode;
 }
 
 const ProductContextProvider = ({ children }: ProductContextProviderProps) => {
-  const [user, setUser] = useState<User>({ id: "", username: "", password: "" });
-  const [registerUser, setRegisterUser] = useState<RegisterUser>({ id: "", firstname: "", lastname: "", adress: "", postalcode: "", city: "", phonenumber: "" , email: "", password: "", repeatpassword: "", });
+  const [user, setUser] = useState<User>({
+    id: "",
+    username: "",
+    password: "",
+  });
+  const [registerUser, setRegisterUser] = useState<RegisterUser>({
+    id: "",
+    firstname: "",
+    lastname: "",
+    adress: "",
+    postalcode: "",
+    city: "",
+    phonenumber: "",
+    email: "",
+    password: "",
+    repeatpassword: "",
+  });
   const [loginVisible, setLoginVisible] = useState(false);
   const [adminVisible, setAdminVisible] = useState(false);
 
   const [registerVisible, setRegisterVisible] = useState(false);
 
-  const { logOut } = React.useContext(
-    UserAuthContext
-  )! as UserAuthContextProps;
+  const { logOut } = React.useContext(UserAuthContext)! as UserAuthContextProps;
 
   const saveUser = (username: string, password: string) => {
     const newUser: User = {
@@ -35,18 +45,34 @@ const ProductContextProvider = ({ children }: ProductContextProviderProps) => {
     setUser(newUser);
   };
 
-
   const handleMenuItemClick = (label: string) => {
+    console.log(
+      "Before update - adminVisible:",
+      adminVisible,
+      "loginVisible",
+      loginVisible
+    );
+
     if (label === "Logga in") {
-      setLoginVisible(!loginVisible); // Toggle visibility for login
-    } else if (label === "Skapa nytt konto") {
-      setRegisterVisible(!registerVisible); // Toggle visibility for register
+      setLoginVisible(!loginVisible);
     }
-    else if (label === "Medarbetar Portal") {
-      setAdminVisible(!adminVisible); // Toggle visibility for admin
-    } else if (label === "Logga ut")
-    logOut();
-    console.log(auth?.currentUser?.email)
+    if (label === "Skapa nytt konto") {
+      setRegisterVisible(!registerVisible);
+    }
+    if (label === "Medarbetar Portal") {
+      setAdminVisible(!adminVisible);
+    }
+    if (label === "Logga ut") {
+      logOut();
+    }
+
+    console.log(
+      "After update - adminVisible:",
+      adminVisible,
+      "loginVisible",
+      loginVisible
+    );
+    console.log(auth?.currentUser?.email);
   };
 
   const LoginValue: ContextType = {
@@ -56,10 +82,8 @@ const ProductContextProvider = ({ children }: ProductContextProviderProps) => {
     loginVisible,
     registerUser,
     registerVisible,
-    adminVisible
+    adminVisible,
   };
-
-
 
   return (
     <ProductContext.Provider value={LoginValue}>
