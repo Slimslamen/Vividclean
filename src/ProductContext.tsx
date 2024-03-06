@@ -18,6 +18,8 @@ const ProductContextProvider = ({ children }: ProductContextProviderProps) => {
   const [user, setUser] = useState<User>({ id: "", username: "", password: "" });
   const [registerUser, setRegisterUser] = useState<RegisterUser>({ id: "", firstname: "", lastname: "", adress: "", postalcode: "", city: "", phonenumber: "" , email: "", password: "", repeatpassword: "", });
   const [loginVisible, setLoginVisible] = useState(false);
+  const [adminVisible, setAdminVisible] = useState(false);
+
   const [registerVisible, setRegisterVisible] = useState(false);
 
   const { logOut } = React.useContext(
@@ -39,6 +41,9 @@ const ProductContextProvider = ({ children }: ProductContextProviderProps) => {
       setLoginVisible(!loginVisible); // Toggle visibility for login
     } else if (label === "Skapa nytt konto") {
       setRegisterVisible(!registerVisible); // Toggle visibility for register
+    }
+    else if (label === "Medarbetar Portal") {
+      setAdminVisible(!adminVisible); // Toggle visibility for admin
     } else if (label === "Logga ut")
     logOut();
     console.log(auth?.currentUser?.email)
@@ -51,6 +56,7 @@ const ProductContextProvider = ({ children }: ProductContextProviderProps) => {
     loginVisible,
     registerUser,
     registerVisible,
+    adminVisible
   };
 
 

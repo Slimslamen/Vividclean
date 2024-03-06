@@ -104,6 +104,12 @@ export const menuItems: MenuItem[] = [
         route: "",
       },
       {
+        label: "Medarbetar Portal",
+        description:
+          "Logga in genom medarbetarportalen",
+        route: "",
+      },
+      {
         label: "Skapa nytt konto",
         description:
           "Skapa konto för smidig tillgång till städtjänster och erbjudanden",

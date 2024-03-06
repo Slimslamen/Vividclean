@@ -6,7 +6,8 @@ export type ContextType = {
   handleMenuItemClick: (label: string) => void;
   loginVisible: boolean;
   registerUser: RegisterUser;
-  registerVisible: booelan;
+  registerVisible: boolean;
+  adminVisible: boolean;
 };
 
 export type UserAuthContextProps = {

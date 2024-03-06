@@ -39,12 +39,12 @@ interface UserAuthContextProps {
       return createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
            // Retrieves the user's unique ID from the user credential object
-          const userId = userCredential.user.uid;
-           // Create a reference to the user document in Firestore
-          const userDocRef = doc(db, 'users', userId);
+          const selectedEmail = userCredential.user.email;
+          //  Create a reference to the user document in Firestore
+          const userDocRef = doc(db, 'users', email);
           
           // Set the user document data with the role field as 'user' and merge with existing data if any
-          return setDoc(userDocRef, { role: 'user' }, { merge: true }); 
+          return setDoc(userDocRef, { role: 'customer' }, { merge: true }); 
         })
         .catch((error) => {
            // Handle registration errors here
