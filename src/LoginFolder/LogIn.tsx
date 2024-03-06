@@ -10,8 +10,8 @@ import { ContextType } from "../types/types";
 
 export default function LogIn() {
   const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const { googleSignIn, logIn } = React.useContext(
     UserAuthContext
   )! as UserAuthContextProps;
