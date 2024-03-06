@@ -10,8 +10,8 @@ import { ContextType } from "../types/types";
 
 export default function LogIn() {
   const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const { googleSignIn, logIn } = React.useContext(
     UserAuthContext
   )! as UserAuthContextProps;
@@ -152,7 +152,7 @@ export default function LogIn() {
             Logga in
           </button>
 
-          <p className="font-DM">Har du redan ett konto? <span onClick={AlreadyAUser} className="text-customDark hover:underline cursor-pointer">Logga in här</span></p>
+          <p className="font-DM">Har du inget konto? <span onClick={AlreadyAUser} className="text-customDark hover:underline cursor-pointer">Skapa konto här</span></p>
         </form>
       </div>
     </main>

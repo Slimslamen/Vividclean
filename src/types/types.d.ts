@@ -6,7 +6,8 @@ export type ContextType = {
   handleMenuItemClick: (label: string) => void;
   loginVisible: boolean;
   registerUser: RegisterUser;
-  registerVisible: booelan;
+  registerVisible: boolean;
+  adminVisible: boolean;
 };
 
 export type UserAuthContextProps = {
@@ -18,13 +19,7 @@ export type UserAuthContextProps = {
 };
 
 //Interface for kundsida component
-export interface Ibooking {
-  selectedDate: date;
-  cleaner: string;
-  time: string;
-  service: string;
-  status: boolean;
-}
+
 export interface Ioptions {
   id: number;
   service: string;
@@ -36,13 +31,13 @@ export interface Icleaners {
   name: string;
 }
 export interface IformData {
-  date: Date;
+  selectedDate: date;
   time: string;
   cleaner: string;
   service: string;
 }
 
-export interface Ifirebase{
+export interface Ibooking{
   id: string;
   name: string;
   date: date;
