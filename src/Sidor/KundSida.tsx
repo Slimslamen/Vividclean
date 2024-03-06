@@ -2,11 +2,10 @@ import DatePicker from "react-datepicker";
 import React, { FormEvent, useEffect, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import Services from "./components/Services";
-import { Ioptions, Icleaners, UserAuthContextProps, IformData, Ibooking } from "../types/types";
+import { Ioptions, Icleaners, IformData, Ibooking } from "../types/types";
 import { db } from "../config/firebase";
 import { collection, getDocs, addDoc, deleteDoc, doc } from "firebase/firestore";
 import BookingPage from "./components/BookingPage";
-import UserAuthContext from "../UserAuthContext";
 
 const options: Ioptions[] = [
   {
@@ -59,8 +58,7 @@ const cleaners:Icleaners[] = [
 ]
 export default function KundSida():JSX.Element {
 
-  const { logIn } = React.useContext(UserAuthContext)! as UserAuthContextProps;
-
+  
 
   //State to handle the form data
   const [formData, setFormData] = useState<IformData>({selectedDate:"", time:"", cleaner:"", service:""})
@@ -110,7 +108,7 @@ export default function KundSida():JSX.Element {
     <>
       <div className="bg-customBeige mx-auto w-full md:w-1/2 my-52 py-10 px-20 flex items-center justify-center flex-col space-y-10 rounded-md shadow-lg">
         <form className="flex items-center justify-center flex-col space-y-10" onSubmit={onSubmit}>
-          <h1 className="text-5xl font-DM">{`Jimmys`} bokningar</h1>
+          <h1 className="text-5xl font-DM">{`s`} bokningar</h1>
           <div>
             <h2 className="text-3xl font-DM mb-5">Boka städning</h2>
             <div className="flex flex-col md:flex-row w-full justify-between space-y-4 md:space-y-0">

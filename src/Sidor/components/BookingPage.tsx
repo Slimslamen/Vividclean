@@ -6,7 +6,7 @@ interface Iprop{
 
 export default function BookingPage({ booking }:Iprop):JSX.Element {
     const { name, service, time, date, cleaner } = booking
-    const shownDate = date.toDate().toLocaleDateString()
+    const shownDate = date.toDate().toLocaleString()
 
 
     return (

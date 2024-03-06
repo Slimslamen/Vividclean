@@ -12,9 +12,11 @@ import { doc, setDoc } from 'firebase/firestore';
 interface UserAuthContextProps {
     user: any; // Replace 'any' with the actual type of your user object
     logIn: (email: string, password: string) => Promise<void>;
-    signUp: (email: string, password: string) => void;
+    signUp: (email: string, username:string, password: string) => void;
     logOut: () => void;
     googleSignIn: () => Promise<void>;
+    name:string;
+    setName: React.Dispatch<React.SetStateAction<string>>;
   }
 
   export const UserAuthContext = createContext<UserAuthContextProps | undefined>(undefined);
@@ -29,12 +31,14 @@ interface UserAuthContextProps {
     async function logIn(email: string, password: string):Promise<void> {
       await signInWithEmailAndPassword(auth, email, password);
     }
+
+    const [name, setName] = useState<string>("");
   
     // async function signUp(email: string, password: string):Promise<void> {
     //   await createUserWithEmailAndPassword(auth, email, password);
     // }
 
-    async function signUp(email: string, password: string): Promise<void> {
+    async function signUp(email: string, name:string, password: string): Promise<void> {
        // Register user with email and password using Firebase authentication
       return createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
@@ -44,7 +48,7 @@ interface UserAuthContextProps {
           const userDocRef = doc(db, 'users', email);
           
           // Set the user document data with the role field as 'user' and merge with existing data if any
-          return setDoc(userDocRef, { role: 'customer' }, { merge: true }); 
+          return setDoc(userDocRef, { role: 'customer', username: name }, { merge: true }); 
         })
         .catch((error) => {
            // Handle registration errors here
@@ -65,7 +69,7 @@ interface UserAuthContextProps {
     
   
     const FireBaseValues: UserAuthContextProps = {
-        user, logIn, signUp, logOut, googleSignIn,
+        user, logIn, signUp, logOut, googleSignIn, name, setName
       };
     return (
       <UserAuthContext.Provider
