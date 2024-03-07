@@ -28,8 +28,6 @@ const AdminLogin = () => {
       // Hämta användarens dokument från Firestore baserat på e-postadressen
       const userQuery = doc(firestore, "users", email);
       const userDocSnap = await getDoc(userQuery);
-      const userName = userDocSnap.data()?.name
-      await handleName(userName)
 
       if (userDocSnap.exists()) {
         // Kontrollera användarrollen
@@ -49,7 +47,6 @@ const AdminLogin = () => {
       setError(error.message);
     }
   };
-
   const usernameIcon = (
     <svg
       className="w-4 h-4 text-customDark dark:text-gray-400"

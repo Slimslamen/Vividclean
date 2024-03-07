@@ -1,10 +1,10 @@
 import DatePicker from "react-datepicker";
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { FormEvent, useEffect, useId, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import Services from "./components/Services";
 import { Ioptions, Icleaners, IformData, Ibooking, UserAuthContextProps } from "../types/types";
 import { db } from "../config/firebase";
-import { collection, getDocs, addDoc, deleteDoc, doc, getFirestore, getDoc } from "firebase/firestore";
+import { collection, getDocs, addDoc, deleteDoc, doc, } from "firebase/firestore";
 import BookingPage from "./components/BookingPage";
 import UserAuthContext from "../UserAuthContext";
 
@@ -59,7 +59,10 @@ const cleaners:Icleaners[] = [
 ]
 export default function KundSida():JSX.Element {
   
-  const { handleName } = React.useContext(UserAuthContext)! as UserAuthContextProps
+  const { name, email } = React.useContext(
+    UserAuthContext
+  )! as UserAuthContextProps;
+
   
   const placeHolderDates = new Date().toLocaleDateString()
   //State to handle the form data
@@ -68,9 +71,8 @@ export default function KundSida():JSX.Element {
   const [Bookings, setBookings] = useState<Ibooking[]>([])
   const [reRender, setReRender] = useState<boolean>(false)
   
-  const selectedName = handleName()
   
-  const bookingsRef = collection(db, "bookings")
+  const bookingsRef = collection(db, "users", email, "booking")
   
   const getBookings = async () => {
     try {
@@ -95,9 +97,11 @@ export default function KundSida():JSX.Element {
   }
   
   const deleteBooking =  async(id:string) => {
-    const bookingDoc = doc(db, "bookings", id)
+    const bookingDoc = doc(db, "users", email, "booking", id)
     await deleteDoc(bookingDoc)
      setReRender(!reRender)
+     console.log(id);
+     
   }
 
   useEffect(() => {
@@ -110,7 +114,7 @@ export default function KundSida():JSX.Element {
     <>
       <div className="bg-customBeige mx-auto w-full md:w-1/2 my-52 py-10 px-20 flex items-center justify-center flex-col space-y-10 rounded-md shadow-lg">
         <form className="flex items-center justify-center flex-col space-y-10" onSubmit={onSubmit}>
-          <h1 className="text-5xl font-DM">{`s`} bokningar</h1>
+          <h1 className="text-5xl font-DM">{`${name}s`} bokningar</h1>
           <div>
             <h2 className="text-3xl font-DM mb-5">Boka städning</h2>
             <div className="flex flex-col md:flex-row w-full justify-between space-y-4 md:space-y-0">

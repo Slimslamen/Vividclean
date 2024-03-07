@@ -12,6 +12,8 @@ interface ProductContextProviderProps {
 }
 
 const ProductContextProvider = ({ children }: ProductContextProviderProps) => {
+
+  
   const [user, setUser] = useState<User>({
     id: "",
     username: "",

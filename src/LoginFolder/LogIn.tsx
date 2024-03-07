@@ -6,13 +6,15 @@ import { useState, useContext } from "react";
 import React from "react";
 import { ProductContext } from "../ProductContext";
 import { ContextType } from "../types/types";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
 
 
 export default function LogIn() {
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { googleSignIn, logIn } = React.useContext(
+  
+  
+  const { googleSignIn, logIn, setName, setEmail, email } = React.useContext(
     UserAuthContext
   )! as UserAuthContextProps;
 
@@ -37,6 +39,14 @@ export default function LogIn() {
     setError("");
     try {
       await logIn(email, password);
+
+      const firestore = getFirestore();
+      const userQuery = doc(firestore, "users", email);
+      const userDocSnap = await getDoc(userQuery);
+      const username = userDocSnap.data()?.username
+
+      setName(username)
+
       alert(`Välkommen ${email}!`)
       navigate("/KundSida");
     } catch (error: unknown) {
@@ -47,8 +57,6 @@ export default function LogIn() {
       }
     }
   };
-
-
   const { loginVisible, handleMenuItemClick } = React.useContext(
     ProductContext
   )! as ContextType;
