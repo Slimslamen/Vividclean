@@ -34,7 +34,7 @@ const Carousel = ({ images }: CarouselProps): JSX.Element => {
 
   return (
     <div className="relative">
-      <div className="flex items-center justify-center space-x-6 space-y-6 overflow-hidden ml-5 mr-5">
+      <div className="flex items-center justify-center space-x-10 space-y-6 overflow-hidden ml-5 mr-5">
         <div className="absolute left-0 top-1/2 transform -translate-y-1/2">
           <button
             className="text-customDark rounded text-4xl md:text-6xl mb-5 ml-4 md:ml-0"
@@ -48,7 +48,7 @@ const Carousel = ({ images }: CarouselProps): JSX.Element => {
             <img
               src={image.url}
               alt={`Slide ${currentImageIndex + index}`}
-              className="md:w-80 w-34 shadow-md opacity-60 h-48 md:h-96"
+              className="md:w-80 w-34 shadow-md opacity-80 h-48 md:h-96"
             />
             <h2 className="text-center font-bold text-customDark font-DM text-lg md:text-xl mt-3 md:mt-4">
               {image.title}

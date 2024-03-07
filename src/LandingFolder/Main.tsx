@@ -5,20 +5,18 @@ import Review from "./Review";
 import Tips from "./Tips";
 
 const images = [
-  {url:"src/assets/bildkarusell6.jpg.png", title:"Hemstäd"},
-  {url:"src/assets/bildkarusell8.jpg.png", title:"Storstäd"},
-  {url:"src/assets/bildkarusell9.jpg.png", title:"Fönsterputs"},
-  {url:"src/assets/bildkarusell3.jpg.png", title:"Flyttstäd"},
-  {url:"src/assets/bildkarusell4.jpg.png", title:"Veckostäd"},
-  {url:"src/assets/bildkarusell5.jpg.png", title:"Företagsstäd"},
-]
+  { url: "src/assets/Carousel1.jpg", title: "Hemstäd" },
+  { url: "src/assets/Carousel2.jpg", title: "Storstäd" },
+  { url: "src/assets/CarouselWeek.jpg", title: "Veckostäd" },
+  { url: "src/assets/CarouselMove.jpg", title: "Flyttstäd" },
+  { url: "src/assets/CarouselCompany.jpg", title: "Företagsstäd" },
+  { url: "src/assets/CarouselWindow.jpg", title: "Fönsterputs" },
+];
 
 export default function Main(): JSX.Element {
-
-
   return (
     <>
-      <div className="container md:mx-100  flex items-center justify-center">
+      <div className="container flex items-center justify-center">
         <Carousel images={images} />
       </div>
       <Info />
