@@ -12,6 +12,9 @@ import LogIn from "./LoginFolder/LogIn";
 import { ProtectedRoute } from "./LoginFolder/ProtectedRoute";
 import AdminLogin from "./LoginFolder/AdminLogin";
 import PersonalSida from "./Sidor/PersonalSida";
+
+
+
 function App() {
   return (
    
@@ -29,12 +32,13 @@ function App() {
             <Route path="/Contact" element={<Contact />} />
             {/* <Route path="/KundSida"  element={<ProtectedRoute><KundSida /></ProtectedRoute>}  /> */}
             <Route path="/KundSida"  element={<KundSida />}  />
+            <Route path="/PersonalSida" element={<PersonalSida />} />
           </Routes>
       
       </ProductContextProvider>
       </UserAuthContextProvider>
       <Footer />
-      <PersonalSida />
+     
     </BrowserRouter>
   );
 }

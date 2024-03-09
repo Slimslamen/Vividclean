@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function PersonalSida() {
+export default function PersonalSida():JSX.Element {
   return (
     <>
     <h1 className="font-DM text-5xl flex items-center justify-center mt-16 border-b border-grey">Personal</h1>

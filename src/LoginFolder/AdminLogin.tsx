@@ -5,11 +5,15 @@ import { Label, TextInput } from "flowbite-react";
 import { ProductContext } from "../ProductContext";
 import { ContextType } from "../types/types";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const AdminLogin = (): JSX.Element => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+
+  const navigate = useNavigate();
+
   const { adminVisible, handleMenuItemClick } = React.useContext(
     ProductContext
   )! as ContextType;
@@ -20,6 +24,7 @@ const AdminLogin = (): JSX.Element => {
     try {
       const auth = getAuth();
       const firestore = getFirestore();
+      navigate("/PersonalSida");
 
       // Logga in användaren med e-post och lösenord
       await signInWithEmailAndPassword(auth, email, password);
@@ -35,7 +40,11 @@ const AdminLogin = (): JSX.Element => {
         if (userRole === "employee") {
           // Om användaren har rollen 'employee', logga in användaren
           console.log("User logged in as employee");
+          
           alert(`Inloggad som medarbetare ${email}`);
+
+          
+          
         } else if (userRole === "customer") {
           setError("Du har inte rätt behörighet att logga in.");
         } else {
