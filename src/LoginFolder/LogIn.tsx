@@ -14,7 +14,7 @@ export default function LogIn() {
   const [error, setError] = useState("");
   
   
-  const { googleSignIn, logIn, setName, setEmail, email } = React.useContext(
+  const { googleSignIn, logIn, setName, setEmailLogin, emailLogin } = React.useContext(
     UserAuthContext
   )! as UserAuthContextProps;
 
@@ -38,16 +38,16 @@ export default function LogIn() {
     e.preventDefault();
     setError("");
     try {
-      await logIn(email, password);
+      await logIn(emailLogin, password);
 
       const firestore = getFirestore();
-      const userQuery = doc(firestore, "users", email);
+      const userQuery = doc(firestore, "users", emailLogin);
       const userDocSnap = await getDoc(userQuery);
       const username = userDocSnap.data()?.username
 
       setName(username)
 
-      alert(`Välkommen ${email}!`)
+      alert(`Välkommen ${emailLogin}!`)
       navigate("/KundSida");
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -110,7 +110,7 @@ export default function LogIn() {
               id="email-address-icon"
               placeholder="Din email"
               addon={usernameIcon}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setEmailLogin(e.target.value)}
               required
             />
           </div>

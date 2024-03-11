@@ -59,7 +59,7 @@ const cleaners:Icleaners[] = [
 ]
 export default function KundSida():JSX.Element {
   
-  const { name, email } = React.useContext(
+  const { name, emailLogin } = React.useContext(
     UserAuthContext
   )! as UserAuthContextProps;
 
@@ -72,7 +72,7 @@ export default function KundSida():JSX.Element {
   const [reRender, setReRender] = useState<boolean>(false)
   
   
-  const bookingsRef = collection(db, "users", email, "booking")
+  const bookingsRef = collection(db, "users", emailLogin, "booking")
   
   const getBookings = async () => {
     try {
@@ -97,7 +97,7 @@ export default function KundSida():JSX.Element {
   }
   
   const deleteBooking =  async(id:string) => {
-    const bookingDoc = doc(db, "users", email, "booking", id)
+    const bookingDoc = doc(db, "users", emailLogin, "booking", id)
     await deleteDoc(bookingDoc)
      setReRender(!reRender)
      console.log(id);

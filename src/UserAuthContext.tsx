@@ -17,7 +17,8 @@ interface UserAuthContextProps {
     googleSignIn: () => Promise<void>;
     name:string;
     setName: React.Dispatch<React.SetStateAction<string>>;
-    
+    emailLogin: string;
+    setEmailLogin: React.Dispatch<React.SetStateAction<string>>;
   }
 
   export const UserAuthContext = createContext<UserAuthContextProps | undefined>(undefined);
@@ -30,7 +31,7 @@ interface UserAuthContextProps {
     const [user, setUser] = useState<any>({}); // Replace 'any' with the actual type of your user object
 
     const [name, setName] = useState<string>("");
-    const [email, setEmail] = useState<string>("");
+    const [emailLogin, setEmailLogin] = useState<string>("");
   
     async function logIn(email: string, password: string):Promise<void> {
       await signInWithEmailAndPassword(auth, email, password);
@@ -71,7 +72,7 @@ interface UserAuthContextProps {
     
   
     const FireBaseValues: UserAuthContextProps = {
-        user, logIn, signUp, logOut, googleSignIn, name, setName, email, setEmail
+        user, logIn, signUp, logOut, googleSignIn, name, setName, emailLogin, setEmailLogin
       };
     return (
       <UserAuthContext.Provider
