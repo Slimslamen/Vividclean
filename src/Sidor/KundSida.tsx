@@ -49,11 +49,7 @@ export default function KundSida():JSX.Element {
   //state with all the bookings
   const [Bookings, setBookings] = useState<Ibooking[]>([])
   const [reRender, setReRender] = useState<boolean>(false)
-  const [cleanerEstelle, setcleanerEstelle] = useState<string>("")
-  const [cleanerMarta, setcleanerMarta] = useState<string>("")
-  const [cleanerJimmy, setcleanerJimmy] = useState<string>("")
-  
-  
+    
   const bookingsRef = collection(db, "users", emailLogin, "booking")
 
   const martaRef = collection(db, "users", "marta_malm_97@hotmail.se", "booking")
@@ -62,14 +58,21 @@ export default function KundSida():JSX.Element {
 
   const getBookings = async () => {
     try {
-      const data = await getDocs(bookingsRef)
-          
-      const filteredData:Ibooking[] = data.docs.map((doc) => ({...doc.data(), id: doc.id}))         
-      setBookings(filteredData)
+      const data = await getDocs(bookingsRef);
+      const filteredData: Ibooking[] = data.docs.map((doc) => ({
+        id: doc.id,
+        name: doc.data().name,
+        date: doc.data().date,
+        cleaner: doc.data().cleaner,
+        time: doc.data().time,
+        status: doc.data().status,
+        service: doc.data().service
+      }));
+      setBookings(filteredData);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   const onSubmit = async(e:FormEvent) => {
     e.preventDefault()
