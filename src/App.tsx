@@ -14,6 +14,7 @@ import AdminLogin from "./LoginFolder/AdminLogin";
 import React from "react";
 import BackgroundOpacity from "./LandingFolder/components/BackgroundOpacity";
 import Register from "./LoginFolder/Register";
+import PersonalSida from "./Sidor/PersonalSida";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
             <Route path="/Contact" element={<Contact />} />
             {/* <Route path="/KundSida"  element={<ProtectedRoute><KundSida /></ProtectedRoute>}  /> */}
             <Route path="/KundSida" element={<KundSida />} />
+            <Route path="/PersonalSida" element={<PersonalSida />} />
           </Routes>
           <Footer />
           </BackgroundOpacity>
