@@ -56,38 +56,16 @@ export default function KundSida():JSX.Element {
   
   const bookingsRef = collection(db, "users", emailLogin, "booking")
 
-  
+  const martaRef = collection(db, "users", "marta_malm_97@hotmail.se", "booking")
+  const EstelleRef = collection(db, "users", "estelle.stenemur@gmail.com", "booking")
+  const JimmyRef = collection(db, "users", "jimmy@gmail.com", "booking")
+
   const getBookings = async () => {
     try {
       const data = await getDocs(bookingsRef)
           
       const filteredData:Ibooking[] = data.docs.map((doc) => ({...doc.data(), id: doc.id}))         
       setBookings(filteredData)
-  
-      const AdminUsers = collection(db, "users")      
-      const AdminSnap = await getDocs(AdminUsers)
-      AdminSnap.docs.forEach((doc) => {
-        const userData = doc.data();
-        const checkAdmin = userData.role;
-        const checkCleaner = userData.username;
-
-        
-        if(checkAdmin == "cleaner"){
-          if(checkCleaner == "Estelle"){
-            setcleanerEstelle(checkCleaner)
-            console.log("titta" + checkCleaner);
-          }
-          if(checkCleaner == "Märta"){
-            setcleanerMarta(checkCleaner)
-            console.log("titta2" + checkCleaner);
-          }
-          if(checkCleaner == "Jimmy"){
-            setcleanerJimmy(checkCleaner)
-            console.log("titta3" + checkCleaner);
-          }
-        }
-      });
-      
     } catch (error) {
       console.log(error);
     }
@@ -98,8 +76,18 @@ export default function KundSida():JSX.Element {
     try {
       const { selectedDate ,time, cleaner, service} = formData
       await addDoc(bookingsRef, {date:selectedDate , time:time, cleaner:cleaner, service:service, status:status})
+      if(cleaner == "Estelle"){
+        await addDoc(EstelleRef, {date:selectedDate , time:time, cleaner:cleaner, service:service, status:status})
+      }
+      if(cleaner == "Märta"){
+        await addDoc(martaRef, {date:selectedDate , time:time, cleaner:cleaner, service:service, status:status})
+      }
+      if(cleaner == "Jimmy"){
+        await addDoc(JimmyRef, {date:selectedDate , time:time, cleaner:cleaner, service:service, status:status})
+      }
       getBookings()
       setFormData({selectedDate:"", time:"", cleaner:cleaners[0].name, service:""})
+      
     } catch (error) {
       console.log(error);
     }
@@ -120,26 +108,22 @@ export default function KundSida():JSX.Element {
     {
       id: uuidv4(),
       value: "",
-      name: "Städare",
-      admin: ""
+      name: "Städare"
     },
     {
       id: uuidv4(),
       value: "Estelle",
-      name: "Estelle",
-      admin: cleanerEstelle
+      name: "Estelle"
     },
     {
       id:uuidv4(),
       value: "Märta",
-      name: "Märta",
-      admin: cleanerMarta
+      name: "Märta"
     },
     {
       id:uuidv4(),
       value: "Jimmy",
-      name: "Jimmy",
-      admin: cleanerJimmy
+      name: "Jimmy"
     }
   ]
   
@@ -161,10 +145,10 @@ export default function KundSida():JSX.Element {
               </div>
             </div>
             <div className="flex flex-col space-y-2 my-9">
-              <select onChange={(e) => setFormData(prev => ({...prev, cleaner:e.target.value}))} name="Städare" id="Städare" className="p-1 rounded-lg w-4/12 bg-transparent focus:outline-none">
+              <select onChange={(e) => setFormData(prev => ({...prev, cleaner:e.target.value}))} value={formData.cleaner} name="Städare" id="Städare" className="p-1 rounded-lg w-4/12 bg-transparent focus:outline-none">
                 {cleaners.map((clean) => (
-                  <option key={clean.id} value={clean.value}>{clean.name} <h2>{clean.admin}</h2></option>
-                 
+                  <option key={clean.id} value={clean.value}>{clean.name}</option>
+                  
                   ))}
               </select>
               <p className="px-2 py-1 bg-customDark text-white rounded-lg w-52">Välj en städare</p>
@@ -197,3 +181,29 @@ export default function KundSida():JSX.Element {
 
 
 
+
+/*   
+      const AdminUsers = collection(db, "users")      
+      const AdminSnap = await getDocs(AdminUsers)
+      AdminSnap.docs.forEach((doc) => {
+        const userData = doc.data();
+        const checkAdmin = userData.role;
+        const checkCleaner = userData.username;
+
+        
+        if(checkAdmin == "cleaner"){
+          if(checkCleaner == "Estelle"){
+            setcleanerEstelle(checkCleaner)
+            console.log("titta" + checkCleaner);
+          }
+          if(checkCleaner == "Märta"){
+            setcleanerMarta(checkCleaner)
+            console.log("titta2" + checkCleaner);
+          }
+          if(checkCleaner == "Jimmy"){
+            setcleanerJimmy(checkCleaner)
+            console.log("titta3" + checkCleaner);
+          }
+        }
+      });
+       */
