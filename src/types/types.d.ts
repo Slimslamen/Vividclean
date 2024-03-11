@@ -33,6 +33,7 @@ export interface Icleaners {
   id: string | number;
   value: string;
   name: string;
+  admin: string;
 }
 export interface IformData {
   selectedDate: date;
