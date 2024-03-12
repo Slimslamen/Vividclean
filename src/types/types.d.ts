@@ -20,6 +20,9 @@ export type UserAuthContextProps = {
   setName: React.Dispatch<React.SetStateAction<string>>;
   emailLogin: string;
   setEmailLogin: React.Dispatch<React.SetStateAction<string>>
+  martaRef: CollectionReference<DocumentData>;
+  EstelleRef: CollectionReference<DocumentData>;
+  JimmyRef:CollectionReference<DocumentData>;
 };
 
 //Interface for kundsida component

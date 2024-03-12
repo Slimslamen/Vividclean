@@ -28,7 +28,7 @@ function App() {
           <Register />
           <BackgroundOpacity>   
           <Navbar />
-          <Loading />
+       {/*    <Loading /> */}
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/AboutUs" element={<AboutUs />} />

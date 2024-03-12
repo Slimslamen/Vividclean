@@ -7,7 +7,7 @@ import {
 } from "@firebase/auth";
 import { createContext, useState, ReactNode } from "react";
 import { auth, db } from "./config/firebase";
-import { doc, setDoc } from 'firebase/firestore';
+import { CollectionReference, DocumentData, collection, doc, setDoc } from 'firebase/firestore';
 
 interface UserAuthContextProps {
     user: any; // Replace 'any' with the actual type of your user object
@@ -19,6 +19,9 @@ interface UserAuthContextProps {
     setName: React.Dispatch<React.SetStateAction<string>>;
     emailLogin: string;
     setEmailLogin: React.Dispatch<React.SetStateAction<string>>;
+    martaRef: CollectionReference<DocumentData>;
+    EstelleRef: CollectionReference<DocumentData>;
+    JimmyRef:CollectionReference<DocumentData>;
   }
 
   export const UserAuthContext = createContext<UserAuthContextProps | undefined>(undefined);
@@ -26,6 +29,12 @@ interface UserAuthContextProps {
   interface UserAuthContextProviderProps {
     children: ReactNode;
   }
+
+  const martaRef = collection(db, "users", "marta_malm_97@hotmail.se", "booking")
+  const EstelleRef = collection(db, "users", "estelle.stenemur@gmail.com", "booking")
+  const JimmyRef = collection(db, "users", "jimmy@gmail.com", "booking")
+
+
 
   export function UserAuthContextProvider({ children }: UserAuthContextProviderProps): JSX.Element {
     const [user, setUser] = useState<any>({}); // Replace 'any' with the actual type of your user object
@@ -72,7 +81,7 @@ interface UserAuthContextProps {
     
   
     const FireBaseValues: UserAuthContextProps = {
-        user, logIn, signUp, logOut, googleSignIn, name, setName, emailLogin, setEmailLogin
+        user, logIn, signUp, logOut, googleSignIn, name, setName, emailLogin, setEmailLogin, martaRef, EstelleRef, JimmyRef
       };
     return (
       <UserAuthContext.Provider

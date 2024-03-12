@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Services from "./components/Services";
 import { Ioptions, Icleaners, IformData, Ibooking, UserAuthContextProps } from "../types/types";
 import { db } from "../config/firebase";
-import { collection, getDocs, addDoc, deleteDoc, doc, getDoc, } from "firebase/firestore";
+import { collection, getDocs, addDoc, deleteDoc, doc } from "firebase/firestore";
 import BookingPage from "./components/BookingPage";
 import UserAuthContext from "../UserAuthContext";
 
@@ -38,7 +38,7 @@ const options: Ioptions[] = [
 
 export default function KundSida():JSX.Element {
   
-  const { name, emailLogin } = React.useContext(
+  const { name, emailLogin, martaRef, EstelleRef, JimmyRef } = React.useContext(
     UserAuthContext
   )! as UserAuthContextProps;
 
@@ -52,9 +52,6 @@ export default function KundSida():JSX.Element {
     
   const bookingsRef = collection(db, "users", emailLogin, "booking")
 
-  const martaRef = collection(db, "users", "marta_malm_97@hotmail.se", "booking")
-  const EstelleRef = collection(db, "users", "estelle.stenemur@gmail.com", "booking")
-  const JimmyRef = collection(db, "users", "jimmy@gmail.com", "booking")
 
   const getBookings = async () => {
     try {
