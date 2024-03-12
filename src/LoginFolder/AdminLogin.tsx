@@ -1,4 +1,4 @@
-import {useState } from "react";
+import { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { Label, TextInput } from "flowbite-react";
@@ -9,7 +9,7 @@ import UserAuthContext from "../UserAuthContext";
 import { useNavigate } from "react-router-dom";
 
 const AdminLogin = () => {
-  const [email, setEmail] = useState("");
+ 
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
 
@@ -18,7 +18,10 @@ const AdminLogin = () => {
   const { adminVisible, handleMenuItemClick } = React.useContext(
     ProductContext
   )! as ContextType;
-  const { handleName } = React.useContext(UserAuthContext)! as UserAuthContextProps
+  const { emailAdmin, setEmailAdmin, name } = React.useContext(
+    UserAuthContext
+  )! as UserAuthContextProps;
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -28,10 +31,10 @@ const AdminLogin = () => {
       navigate("/PersonalSida");
 
       // Logga in användaren med e-post och lösenord
-      await signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, emailAdmin, password);
 
       // Hämta användarens dokument från Firestore baserat på e-postadressen
-      const userQuery = doc(firestore, "users", email);
+      const userQuery = doc(firestore, "users", emailAdmin);
       const userDocSnap = await getDoc(userQuery);
 
       if (userDocSnap.exists()) {
@@ -40,12 +43,10 @@ const AdminLogin = () => {
 
         if (userRole === "employee") {
           // Om användaren har rollen 'employee', logga in användaren
-          console.log("User logged in as employee");
-          
-          alert(`Inloggad som medarbetare ${email}`);
+          console.log("User logged in as cleaner");
 
-          
-          
+          alert(`Inloggad som medarbetare ${name}`);
+
         } else if (userRole === "customer") {
           setError("Du har inte rätt behörighet att logga in.");
         } else {
@@ -56,6 +57,9 @@ const AdminLogin = () => {
       setError(error.message);
     }
   };
+
+
+
   const usernameIcon = (
     <svg
       className="w-4 h-4 text-customDark dark:text-gray-400"
@@ -103,11 +107,11 @@ const AdminLogin = () => {
 
             <TextInput
               type="email"
-              value={email}
+              value={emailAdmin}
               placeholder="Din email"
               addon={usernameIcon}
               required
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setEmailAdmin(e.target.value)}
             />
           </div>
           <div>
@@ -131,7 +135,10 @@ const AdminLogin = () => {
           {error && <p style={{ color: "red" }}>{error}</p>}
           <p className="font-DM">
             Är du kund?{" "}
-            <span onClick={NavigateUserLogIn} className="text-customDark hover:underline cursor-pointer">
+            <span
+              onClick={NavigateUserLogIn}
+              className="text-customDark hover:underline cursor-pointer"
+            >
               Logga in här
             </span>
           </p>

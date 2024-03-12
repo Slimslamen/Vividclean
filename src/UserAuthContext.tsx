@@ -17,7 +17,8 @@ interface UserAuthContextProps {
     googleSignIn: () => Promise<void>;
     name:string;
     setName: React.Dispatch<React.SetStateAction<string>>;
-    
+    emailAdmin: string; // Add email to the context props
+    setEmailAdmin: React.Dispatch<React.SetStateAction<string>>; // Add setEmail to the context props
   }
 
   export const UserAuthContext = createContext<UserAuthContextProps | undefined>(undefined);
@@ -28,7 +29,7 @@ interface UserAuthContextProps {
 
   export function UserAuthContextProvider({ children }: UserAuthContextProviderProps): JSX.Element {
     const [user, setUser] = useState<any>({}); // Replace 'any' with the actual type of your user object
-
+    const [emailAdmin, setEmailAdmin] = useState("");
     const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
   
@@ -71,7 +72,7 @@ interface UserAuthContextProps {
     
   
     const FireBaseValues: UserAuthContextProps = {
-        user, logIn, signUp, logOut, googleSignIn, name, setName, email, setEmail
+        user, logIn, signUp, logOut, googleSignIn, name, setName, email, setEmail, emailAdmin, setEmailAdmin
       };
     return (
       <UserAuthContext.Provider
