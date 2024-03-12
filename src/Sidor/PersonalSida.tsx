@@ -31,7 +31,8 @@ export default function PersonalSida(): JSX.Element {
             id: doc.id,
           }));
 
-        // setCleanerBookings(filteredBookings)
+        setCleanerBookings(filteredBookings);
+
       } catch (error) {
         console.error("Error fetching bookings:", error);
       }

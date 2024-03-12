@@ -17,6 +17,9 @@ export default function LogIn() {
   const { googleSignIn, logIn, setName, setEmailLogin, emailLogin } = React.useContext(
     UserAuthContext
   )! as UserAuthContextProps;
+  const { loginVisible, handleMenuItemClick } = React.useContext(
+    ProductContext
+  )! as ContextType;
 
   const navigate = useNavigate(); //navigate hook to navigate on the site
 
@@ -49,6 +52,7 @@ export default function LogIn() {
 
       alert(`Välkommen ${emailLogin}!`)
       navigate("/KundSida");
+      handleMenuItemClick("Logga in")
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.log(error.message); // Du kan nu använda Error-metoder
@@ -57,9 +61,7 @@ export default function LogIn() {
       }
     }
   };
-  const { loginVisible, handleMenuItemClick } = React.useContext(
-    ProductContext
-  )! as ContextType;
+
 
   const usernameIcon = (
     <svg

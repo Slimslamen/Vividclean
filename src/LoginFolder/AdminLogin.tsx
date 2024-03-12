@@ -18,6 +18,7 @@ const AdminLogin = () => {
   const { adminVisible, handleMenuItemClick } = React.useContext(
     ProductContext
   )! as ContextType;
+  
   const { emailAdmin, setEmailAdmin, name } = React.useContext(
     UserAuthContext
   )! as UserAuthContextProps;
@@ -41,7 +42,7 @@ const AdminLogin = () => {
         // Kontrollera användarrollen
         const userRole = userDocSnap.data()?.role;
 
-        if (userRole === "employee") {
+        if (userRole === "cleaner") {
           // Om användaren har rollen 'employee', logga in användaren
           console.log("User logged in as cleaner");
 

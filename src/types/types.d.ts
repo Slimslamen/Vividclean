@@ -23,6 +23,8 @@ export type UserAuthContextProps = {
   martaRef: CollectionReference<DocumentData>;
   EstelleRef: CollectionReference<DocumentData>;
   JimmyRef:CollectionReference<DocumentData>;
+  emailAdmin: string;
+  setEmailAdmin: React.Dispatch<React.SetStateAction<string>>
 };
 
 //Interface for kundsida component
