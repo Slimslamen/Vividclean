@@ -1,10 +1,10 @@
 import DatePicker from "react-datepicker";
-import React, { FormEvent, useEffect, useId, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import Services from "./components/Services";
 import { Ioptions, Icleaners, IformData, Ibooking, UserAuthContextProps } from "../types/types";
 import { db } from "../config/firebase";
-import { collection, getDocs, addDoc, deleteDoc, doc, } from "firebase/firestore";
+import { collection, getDocs, addDoc, deleteDoc, doc } from "firebase/firestore";
 import BookingPage from "./components/BookingPage";
 import UserAuthContext from "../UserAuthContext";
 
@@ -35,31 +35,10 @@ const options: Ioptions[] = [
     type:"Toppstädning-checkbox-list"
   },
 ];
-const cleaners:Icleaners[] = [
-  {
-    id: uuidv4(),
-    value: "",
-    name: "Städare"
-  },
-  {
-    id: uuidv4(),
-    value: "Estelle",
-    name: "Estelle"
-  },
-  {
-    id:uuidv4(),
-    value: "Märta",
-    name: "Märta"
-  },
-  {
-    id:uuidv4(),
-    value: "Jimmy",
-    name: "Jimmy"
-  }
-]
+
 export default function KundSida():JSX.Element {
   
-  const { name, email } = React.useContext(
+  const { name, emailLogin, martaRef, EstelleRef, JimmyRef } = React.useContext(
     UserAuthContext
   )! as UserAuthContextProps;
 
@@ -70,38 +49,54 @@ export default function KundSida():JSX.Element {
   //state with all the bookings
   const [Bookings, setBookings] = useState<Ibooking[]>([])
   const [reRender, setReRender] = useState<boolean>(false)
-  
-  
-  const bookingsRef = collection(db, "users", email, "booking")
-  
+    
+  const bookingsRef = collection(db, "users", emailLogin, "booking")
+
+
   const getBookings = async () => {
     try {
-      const data = await getDocs(bookingsRef)
-      const filteredData:Ibooking[] = data.docs.map((doc) => ({...doc.data(), id: doc.id}))         
-      setBookings(filteredData)
-      
+      const data = await getDocs(bookingsRef);
+      const filteredData: Ibooking[] = data.docs.map((doc) => ({
+        id: doc.id,
+        name: doc.data().name,
+        date: doc.data().date,
+        cleaner: doc.data().cleaner,
+        time: doc.data().time,
+        status: doc.data().status,
+        service: doc.data().service
+      }));
+      setBookings(filteredData);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
+
   const onSubmit = async(e:FormEvent) => {
     e.preventDefault()
     try {
       const { selectedDate ,time, cleaner, service} = formData
       await addDoc(bookingsRef, {date:selectedDate , time:time, cleaner:cleaner, service:service, status:status})
+      if(cleaner == "Estelle"){
+        await addDoc(EstelleRef, {date:selectedDate , time:time, cleaner:cleaner, service:service, status:status})
+      }
+      if(cleaner == "Märta"){
+        await addDoc(martaRef, {date:selectedDate , time:time, cleaner:cleaner, service:service, status:status})
+      }
+      if(cleaner == "Jimmy"){
+        await addDoc(JimmyRef, {date:selectedDate , time:time, cleaner:cleaner, service:service, status:status})
+      }
       getBookings()
       setFormData({selectedDate:"", time:"", cleaner:cleaners[0].name, service:""})
+      
     } catch (error) {
       console.log(error);
     }
   }
   
   const deleteBooking =  async(id:string) => {
-    const bookingDoc = doc(db, "users", email, "booking", id)
+    const bookingDoc = doc(db, "users", emailLogin, "booking", id)
     await deleteDoc(bookingDoc)
      setReRender(!reRender)
-     console.log(id);
-     
   }
 
   useEffect(() => {
@@ -109,6 +104,28 @@ export default function KundSida():JSX.Element {
   }, [reRender])
   
   
+  const cleaners:Icleaners[] = [
+    {
+      id: uuidv4(),
+      value: "",
+      name: "Städare"
+    },
+    {
+      id: uuidv4(),
+      value: "Estelle",
+      name: "Estelle"
+    },
+    {
+      id:uuidv4(),
+      value: "Märta",
+      name: "Märta"
+    },
+    {
+      id:uuidv4(),
+      value: "Jimmy",
+      name: "Jimmy"
+    }
+  ]
   
   return (
     <>
@@ -128,9 +145,10 @@ export default function KundSida():JSX.Element {
               </div>
             </div>
             <div className="flex flex-col space-y-2 my-9">
-              <select onChange={(e) => setFormData(prev => ({...prev, cleaner:e.target.value}))} name="Städare" id="Städare" className="p-1 rounded-lg w-4/12 bg-transparent focus:outline-none">
+              <select onChange={(e) => setFormData(prev => ({...prev, cleaner:e.target.value}))} value={formData.cleaner} name="Städare" id="Städare" className="p-1 rounded-lg w-4/12 bg-transparent focus:outline-none">
                 {cleaners.map((clean) => (
                   <option key={clean.id} value={clean.value}>{clean.name}</option>
+                  
                   ))}
               </select>
               <p className="px-2 py-1 bg-customDark text-white rounded-lg w-52">Välj en städare</p>
@@ -163,3 +181,29 @@ export default function KundSida():JSX.Element {
 
 
 
+
+/*   
+      const AdminUsers = collection(db, "users")      
+      const AdminSnap = await getDocs(AdminUsers)
+      AdminSnap.docs.forEach((doc) => {
+        const userData = doc.data();
+        const checkAdmin = userData.role;
+        const checkCleaner = userData.username;
+
+        
+        if(checkAdmin == "cleaner"){
+          if(checkCleaner == "Estelle"){
+            setcleanerEstelle(checkCleaner)
+            console.log("titta" + checkCleaner);
+          }
+          if(checkCleaner == "Märta"){
+            setcleanerMarta(checkCleaner)
+            console.log("titta2" + checkCleaner);
+          }
+          if(checkCleaner == "Jimmy"){
+            setcleanerJimmy(checkCleaner)
+            console.log("titta3" + checkCleaner);
+          }
+        }
+      });
+       */

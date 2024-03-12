@@ -15,6 +15,7 @@ import React from "react";
 import BackgroundOpacity from "./LandingFolder/components/BackgroundOpacity";
 import Register from "./LoginFolder/Register";
 import PersonalSida from "./Sidor/PersonalSida";
+import Loading from "./Loading";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Register />
           <BackgroundOpacity>   
           <Navbar />
+       {/*    <Loading /> */}
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/AboutUs" element={<AboutUs />} />

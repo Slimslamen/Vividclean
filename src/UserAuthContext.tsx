@@ -7,7 +7,7 @@ import {
 } from "@firebase/auth";
 import { createContext, useState, ReactNode } from "react";
 import { auth, db } from "./config/firebase";
-import { doc, setDoc } from 'firebase/firestore';
+import { CollectionReference, DocumentData, collection, doc, setDoc } from 'firebase/firestore';
 
 interface UserAuthContextProps {
     user: any; // Replace 'any' with the actual type of your user object
@@ -17,8 +17,11 @@ interface UserAuthContextProps {
     googleSignIn: () => Promise<void>;
     name:string;
     setName: React.Dispatch<React.SetStateAction<string>>;
-    emailAdmin: string; // Add email to the context props
-    setEmailAdmin: React.Dispatch<React.SetStateAction<string>>; // Add setEmail to the context props
+    emailLogin: string;
+    setEmailLogin: React.Dispatch<React.SetStateAction<string>>;
+    martaRef: CollectionReference<DocumentData>;
+    EstelleRef: CollectionReference<DocumentData>;
+    JimmyRef:CollectionReference<DocumentData>;
   }
 
   export const UserAuthContext = createContext<UserAuthContextProps | undefined>(undefined);
@@ -27,11 +30,17 @@ interface UserAuthContextProps {
     children: ReactNode;
   }
 
+  const martaRef = collection(db, "users", "marta_malm_97@hotmail.se", "booking")
+  const EstelleRef = collection(db, "users", "estelle.stenemur@gmail.com", "booking")
+  const JimmyRef = collection(db, "users", "jimmy@gmail.com", "booking")
+
+
+
   export function UserAuthContextProvider({ children }: UserAuthContextProviderProps): JSX.Element {
     const [user, setUser] = useState<any>({}); // Replace 'any' with the actual type of your user object
     const [emailAdmin, setEmailAdmin] = useState("");
     const [name, setName] = useState<string>("");
-    const [email, setEmail] = useState<string>("");
+    const [emailLogin, setEmailLogin] = useState<string>("");
   
     async function logIn(email: string, password: string):Promise<void> {
       await signInWithEmailAndPassword(auth, email, password);
@@ -72,7 +81,7 @@ interface UserAuthContextProps {
     
   
     const FireBaseValues: UserAuthContextProps = {
-        user, logIn, signUp, logOut, googleSignIn, name, setName, email, setEmail, emailAdmin, setEmailAdmin
+        user, logIn, signUp, logOut, googleSignIn, name, setName, emailLogin, setEmailLogin, martaRef, EstelleRef, JimmyRef
       };
     return (
       <UserAuthContext.Provider
