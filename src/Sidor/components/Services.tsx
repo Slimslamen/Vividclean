@@ -25,6 +25,7 @@ const { type, service } = option
         onChange={(e) => setFormData(prev => ({...prev, service:e.target.value}))}
         id={type}
         type="radio"
+        required
         checked={service === formService}
         value={service}
         className="w-4 h-4 text-customDark bg-gray-100 border-gray-300 rounded focus:ring-customDark  "
