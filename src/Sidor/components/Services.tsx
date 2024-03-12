@@ -4,10 +4,12 @@ import { Ioptions } from '../../types/types';
 interface Iservice{
     option:Ioptions;
     setFormData:React.Dispatch<React.SetStateAction<{
+      selectedName: string;
       selectedDate: Date;
       time: string;
       cleaner: string;
       service: string;
+      status: boolean;
   }>>
     formService: string;
 }

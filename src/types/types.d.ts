@@ -39,10 +39,12 @@ export interface Icleaners {
 
 }
 export interface IformData {
+  selectedName: string;
   selectedDate: date;
   time: string;
   cleaner: string;
   service: string;
+  status: boolean;
 }
 
 export interface Ibooking{

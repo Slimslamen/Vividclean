@@ -38,3 +38,5 @@ interface FirebaseConfig {
 // marta_malm_97@hotmail.se / hejhej
 // jimmy@gmail.com / nejnej
 // estelle.stenemur@gmail.com / halloj
+// konify@gmail.com / konify
+// clean@gmail.com  / vividclean

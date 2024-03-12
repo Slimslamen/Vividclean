@@ -45,7 +45,7 @@ export default function KundSida():JSX.Element {
   
   const placeHolderDates = new Date().toLocaleDateString()
   //State to handle the form data
-  const [formData, setFormData] = useState<IformData>({selectedDate:"", time:"", cleaner:"", service:""})
+  const [formData, setFormData] = useState<IformData>({selectedName:name, selectedDate:"", time:"", cleaner:"", service:"", status:false})
   //state with all the bookings
   const [Bookings, setBookings] = useState<Ibooking[]>([])
   const [reRender, setReRender] = useState<boolean>(false)
@@ -74,19 +74,19 @@ export default function KundSida():JSX.Element {
   const onSubmit = async(e:FormEvent) => {
     e.preventDefault()
     try {
-      const { selectedDate ,time, cleaner, service} = formData
-      await addDoc(bookingsRef, {date:selectedDate , time:time, cleaner:cleaner, service:service, status:status})
+      const { selectedName, selectedDate ,time, cleaner, service, status } = formData
+      await addDoc(bookingsRef, { name:selectedName, date:selectedDate , time:time, cleaner:cleaner, service:service, status:status })
       if(cleaner == "Estelle"){
-        await addDoc(EstelleRef, {date:selectedDate , time:time, cleaner:cleaner, service:service, status:status})
+        await addDoc(EstelleRef, { name:selectedName, date:selectedDate , time:time, cleaner:cleaner, service:service, status:status })
       }
       if(cleaner == "Märta"){
-        await addDoc(martaRef, {date:selectedDate , time:time, cleaner:cleaner, service:service, status:status})
+        await addDoc(martaRef, { name:selectedName, date:selectedDate , time:time, cleaner:cleaner, service:service, status:status })
       }
       if(cleaner == "Jimmy"){
-        await addDoc(JimmyRef, {date:selectedDate , time:time, cleaner:cleaner, service:service, status:status})
+        await addDoc(JimmyRef, { name:selectedName, date:selectedDate , time:time, cleaner:cleaner, service:service, status:status })
       }
       getBookings()
-      setFormData({selectedDate:"", time:"", cleaner:cleaners[0].name, service:""})
+      setFormData({selectedName:name, selectedDate:"", time:"", cleaner:cleaners[0].name, service:"", status:false})
       
     } catch (error) {
       console.log(error);
