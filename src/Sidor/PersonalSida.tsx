@@ -47,7 +47,7 @@ export default function PersonalSida(): JSX.Element {
       <h1 className="font-DM text-5xl flex items-center justify-center mt-16 border-b border-grey">
         {admin}
       </h1>
-      <hr className="bg-black"/>
+      <hr className="bg-black" />
 
       <div className="flex md:flex-cols-2 md:gap-4">
         <div className="w-full h-96 mt-10 mb-10">
@@ -56,21 +56,28 @@ export default function PersonalSida(): JSX.Element {
           </h2>
           <ul className="flex flex-col">
             {cleaner?.map((booking) => (
-              <div key={booking.id} className="m-5 border-b border-black bg-customDark text-white font-DM p-5 rounded-lg flex flex-row items-center justify-between">
+              <div
+                key={booking.id}
+                className="m-5 border-b border-black bg-customDark text-white font-DM p-5 rounded-lg flex flex-row items-center justify-between"
+              >
                 <div className="flex flex-row space-x-4">
-                  <li>
-                    Datum: {booking.date.toLocaleDateString()}  
-                  </li>
-                  <li>
-                    Tid: {booking.time}
-                  </li>
-                  <li>
-                    Tjänst: {booking.service}
-                  </li>
+                  <li><span className="font-semibold text-lg">Datum:</span> {booking.date.toLocaleDateString()}</li>
+                  <li><span className="font-semibold text-lg">Tid:</span> {booking.time}</li>
+                  <li><span className="font-semibold text-lg">Tjänst:</span> {booking.service}</li>
                 </div>
+                <div className="flex flex-row space-x-3">
                 <button className=" border border-solid text-white bg-customDark p-1 rounded-lg">
                   Pågående
                 </button>
+                <div className="flex items-center me-4">
+                  <input
+                    id="green-checkbox"
+                    type="checkbox"
+                    value=""
+                    className="size-5 rounded-lg dark:ring-offset-gray-300 focus:ring-1 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  </div>
+                </div>
               </div>
             ))}
           </ul>
