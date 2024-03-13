@@ -13,7 +13,6 @@ export default function BookingPage({ booking }:Iprop):JSX.Element {
       )! as UserAuthContextProps; */
     const {  name,service, time, date, cleaner } = booking
     const shownDate = date.toDate().toLocaleDateString()
-    console.log(name);
     
     return (
     <div className="w-full flex flex-row">
