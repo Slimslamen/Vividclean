@@ -3,6 +3,8 @@ import { getFirestore } from "firebase/firestore";
 import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 import { Ibooking, UserAuthContextProps } from "../types/types";
 import UserAuthContext from "../UserAuthContext";
+import BookingAdminList from "./components/BookingAdminList";
+import DoneAdminBookings from "./components/DoneAdminbookings";
 
 export default function PersonalSida(): JSX.Element {
   const [cleaner, setCleaner] = useState<Ibooking[]>([]);
@@ -60,15 +62,7 @@ export default function PersonalSida(): JSX.Element {
                 key={booking.id}
                 className="m-5 border-b border-black bg-customDark text-white font-DM p-5 rounded-lg flex flex-row items-center justify-between"
               >
-                <div className="flex flex-row space-x-4">
-                  <li><span className="font-semibold text-lg">Datum:</span> {booking.date.toLocaleDateString()}</li>
-                  <li><span className="font-semibold text-lg">Tid:</span> {booking.time}</li>
-                  <li><span className="font-semibold text-lg">Tjänst:</span> {booking.service}</li>
-                </div>
-                <div className="flex flex-row space-x-3">
-                <button className=" border border-solid text-white bg-customDark p-1 rounded-lg">
-                  Pågående
-                </button>
+                <BookingAdminList key={booking.id} booking={booking} />
                 <div className="flex items-center me-4">
                   <input
                     id="green-checkbox"
@@ -76,7 +70,6 @@ export default function PersonalSida(): JSX.Element {
                     value=""
                     className="size-5 rounded-lg dark:ring-offset-gray-300 focus:ring-1 dark:bg-gray-700 dark:border-gray-600"
                   />
-                  </div>
                 </div>
               </div>
             ))}
@@ -86,6 +79,24 @@ export default function PersonalSida(): JSX.Element {
           <h2 className="font-DM text-2xl flex items-center justify-center border-b border-black mr-4 mb-4">
             Dina utförda arbetspass
           </h2>
+          <ul className="flex flex-col">
+            {cleaner?.map((booking) => (
+              <div
+                key={booking.id}
+                className="m-5 border-b border-black bg-customDark text-white font-DM p-5 rounded-lg flex flex-row items-center justify-between"
+              >
+                <DoneAdminBookings key={booking.id} booking={booking} />
+                <div className="flex items-center me-4">
+                  <input
+                    id="green-checkbox"
+                    type="checkbox"
+                    value=""
+                    className="size-5 rounded-lg dark:ring-offset-gray-300 focus:ring-1 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                </div>
+              </div>
+            ))}
+          </ul>
         </div>
       </div>
     </div>
