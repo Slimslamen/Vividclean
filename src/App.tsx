@@ -16,7 +16,7 @@ import BackgroundOpacity from "./LandingFolder/components/BackgroundOpacity";
 import Register from "./LoginFolder/Register";
 import PersonalSida from "./Sidor/PersonalSida";
 import Loading from "./Loading";
-import NoPageFound from "./Sidor/NoPageFound";
+import NoPageFound from "./Sidor/components/NoPageFound";
 
 function App() {
   return (

@@ -47,7 +47,7 @@ export default function KundSida():JSX.Element {
   //State to handle the form data
   const [formData, setFormData] = useState<IformData>({selectedName:name, selectedDate:"", time:"", cleaner:"", service:"", status:false})
   //state with all the bookings
-  const [Bookings, setBookings] = useState<Ibooking[]>([])
+  const [bookings, setBookings] = useState<Ibooking[]>([])
   const [reRender, setReRender] = useState<boolean>(false)
     
   const bookingsRef = collection(db, "users", emailLogin, "booking")
@@ -60,11 +60,12 @@ export default function KundSida():JSX.Element {
         id: doc.id,
         name: doc.data().name,
         date: doc.data().date,
-        cleaner: doc.data().cleaner,
+        cleaner:doc.data().cleaner,
         time: doc.data().time,
         status: doc.data().status,
         service: doc.data().service
       }));
+      
       setBookings(filteredData);
     } catch (error) {
       console.log(error);
@@ -167,7 +168,7 @@ export default function KundSida():JSX.Element {
           </button>
         </form>
         <h2 className="text-3xl my-2 font-DM">Kommande bokningar</h2>
-        {Bookings.map((booking) => (
+        {bookings.map((booking) => (
           <div className="flex flex-row w-full">
             <BookingPage key={booking.id} booking={booking} />
             <button onClick={() => deleteBooking(booking.id)} className="ml-2 bg-customHoverDark rounded-lg hover:bg-customDark text-white duration-300 ease-in-out p-1 font-DM" >Ta bort bokning</button>
