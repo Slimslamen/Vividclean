@@ -25,6 +25,7 @@ const AdminLogin = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    handleMenuItemClick("Medarbetar Portal")
 
     try {
       const auth = getAuth();

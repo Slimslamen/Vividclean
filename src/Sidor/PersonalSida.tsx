@@ -50,7 +50,7 @@ export default function PersonalSida(): JSX.Element {
       <hr className="bg-black"/>
 
       <div className="flex md:flex-cols-2 md:gap-4">
-        <div className="w-full h-96 mt-10 mb-10">
+        <div className="w-full h-auto mt-10 mb-10">
           <h2 className="font-DM text-2xl flex items-center justify-center border-b border-black ml-4 mb-">
             Dina kommande arbetspass
           </h2>
