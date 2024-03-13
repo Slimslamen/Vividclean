@@ -4,13 +4,13 @@ import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 import { Ibooking, UserAuthContextProps } from "../types/types";
 import UserAuthContext from "../UserAuthContext";
 import BookingAdminList from "./components/BookingAdminList";
-import DoneAdminBookings from "./components/DoneAdminbookings";
+import DoneAdminBookings from "./components/DoneAdminBookings";
 
 export default function PersonalSida(): JSX.Element {
   const [cleaner, setCleaner] = useState<Ibooking[]>([]);
   const [admin, setAdmin] = useState<string>("");
 
-  const { emailAdmin } = React.useContext(
+  const { emailAdmin, formData, setFormData } = React.useContext(
     UserAuthContext
   ) as UserAuthContextProps;
 
@@ -44,6 +44,16 @@ export default function PersonalSida(): JSX.Element {
     fetchBookings();
   }, []);
 
+  function handleDoneBooking(e: React.HTMLInputTypeAttribute, id:string) {
+    cleaner.filter(() => {
+      if (id === id) {
+    
+        setFormData((prev) => ({...prev, status: true}));
+      }
+    });
+    
+  }
+
   return (
     <div className="p-10 bg-customHover">
       <h1 className="font-DM text-5xl flex items-center justify-center mt-16 border-b border-grey">
@@ -56,48 +66,45 @@ export default function PersonalSida(): JSX.Element {
           <h2 className="font-DM text-2xl flex items-center justify-center border-b border-black ml-4 mb-">
             Dina kommande arbetspass
           </h2>
-          <ul className="flex flex-col">
-            {cleaner?.map((booking) => (
-              <div
-                key={booking.id}
-                className="m-5 border-b border-black bg-customDark text-white font-DM p-5 rounded-lg flex flex-row items-center justify-between"
-              >
-                <BookingAdminList key={booking.id} booking={booking} />
-                <div className="flex items-center me-4">
-                  <input
-                    id="green-checkbox"
-                    type="checkbox"
-                    value=""
-                    className="size-5 rounded-lg dark:ring-offset-gray-300 focus:ring-1 dark:bg-gray-700 dark:border-gray-600"
-                  />
+          {!formData.status && (
+            <ul className="flex flex-col">
+              {cleaner?.map((booking) => (
+                <div
+                  key={booking.id}
+                  className="m-5 border-b border-black bg-customDark text-white font-DM p-5 rounded-lg flex flex-row items-center justify-between"
+                >
+                  <BookingAdminList key={booking.id} booking={booking} />
+                  <div className="flex items-center me-4">
+                    <input
+                      id="green-checkbox"
+                      type="checkbox"
+                      value=""
+                      onChange={(e) => handleDoneBooking(e.target.value,booking.id)}
+                      className="size-5 rounded-lg dark:ring-offset-gray-300 focus:ring-1 dark:bg-gray-700 dark:border-gray-600"
+                    />
+                  </div>
                 </div>
-              </div>
-            ))}
-          </ul>
+              ))}
+            </ul>
+          )}
         </div>
-        <div className="w-full h-96 mt-10 ml-[5%]">
-          <h2 className="font-DM text-2xl flex items-center justify-center border-b border-black mr-4 mb-4">
-            Dina utförda arbetspass
-          </h2>
-          <ul className="flex flex-col">
-            {cleaner?.map((booking) => (
-              <div
-                key={booking.id}
-                className="m-5 border-b border-black bg-customDark text-white font-DM p-5 rounded-lg flex flex-row items-center justify-between"
-              >
-                <DoneAdminBookings key={booking.id} booking={booking} />
-                <div className="flex items-center me-4">
-                  <input
-                    id="green-checkbox"
-                    type="checkbox"
-                    value=""
-                    className="size-5 rounded-lg dark:ring-offset-gray-300 focus:ring-1 dark:bg-gray-700 dark:border-gray-600"
-                  />
+        {formData.status && (
+          <div className="w-full h-96 mt-10 ml-[5%]">
+            <h2 className="font-DM text-2xl flex items-center justify-center border-b border-black mr-4 mb-4">
+              Dina utförda arbetspass
+            </h2>
+            <ul className="flex flex-col">
+              {cleaner?.map((booking) => (
+                <div
+                  key={booking.id}
+                  className="m-5 border-b border-black bg-customDark text-white font-DM p-5 rounded-lg flex flex-row items-center justify-between"
+                >
+                  <DoneAdminBookings key={booking.id} booking={booking} />
                 </div>
-              </div>
-            ))}
-          </ul>
-        </div>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );

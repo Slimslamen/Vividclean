@@ -25,6 +25,8 @@ export type UserAuthContextProps = {
   JimmyRef:CollectionReference<DocumentData>;
   emailAdmin: string;
   setEmailAdmin: React.Dispatch<React.SetStateAction<string>>
+  formData: IformData;
+  setFormData: React.Dispatch<React.SetStateAction<IformData>>
 };
 
 //Interface for kundsida component

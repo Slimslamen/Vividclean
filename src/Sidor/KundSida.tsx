@@ -38,14 +38,14 @@ const options: Ioptions[] = [
 
 export default function KundSida():JSX.Element {
   
-  const { name, emailLogin, martaRef, EstelleRef, JimmyRef } = React.useContext(
+  const { name, emailLogin, martaRef, EstelleRef, JimmyRef, formData, setFormData } = React.useContext(
     UserAuthContext
   )! as UserAuthContextProps;
 
   
   const placeHolderDates = new Date().toLocaleDateString()
   //State to handle the form data
-  const [formData, setFormData] = useState<IformData>({selectedName:name, selectedDate:"", time:"", cleaner:"", service:"", status:false})
+ 
   //state with all the bookings
   const [bookings, setBookings] = useState<Ibooking[]>([])
   const [reRender, setReRender] = useState<boolean>(false)
