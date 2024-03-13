@@ -30,7 +30,7 @@ export default function LogIn() {
       navigate("/KundSida");
     } catch (error: unknown) {
       if (error instanceof Error) {
-        console.log(error.message); // Du kan nu använda Error-metoder
+        console.log(error.message); 
       } else {
         console.error("Ett okänt fel inträffade:", error);
       }
@@ -55,7 +55,7 @@ export default function LogIn() {
       handleMenuItemClick("Logga in")
     } catch (error: unknown) {
       if (error instanceof Error) {
-        console.log(error.message); // Du kan nu använda Error-metoder
+        console.log(error.message); 
       } else {
         console.error("Ett okänt fel inträffade:", error);
       }
@@ -77,7 +77,7 @@ export default function LogIn() {
 
   function handleHideLogin() {
     handleMenuItemClick("Logga in");
-    // Dölj LogIn genom att anropa saveUser med tomma värden
+
   }
 
   function AlreadyAUser() {
