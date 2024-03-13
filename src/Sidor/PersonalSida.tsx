@@ -43,33 +43,44 @@ export default function PersonalSida(): JSX.Element {
   }, []);
 
   return (
-    <>
+    <div className="p-10 bg-customHover">
       <h1 className="font-DM text-5xl flex items-center justify-center mt-16 border-b border-grey">
-        Personal: {admin}
+        {admin}
       </h1>
+      <hr className="bg-black"/>
 
       <div className="flex md:flex-cols-2 md:gap-4">
         <div className="w-full h-96 mt-10 mb-10">
-          <h2 className="font-DM text-xl flex items-center justify-center border-b border-black ml-4 mb-4">
+          <h2 className="font-DM text-2xl flex items-center justify-center border-b border-black ml-4 mb-">
             Dina kommande arbetspass
           </h2>
-          <ul>
+          <ul className="flex flex-col">
             {cleaner?.map((booking) => (
-              <li className="m-5 border-b border-black" key={booking.id}>
-                Datum: {booking.date.toLocaleDateString()}, Tid: {booking.time}
-                <button className="m-5 ml-48 border border-solid text-white bg-customDark p-1 rounded-lg">
-                  städning utförd
+              <div key={booking.id} className="m-5 border-b border-black bg-customDark text-white font-DM p-5 rounded-lg flex flex-row items-center justify-between">
+                <div className="flex flex-row space-x-4">
+                  <li>
+                    Datum: {booking.date.toLocaleDateString()}  
+                  </li>
+                  <li>
+                    Tid: {booking.time}
+                  </li>
+                  <li>
+                    Tjänst: {booking.service}
+                  </li>
+                </div>
+                <button className=" border border-solid text-white bg-customDark p-1 rounded-lg">
+                  Pågående
                 </button>
-              </li>
+              </div>
             ))}
           </ul>
         </div>
         <div className="w-full h-96 mt-10 ml-[5%]">
-          <h2 className="font-DM text-xl flex items-center justify-center border-b border-black mr-4 mb-4">
+          <h2 className="font-DM text-2xl flex items-center justify-center border-b border-black mr-4 mb-4">
             Dina utförda arbetspass
           </h2>
         </div>
       </div>
-    </>
+    </div>
   );
 }
