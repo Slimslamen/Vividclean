@@ -1,6 +1,6 @@
 import React from "react";
-import { Ibooking, UserAuthContextProps } from "../../types/types"
-import UserAuthContext from "../../UserAuthContext";
+import { Ibooking } from "../../types/types"
+
 
 interface Iprop{
     booking: Ibooking;
@@ -8,11 +8,9 @@ interface Iprop{
 
 export default function BookingPage({ booking }:Iprop):JSX.Element {
 
-    const { name } = React.useContext(
-        UserAuthContext
-      )! as UserAuthContextProps;
-    const {  service, time, date, cleaner } = booking
+    const {  name,service, time, date, cleaner } = booking
     const shownDate = date.toDate().toLocaleDateString()
+    
     return (
     <div className="w-full flex flex-row">
         <div className="flex flex-col md:flex-row space-x-2 w-full px-5 py-2 bg-customDark text-white text-xl rounded-lg items-center justify-between font-DM">

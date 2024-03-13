@@ -1,13 +1,15 @@
 import React from 'react'
-import { Ioptions } from '../../types/types';
+import { Ioptions } from '../types/types';
 
 interface Iservice{
     option:Ioptions;
     setFormData:React.Dispatch<React.SetStateAction<{
+      selectedName: string;
       selectedDate: Date;
       time: string;
       cleaner: string;
       service: string;
+      status: boolean;
   }>>
     formService: string;
 }
@@ -23,6 +25,7 @@ const { type, service } = option
         onChange={(e) => setFormData(prev => ({...prev, service:e.target.value}))}
         id={type}
         type="radio"
+        required
         checked={service === formService}
         value={service}
         className="w-4 h-4 text-customDark bg-gray-100 border-gray-300 rounded focus:ring-customDark  "

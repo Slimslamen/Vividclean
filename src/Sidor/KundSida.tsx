@@ -45,7 +45,7 @@ export default function KundSida():JSX.Element {
   
   const placeHolderDates = new Date().toLocaleDateString()
   //State to handle the form data
-  const [formData, setFormData] = useState<IformData>({selectedDate:"", time:"", cleaner:"", service:""})
+  const [formData, setFormData] = useState<IformData>({selectedName:name, selectedDate:"", time:"", cleaner:"", service:"", status:false})
   //state with all the bookings
   const [Bookings, setBookings] = useState<Ibooking[]>([])
   const [reRender, setReRender] = useState<boolean>(false)
@@ -74,19 +74,19 @@ export default function KundSida():JSX.Element {
   const onSubmit = async(e:FormEvent) => {
     e.preventDefault()
     try {
-      const { selectedDate ,time, cleaner, service} = formData
-      await addDoc(bookingsRef, {date:selectedDate , time:time, cleaner:cleaner, service:service, status:status})
+      const { selectedName, selectedDate ,time, cleaner, service, status } = formData
+      await addDoc(bookingsRef, { name:selectedName, date:selectedDate , time:time, cleaner:cleaner, service:service, status:status })
       if(cleaner == "Estelle"){
-        await addDoc(EstelleRef, {date:selectedDate , time:time, cleaner:cleaner, service:service, status:status})
+        await addDoc(EstelleRef, { name:selectedName, date:selectedDate , time:time, cleaner:cleaner, service:service, status:status })
       }
       if(cleaner == "Märta"){
-        await addDoc(martaRef, {date:selectedDate , time:time, cleaner:cleaner, service:service, status:status})
+        await addDoc(martaRef, { name:selectedName, date:selectedDate , time:time, cleaner:cleaner, service:service, status:status })
       }
       if(cleaner == "Jimmy"){
-        await addDoc(JimmyRef, {date:selectedDate , time:time, cleaner:cleaner, service:service, status:status})
+        await addDoc(JimmyRef, { name:selectedName, date:selectedDate , time:time, cleaner:cleaner, service:service, status:status })
       }
       getBookings()
-      setFormData({selectedDate:"", time:"", cleaner:cleaners[0].name, service:""})
+      setFormData({selectedName:name, selectedDate:"", time:"", cleaner:cleaners[0].name, service:"", status:false})
       
     } catch (error) {
       console.log(error);
@@ -136,16 +136,16 @@ export default function KundSida():JSX.Element {
             <h2 className="text-3xl font-DM mb-5">Boka städning</h2>
             <div className="flex flex-col md:flex-row w-full justify-between space-y-4 md:space-y-0">
               <div className="w-full flex flex-col items-start space-y-2">
-                <DatePicker onChange={(date:Date) => setFormData(prev => ({ ...prev, selectedDate:date }))} placeholderText={placeHolderDates} filterDate={date => { return date.getDay() !== 0 && date.getDay() !== 6}}/* Disable weekends (Saturday and Sunday) */ minDate={new Date()} selected={formData.selectedDate} />
+                <DatePicker onChange={(date:Date) => setFormData(prev => ({ ...prev, selectedDate:date }))} placeholderText={placeHolderDates} filterDate={date => { return date.getDay() !== 0 && date.getDay() !== 6}}/* Disable weekends (Saturday and Sunday) */ minDate={new Date()} selected={formData.selectedDate} required />
                 <p className="px-2 py-1 bg-customDark text-white rounded-lg">Välj datum</p>
               </div>
               <div className="w-full flex flex-col md:items-end space-y-2">
-                <input onChange={e => setFormData(prev => ({...prev, time:e.target.value}))} value={formData.time} id="time" type="time" min='08:00' max= '15:00' step="3600" className="p-1 rounded-lg w-5/12" />
+                <input required onChange={e => setFormData(prev => ({...prev, time:e.target.value}))} value={formData.time} id="time" type="time" min='08:00' max= '15:00' step="3600" className="p-1 rounded-lg w-5/12" />
                 <p className="px-2 py-1 bg-customDark text-white rounded-lg">Välj tid</p>
               </div>
             </div>
             <div className="flex flex-col space-y-2 my-9">
-              <select onChange={(e) => setFormData(prev => ({...prev, cleaner:e.target.value}))} value={formData.cleaner} name="Städare" id="Städare" className="p-1 rounded-lg w-4/12 bg-transparent focus:outline-none">
+              <select required onChange={(e) => setFormData(prev => ({...prev, cleaner:e.target.value}))} value={formData.cleaner} name="Städare" id="Städare" className="p-1 rounded-lg w-4/12 bg-transparent focus:outline-none">
                 {cleaners.map((clean) => (
                   <option key={clean.id} value={clean.value}>{clean.name}</option>
                   
@@ -177,33 +177,3 @@ export default function KundSida():JSX.Element {
       </>
   );
 }
-
-
-
-
-
-/*   
-      const AdminUsers = collection(db, "users")      
-      const AdminSnap = await getDocs(AdminUsers)
-      AdminSnap.docs.forEach((doc) => {
-        const userData = doc.data();
-        const checkAdmin = userData.role;
-        const checkCleaner = userData.username;
-
-        
-        if(checkAdmin == "cleaner"){
-          if(checkCleaner == "Estelle"){
-            setcleanerEstelle(checkCleaner)
-            console.log("titta" + checkCleaner);
-          }
-          if(checkCleaner == "Märta"){
-            setcleanerMarta(checkCleaner)
-            console.log("titta2" + checkCleaner);
-          }
-          if(checkCleaner == "Jimmy"){
-            setcleanerJimmy(checkCleaner)
-            console.log("titta3" + checkCleaner);
-          }
-        }
-      });
-       */
