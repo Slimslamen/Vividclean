@@ -16,6 +16,7 @@ import BackgroundOpacity from "./LandingFolder/components/BackgroundOpacity";
 import Register from "./LoginFolder/Register";
 import PersonalSida from "./Sidor/PersonalSida";
 import Loading from "./Loading";
+import NoPageFound from "./Sidor/components/NoPageFound";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
             {/* <Route path="/KundSida"  element={<ProtectedRoute><KundSida /></ProtectedRoute>}  /> */}
             <Route path="/KundSida" element={<KundSida />} />
             <Route path="/PersonalSida" element={<PersonalSida />} />
+            <Route path="*" element={<NoPageFound />} />
           </Routes>
           <Footer />
           </BackgroundOpacity>

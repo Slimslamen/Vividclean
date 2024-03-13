@@ -23,6 +23,8 @@ export type UserAuthContextProps = {
   martaRef: CollectionReference<DocumentData>;
   EstelleRef: CollectionReference<DocumentData>;
   JimmyRef:CollectionReference<DocumentData>;
+  emailAdmin: string;
+  setEmailAdmin: React.Dispatch<React.SetStateAction<string>>
 };
 
 //Interface for kundsida component
@@ -39,16 +41,18 @@ export interface Icleaners {
 
 }
 export interface IformData {
+  selectedName: string;
   selectedDate: date;
   time: string;
   cleaner: string;
   service: string;
+  status: boolean;
 }
 
 export interface Ibooking{
   id: string;
   name: string;
-  date: date;
+  date: Date;
   cleaner: string;
   time: string;
   status: boolean;

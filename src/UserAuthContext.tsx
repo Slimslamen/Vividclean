@@ -22,6 +22,8 @@ interface UserAuthContextProps {
     martaRef: CollectionReference<DocumentData>;
     EstelleRef: CollectionReference<DocumentData>;
     JimmyRef:CollectionReference<DocumentData>;
+    emailAdmin: string;
+    setEmailAdmin:  React.Dispatch<React.SetStateAction<string>>
   }
 
   export const UserAuthContext = createContext<UserAuthContextProps | undefined>(undefined);
@@ -81,7 +83,7 @@ interface UserAuthContextProps {
     
   
     const FireBaseValues: UserAuthContextProps = {
-        user, logIn, signUp, logOut, googleSignIn, name, setName, emailLogin, setEmailLogin, martaRef, EstelleRef, JimmyRef
+        user, logIn, signUp, logOut, googleSignIn, name, setName, emailLogin, setEmailLogin, martaRef, EstelleRef, JimmyRef, emailAdmin, setEmailAdmin
       };
     return (
       <UserAuthContext.Provider
