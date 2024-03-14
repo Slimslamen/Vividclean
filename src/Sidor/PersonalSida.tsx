@@ -46,7 +46,6 @@ export default function PersonalSida(): JSX.Element {
 
   function handleDoneBooking(id:string) {
       setCleaner(prev => prev.map(book => book.id === id ? {...book, status: !book.status}: book))
-
   }
   
   return (
