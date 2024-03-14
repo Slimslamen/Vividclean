@@ -15,18 +15,18 @@ export default function PersonalSida(): JSX.Element {
     UserAuthContext
   ) as UserAuthContextProps;
 
+  const bookingsRef = (collection(db, "users", emailAdmin, "booking"));
 
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const bookingsRef = await getDocs(collection(db, "users", emailAdmin, "booking"));
-
+        const data = await getDocs(bookingsRef)
         const getUsername = doc(db, "users", emailAdmin);
         const usernameSnap = await getDoc(getUsername);
         const adminUser = usernameSnap.data()?.username;
         setAdmin(adminUser);
 
-        const filteredBookings: Ibooking[] = bookingsRef.docs
+        const filteredBookings: Ibooking[] = data.docs
           .filter((doc) => doc.data().cleaner === adminUser)
           .map((doc) => ({
             ...doc.data(),
@@ -34,18 +34,21 @@ export default function PersonalSida(): JSX.Element {
             date: doc.data().date.toDate(),
             status: doc.data().status
           }));
-        setCleaner(filteredBookings);
-
+          const newBookings = filteredBookings.sort((a, b) => a.date.getTime() - b.date.getTime());
+        setCleaner(newBookings);
       } catch (error) {
         console.error("Error fetching bookings:", error);
       }
     };
 
     fetchBookings();
-  }, []);
-
-  function handleDoneBooking(id:string) {
+  }, [cleaner, emailAdmin]);
+  
+  const checkRef = (collection(db, "users", emailAdmin, "booking", "id"));
+ async function handleDoneBooking(id:string) {
       setCleaner(prev => prev.map(book => book.id === id ? {...book, status: !book.status}: book))
+      const check = await getDocs(checkRef)
+      updateDoc(check, {status: true})
   }
   
   return (
