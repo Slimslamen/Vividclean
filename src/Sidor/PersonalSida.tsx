@@ -34,15 +34,15 @@ export default function PersonalSida(): JSX.Element {
             date: doc.data().date.toDate(),
             status: doc.data().status
           }));
-        setCleaner(filteredBookings);
-
+          const newBookings = filteredBookings.sort((a, b) => a.date.getTime() - b.date.getTime());
+        setCleaner(newBookings);
       } catch (error) {
         console.error("Error fetching bookings:", error);
       }
     };
 
     fetchBookings();
-  }, []);
+  }, [cleaner, emailAdmin]);
 
  async function handleDoneBooking(id:string) {
       setCleaner(prev => prev.map(book => book.id === id ? {...book, status: !book.status}: book))
