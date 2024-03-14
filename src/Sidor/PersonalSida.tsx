@@ -34,19 +34,18 @@ export default function PersonalSida(): JSX.Element {
             date: doc.data().date.toDate(),
             status: doc.data().status
           }));
-        setCleaner(filteredBookings);
-
+          const newBookings = filteredBookings.sort((a, b) => a.date.getTime() - b.date.getTime());
+        setCleaner(newBookings);
       } catch (error) {
         console.error("Error fetching bookings:", error);
       }
     };
 
     fetchBookings();
-  }, []);
+  }, [cleaner, emailAdmin]);
 
-  function handleDoneBooking(id:string) {
+ async function handleDoneBooking(id:string) {
       setCleaner(prev => prev.map(book => book.id === id ? {...book, status: !book.status}: book))
-
 
   }
   
@@ -85,7 +84,7 @@ export default function PersonalSida(): JSX.Element {
             </ul>
         </div>
         
-          <div className="w-full h-96 mt-10 ml-[5%]">
+          <div className="w-full h-auto mt-10 ml-[5%]">
             <h2 className="font-DM text-2xl flex items-center justify-center border-b border-black mr-4 mb-4">
               Dina utförda arbetspass
             </h2>

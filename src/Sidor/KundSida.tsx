@@ -49,6 +49,7 @@ export default function KundSida():JSX.Element {
   //state with all the bookings
   const [bookings, setBookings] = useState<Ibooking[]>([])
   const [reRender, setReRender] = useState<boolean>(false)
+  const [checkError, setCheckError] = useState<boolean>(true)
     
   const bookingsRef = collection(db, "users", emailLogin, "booking")
 
@@ -71,6 +72,7 @@ export default function KundSida():JSX.Element {
       console.log(error);
     }
   };
+ 
 
   const onSubmit = async(e:FormEvent) => {
     e.preventDefault()
@@ -85,7 +87,8 @@ export default function KundSida():JSX.Element {
       }
       if(cleaner == "Jimmy"){
         await addDoc(JimmyRef, { name:selectedName, date:selectedDate , time:time, cleaner:cleaner, service:service, status:status })
-      }
+      }  
+   
       getBookings()
       setFormData({selectedName:name, selectedDate:"", time:"", cleaner:cleaners[0].name, service:"", status:false})
       
@@ -99,6 +102,16 @@ export default function KundSida():JSX.Element {
     await deleteDoc(bookingDoc)
      setReRender(!reRender)
   }
+useEffect(() => {
+  const { service } = formData
+  if(service === "Städare"){
+    setCheckError(true)
+  }else if(service !== "Städare"){
+    setCheckError(false)
+  }
+
+}, [])
+
 
   useEffect(() => {
     getBookings()
@@ -108,7 +121,7 @@ export default function KundSida():JSX.Element {
   const cleaners:Icleaners[] = [
     {
       id: uuidv4(),
-      value: "",
+      value: "Städare",
       name: "Städare"
     },
     {
@@ -160,10 +173,10 @@ export default function KundSida():JSX.Element {
                   <Services key={option.id} option={option} formService={formData.service} setFormData={setFormData}/>    
                   ))}
               </ul>
-              <p className="px-2 py-1 bg-customDark text-white rounded-lg">Välj en tjänst</p>
+              <p className={`px-2 py-1 text-center text-white rounded-lg ${checkError ? 'bg-red-500': 'bg-customDark'} `}>Välj en tjänst</p>
             </div>
           </div>
-          <button type="submit" className="cursor-pointer bg-customDark text-white px-32 py-2 rounded-md hover:bg-customHoverDark duration-300 ease-in-out disabled:opacity-30 disabled:hover:bg-customDark disabled:cursor-auto">
+          <button disabled={checkError} type="submit" className="cursor-pointer bg-customDark text-white px-32 py-2 rounded-md hover:bg-customHoverDark duration-300 ease-in-out disabled:opacity-30 disabled:hover:bg-customDark disabled:cursor-auto">
             Boka nu
           </button>
         </form>
