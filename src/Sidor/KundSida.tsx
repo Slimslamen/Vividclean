@@ -2,7 +2,7 @@ import DatePicker from "react-datepicker";
 import React, { FormEvent, useEffect, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import Services from "./components/Services";
-import { Ioptions, Icleaners, IformData, Ibooking, UserAuthContextProps } from "../types/types";
+import { Ioptions, Icleaners, Ibooking, UserAuthContextProps } from "../types/types";
 import { db } from "../config/firebase";
 import { collection, getDocs, addDoc, deleteDoc, doc } from "firebase/firestore";
 import BookingPage from "./components/BookingPage";
