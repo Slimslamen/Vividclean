@@ -50,7 +50,7 @@ export default function LogIn() {
 
       setName(username)
 
-      alert(`Välkommen ${emailLogin}!`)
+      alert(`Välkommen ${username}!`)
       navigate("/KundSida");
       handleMenuItemClick("Logga in")
     } catch (error: unknown) {
