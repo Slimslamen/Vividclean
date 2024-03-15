@@ -44,12 +44,17 @@ export default function PersonalSida(): JSX.Element {
     fetchBookings();
   }, [cleaner, emailAdmin]);
   
-  const checkRef = (collection(db, "users", emailAdmin, "booking", "id"));
- async function handleDoneBooking(id:string) {
-      setCleaner(prev => prev.map(book => book.id === id ? {...book, status: !book.status}: book))
-      const check = await getDocs(checkRef)
-      updateDoc(check, {status: true})
-  }
+  async function handleDoneBooking(id: string) {
+    setCleaner(prev => prev.map(book => book.id === id ? {...book, status: !book.status}: book));
+
+    try {
+        const docRef = doc(db, "users", emailAdmin, "booking", id);
+        await updateDoc(docRef, { status: true });
+    } catch (error) {
+
+        console.error("Error updating booking:", error);
+    }
+}
   
   return (
     <div className="p-10 bg-customHover h-auto">
