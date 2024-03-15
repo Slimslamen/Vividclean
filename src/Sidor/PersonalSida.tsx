@@ -11,7 +11,7 @@ export default function PersonalSida(): JSX.Element {
   const [cleaner, setCleaner] = useState<Ibooking[]>([]);
   const [admin, setAdmin] = useState<string>("");
 
-  const { emailAdmin } = React.useContext(
+  const { emailAdmin, emailLogin } = React.useContext(
     UserAuthContext
   ) as UserAuthContextProps;
 
@@ -48,10 +48,11 @@ export default function PersonalSida(): JSX.Element {
     setCleaner(prev => prev.map(book => book.id === id ? {...book, status: !book.status}: book));
 
     try {
+        const customerRef = doc(db, "users", emailLogin, "booking", id)
         const docRef = doc(db, "users", emailAdmin, "booking", id);
+        await updateDoc(customerRef, { status:true });
         await updateDoc(docRef, { status: true });
     } catch (error) {
-
         console.error("Error updating booking:", error);
     }
 }
@@ -78,7 +79,7 @@ export default function PersonalSida(): JSX.Element {
                   <BookingAdminList key={booking.id} booking={booking} />
                   <div className="flex items-center me-4">
                     <input
-                      id="green-checkbox"
+                      id="checkbox"
                       type="checkbox"
                       checked={booking.status}
                       onChange={() => handleDoneBooking(booking.id)}

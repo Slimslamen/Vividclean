@@ -7,6 +7,7 @@ import { db } from "../config/firebase";
 import { collection, getDocs, addDoc, deleteDoc, doc } from "firebase/firestore";
 import BookingPage from "./components/BookingPage";
 import UserAuthContext from "../UserAuthContext";
+import DoneAdminBookings from "./components/DoneAdminBookings";
 
 const options: Ioptions[] = [
   {
@@ -115,7 +116,7 @@ useEffect(() => {
 
   useEffect(() => {
     getBookings()
-  }, [reRender])
+  }, [bookings])
   
   
   const cleaners:Icleaners[] = [
@@ -180,13 +181,28 @@ useEffect(() => {
             Boka nu
           </button>
         </form>
+        <div className="space-y-4">
         <h2 className="text-3xl my-2 font-DM">Kommande bokningar</h2>
         {bookings.map((booking) => (
+          !booking.status && (
           <div className="flex flex-row w-full">
             <BookingPage key={booking.id} booking={booking} />
             <button onClick={() => deleteBooking(booking.id)} className="ml-2 bg-customHoverDark rounded-lg hover:bg-customDark text-white duration-300 ease-in-out p-1 font-DM" >Ta bort bokning</button>
           </div>
+          )
           ))}
+        </div>
+        <div className="space-y-4">
+        <h2 className="text-3xl my-2 font-DM">Utförda bokningar</h2>
+        {bookings.map((booking) => (
+          booking.status && (
+          <div className="flex flex-row w-full">
+            <DoneAdminBookings key={booking.id} booking={booking} />
+            <button onClick={() => deleteBooking(booking.id)} className="ml-2 bg-customHoverDark rounded-lg hover:bg-customDark text-white duration-300 ease-in-out p-1 font-DM" >Ta bort bokning</button>
+          </div>
+          )
+          ))}
+        </div>
       </div>
       </>
   );
