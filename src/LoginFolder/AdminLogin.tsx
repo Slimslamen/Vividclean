@@ -23,7 +23,7 @@ const AdminLogin = () => {
     UserAuthContext
   )! as UserAuthContextProps;
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     handleMenuItemClick("Medarbetar Portal")
 
@@ -105,11 +105,12 @@ const AdminLogin = () => {
             />
           </button>
           <div>
-            <Label value="Din email" className="text-black" />
+            <Label htmlFor="email" value="Din email" className="text-black" />
 
             <TextInput
+            id="email"
               type="email"
-              value={emailAdmin}
+              autoComplete="email"
               placeholder="Din email"
               addon={usernameIcon}
               required
@@ -117,14 +118,15 @@ const AdminLogin = () => {
             />
           </div>
           <div>
-            <Label value="Lösenord" className="text-black" />
+            <Label htmlFor="password" value="Lösenord" className="text-black" />
 
             <TextInput
+            id="password"
               type="password"
-              value={password}
               placeholder="Lösenord"
               required
               onChange={(e) => setPassword(e.target.value)}
+              autoComplete="current-password"
             />
           </div>
 
