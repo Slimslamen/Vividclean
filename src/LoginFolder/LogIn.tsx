@@ -107,7 +107,7 @@ export default function LogIn() {
             />
           </button>
           <div>
-            <Label value="Your email" className="text-black" />
+            <Label value="Din email" className="text-black" />
             <TextInput
               id="email-address-icon"
               placeholder="Din email"
@@ -119,7 +119,7 @@ export default function LogIn() {
           <div>
             <Label
               htmlFor="password1"
-              value="Your password"
+              value="Ditt lösenord"
               className="text-black"
             />
             <TextInput
