@@ -189,7 +189,7 @@ export default function KundSida(): JSX.Element {
     <>
       <div className="bg-customBeige mx-auto w-full md:w-1/2 my-52 py-10 px-20 flex items-center justify-center flex-col space-y-10 rounded-md shadow-lg">
         <form
-          className="flex items-center justify-center flex-col space-y-10"
+          className="flex items-center justify-center flex-col space-y-10 p-10"
           onSubmit={onSubmit}
         >
           <h1 className="text-5xl font-DM">{`${name}s`} bokningar</h1>
@@ -267,7 +267,7 @@ export default function KundSida(): JSX.Element {
                 ))}
               </ul>
               <p
-                className={`px-2 py-1 text-center text-white rounded-lgbg-customDark`}
+                className={`px-2 py-1 text-center text-white rounded-lg bg-customDark`}
               >
                 Välj en tjänst
               </p>
@@ -280,7 +280,7 @@ export default function KundSida(): JSX.Element {
             Boka nu
           </button>
         </form>
-        <div className="space-y-4">
+        <div className="space-y-5">
           <h2 className="text-3xl my-2 font-DM">Kommande bokningar</h2>
           {bookings.map(
             (booking) =>
@@ -297,23 +297,17 @@ export default function KundSida(): JSX.Element {
               )
           )}
         </div>
-        <div className="space-y-4">
+        <div>
           <h2 className="text-3xl my-2 font-DM">Utförda bokningar</h2>
-          <ul className="flex flex-col font-DM">
+          <ul className="flex flex-col font-DM space-y-1">
             {bookings.map(
               (booking) =>
                 booking.status && (
                   <div
                     key={booking.id}
-                    className="m-5 border-b border-black bg-customDark text-white font-DM p-5 rounded-lg flex flex-row items-center justify-between"
+                    className="m-5 border-b border-black bg-customDark text-white font-DM p-5 rounded-lg"
                   >
                     <DoneAdminBookings key={booking.id} booking={booking} />
-                    <button
-                      onClick={() => deleteBooking(booking.id)}
-                      className="ml-2 bg-customHoverDark rounded-lg hover:bg-customDark text-white duration-300 ease-in-out p-1 font-DM"
-                    >
-                      Ta bort bokning
-                    </button>
                   </div>
                 )
             )}
