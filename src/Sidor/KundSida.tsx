@@ -50,7 +50,6 @@ export default function KundSida():JSX.Element {
   //state with all the bookings
   const [bookings, setBookings] = useState<Ibooking[]>([])
   const [reRender, setReRender] = useState<boolean>(false)
-  const [checkError, setCheckError] = useState<boolean>(true)
     
   const bookingsRef = collection(db, "users", emailLogin, "booking")
 
@@ -103,20 +102,10 @@ export default function KundSida():JSX.Element {
     await deleteDoc(bookingDoc)
      setReRender(!reRender)
   }
-useEffect(() => {
-  const { service } = formData
-  if(service === "Städare"){
-    setCheckError(true)
-  }else if(service !== "Städare"){
-    setCheckError(false)
-  }
-
-}, [])
-
 
   useEffect(() => {
     getBookings()
-  }, [bookings])
+  }, [reRender])
   
   
   const cleaners:Icleaners[] = [

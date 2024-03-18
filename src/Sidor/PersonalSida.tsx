@@ -42,7 +42,7 @@ export default function PersonalSida(): JSX.Element {
     };
 
     fetchBookings();
-  }, [cleaner, emailAdmin]);
+  }, [cleaner]);
   
   async function handleDoneBooking(id: string) {
     setCleaner(prev => prev.map(book => book.id === id ? {...book, status: !book.status}: book));
