@@ -34,7 +34,7 @@ interface UserAuthContextProps {
   interface UserAuthContextProviderProps {
     children: ReactNode;
   }
-
+  //all the bookings for the cleaners
   const martaRef = collection(db, "users", "marta_malm_97@hotmail.se", "booking")
   const EstelleRef = collection(db, "users", "estelle.stenemur@gmail.com", "booking")
   const JimmyRef = collection(db, "users", "jimmy@gmail.com", "booking")

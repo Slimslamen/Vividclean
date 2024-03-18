@@ -56,7 +56,9 @@ export default function KundSida():JSX.Element {
 
   const getBookings = async () => {
     try {
+      //get all bookings in firebase
       const data = await getDocs(bookingsRef);
+      //mapping all the info in a booking
       const filteredData: Ibooking[] = data.docs.map((doc) => ({
         id: doc.id,
         name: doc.data().name,
@@ -66,7 +68,7 @@ export default function KundSida():JSX.Element {
         status: doc.data().status,
         service: doc.data().service
       }));
-      
+      //setting the mapped info in bookings
       setBookings(filteredData);
     } catch (error) {
       console.log(error);
@@ -77,8 +79,11 @@ export default function KundSida():JSX.Element {
   const onSubmit = async(e:FormEvent) => {
     e.preventDefault()
     try {
+      //Destructuring formdata
       const { selectedName, selectedDate ,time, cleaner, service, status } = formData
+      //Add booking to firebase
       await addDoc(bookingsRef, { name:selectedName, date:selectedDate , time:time, cleaner:cleaner, service:service, status:status })
+      //Add booking to selected cleaner
       if(cleaner == "Estelle"){
         await addDoc(EstelleRef, { name:selectedName, date:selectedDate , time:time, cleaner:cleaner, service:service, status:status })
       }
@@ -88,8 +93,9 @@ export default function KundSida():JSX.Element {
       if(cleaner == "Jimmy"){
         await addDoc(JimmyRef, { name:selectedName, date:selectedDate , time:time, cleaner:cleaner, service:service, status:status })
       }  
-   
+      //get all the bookings
       getBookings()
+      //put all fields to default
       setFormData({selectedName:name, selectedDate:"", time:"", cleaner:cleaners[0].name, service:"", status:false})
       
     } catch (error) {
@@ -98,8 +104,10 @@ export default function KundSida():JSX.Element {
   }
   
   const deleteBooking =  async(id:string) => {
+    //deleting booking based on id
     const bookingDoc = doc(db, "users", emailLogin, "booking", id)
     await deleteDoc(bookingDoc)
+    //changing state to false or true, to get the remaining bookings each time you delete a booking
      setReRender(!reRender)
   }
 
@@ -140,19 +148,18 @@ export default function KundSida():JSX.Element {
             <h2 className="text-3xl font-DM mb-5">Boka städning</h2>
             <div className="flex flex-col md:flex-row w-full justify-between space-y-4 md:space-y-0">
               <div className="w-full flex flex-col items-start space-y-2">
-                <DatePicker onChange={(date:Date) => setFormData(prev => ({ ...prev, selectedDate:date }))} placeholderText={placeHolderDates} filterDate={date => { return date.getDay() !== 0 && date.getDay() !== 6}}/* Disable weekends (Saturday and Sunday) */ minDate={new Date()} selected={formData.selectedDate} required />
-                <p className="px-2 py-1 bg-customDark text-white rounded-lg">Välj datum</p>
+                <DatePicker onChange={(date:Date) => setFormData(prev => ({ ...prev, selectedDate:date }))} placeholderText={placeHolderDates} id="date" filterDate={date => { return date.getDay() !== 0 && date.getDay() !== 6}}/* Disable weekends (Saturday and Sunday) */ minDate={new Date()} selected={formData.selectedDate} required />
+                <label htmlFor="date" className="px-2 py-1 bg-customDark text-white rounded-lg">Välj datum</label>
               </div>
               <div className="w-full flex flex-col md:items-end space-y-2">
                 <input required onChange={e => setFormData(prev => ({...prev, time:e.target.value}))} value={formData.time} id="time" type="time" min='08:00' max= '15:00' step="3600" className="p-1 rounded-lg w-5/12" />
-                <p className="px-2 py-1 bg-customDark text-white rounded-lg">Välj tid</p>
+                <label htmlFor="time" className="px-2 py-1 bg-customDark text-white rounded-lg">Välj tid</label>
               </div>
             </div>
             <div className="flex flex-col space-y-2 my-9">
-              <select required onChange={(e) => setFormData(prev => ({...prev, cleaner:e.target.value}))} value={formData.cleaner} name="Städare" id="Städare" className="p-1 rounded-lg w-4/12 bg-transparent focus:outline-none">
+              <select required onChange={(e) => setFormData(prev => ({...prev, cleaner:e.target.value}))} value={formData.cleaner} className="p-1 rounded-lg w-4/12 bg-transparent focus:outline-none">
                 {cleaners.map((clean) => (
                   <option key={clean.id} value={clean.value}>{clean.name}</option>
-                  
                   ))}
               </select>
               <p className="px-2 py-1 bg-customDark text-white rounded-lg w-52">Välj en städare</p>
@@ -163,10 +170,10 @@ export default function KundSida():JSX.Element {
                   <Services key={option.id} option={option} formService={formData.service} setFormData={setFormData}/>    
                   ))}
               </ul>
-              <p className={`px-2 py-1 text-center text-white rounded-lg ${checkError ? 'bg-red-500': 'bg-customDark'} `}>Välj en tjänst</p>
+              <p className={`px-2 py-1 text-center text-white rounded-lg'bg-customDark`}>Välj en tjänst</p>
             </div>
           </div>
-          <button disabled={checkError} type="submit" className="cursor-pointer bg-customDark text-white px-32 py-2 rounded-md hover:bg-customHoverDark duration-300 ease-in-out disabled:opacity-30 disabled:hover:bg-customDark disabled:cursor-auto">
+          <button  type="submit" className="cursor-pointer bg-customDark text-white px-32 py-2 rounded-md hover:bg-customHoverDark duration-300 ease-in-out disabled:opacity-30 disabled:hover:bg-customDark disabled:cursor-auto">
             Boka nu
           </button>
         </form>
