@@ -65,15 +65,14 @@ export default function KundSida(): JSX.Element {
   //state with all the bookings
   const [bookings, setBookings] = useState<Ibooking[]>([]);
   const [reRender, setReRender] = useState<boolean>(false);
-  const [checkError, setCheckError] = useState<boolean>(true);
 
   const bookingsRef = collection(db, "users", emailLogin, "booking");
 
   const getBookings = async () => {
     try {
-      //get all bookings in firebase
+      //getting bookings on the logged in user
       const data = await getDocs(bookingsRef);
-      //mapping all the info in a booking
+      //mapping over info of the booking
       const filteredData: Ibooking[] = data.docs.map((doc) => ({
         id: doc.id,
         name: doc.data().name,
@@ -95,6 +94,7 @@ export default function KundSida(): JSX.Element {
     try {
       const { selectedName, selectedDate, time, cleaner, service, status } =
         formData;
+        //add booking to selected cleaner
       await addDoc(bookingsRef, {
         name: selectedName,
         date: selectedDate,
@@ -133,8 +133,9 @@ export default function KundSida(): JSX.Element {
           status: status,
         });
       }
-
+      //get bookings
       getBookings();
+      //set inputs to default
       setFormData({
         selectedName: name,
         selectedDate: "",
@@ -149,31 +150,16 @@ export default function KundSida(): JSX.Element {
   };
 
   const deleteBooking = async (id: string) => {
+    //detelte booking based on selected id
     const bookingDoc = doc(db, "users", emailLogin, "booking", id);
     await deleteDoc(bookingDoc);
+    //changing state from true to false or other way around
     setReRender(!reRender);
   };
-  useEffect(() => {
-    const { service } = formData;
-    if (service === "Städare") {
-      setCheckError(true);
-    } else if (service !== "Städare") {
-      setCheckError(false);
-    }
-  }, []);
-  }
-  
-  const deleteBooking =  async(id:string) => {
-    //deleting booking based on id
-    const bookingDoc = doc(db, "users", emailLogin, "booking", id)
-    await deleteDoc(bookingDoc)
-    //changing state to false or true, to get the remaining bookings each time you delete a booking
-     setReRender(!reRender)
-  }
-
+//updating the fetched booking after each time we delete a booking
   useEffect(() => {
     getBookings();
-  }, [bookings]);
+  }, [reRender]);
 
   const cleaners: Icleaners[] = [
     {
@@ -198,6 +184,7 @@ export default function KundSida(): JSX.Element {
     },
   ];
 
+
   return (
     <>
       <div className="bg-customBeige mx-auto w-full md:w-1/2 my-52 py-10 px-20 flex items-center justify-center flex-col space-y-10 rounded-md shadow-lg">
@@ -210,25 +197,63 @@ export default function KundSida(): JSX.Element {
             <h2 className="text-3xl font-DM mb-5">Boka städning</h2>
             <div className="flex flex-col md:flex-row w-full justify-between space-y-4 md:space-y-0">
               <div className="w-full flex flex-col items-start space-y-2">
-                <DatePicker onChange={(date:Date) => setFormData(prev => ({ ...prev, selectedDate:date }))} placeholderText={placeHolderDates} id="date" filterDate={date => { return date.getDay() !== 0 && date.getDay() !== 6}}/* Disable weekends (Saturday and Sunday) */ minDate={new Date()} selected={formData.selectedDate} required />
-                <label htmlFor="date" className="px-2 py-1 bg-customDark text-white rounded-lg">Välj datum</label>
+                <DatePicker
+                  onChange={(date: Date) =>
+                    setFormData((prev) => ({ ...prev, selectedDate: date }))
+                  }
+                  placeholderText={placeHolderDates}
+                  filterDate={(date) => {
+                    return date.getDay() !== 0 && date.getDay() !== 6;
+                  }}
+                  /* Disable weekends (Saturday and Sunday) */ minDate={
+                    new Date()
+                  }
+                  selected={formData.selectedDate}
+                  required
+                  id="date"
+                />
+                <label htmlFor="date" className="px-2 py-1 bg-customDark text-white rounded-lg">
+                  Välj datum
+                </label>
               </div>
               <div className="w-full flex flex-col md:items-end space-y-2">
-                <input required onChange={e => setFormData(prev => ({...prev, time:e.target.value}))} value={formData.time} id="time" type="time" min='08:00' max= '15:00' step="3600" className="p-1 rounded-lg w-5/12" />
-                <label htmlFor="time" className="px-2 py-1 bg-customDark text-white rounded-lg">Välj tid</label>
+                <input
+                  required
+                  onChange={(e) =>
+                    setFormData((prev) => ({ ...prev, time: e.target.value }))
+                  }
+                  value={formData.time}
+                  id="time"
+                  type="time"
+                  min="08:00"
+                  max="15:00"
+                  step="3600"
+                  className="p-1 rounded-lg w-5/12"
+                />
+                <label htmlFor="time" className="px-2 py-1 bg-customDark text-white rounded-lg">
+                  Välj tid
+                </label>
               </div>
             </div>
             <div className="flex flex-col space-y-2 my-9">
-              <select required onChange={(e) => setFormData(prev => ({...prev, cleaner:e.target.value}))} value={formData.cleaner} className="p-1 rounded-lg w-4/12 bg-transparent focus:outline-none">
+              <select
+                required
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, cleaner: e.target.value }))
+                }
+                value={formData.cleaner}
+                name="Städare"
+                className="p-1 rounded-lg w-4/12 bg-transparent focus:outline-none"
+              >
                 {cleaners.map((clean) => (
                   <option key={clean.id} value={clean.value}>
                     {clean.name}
                   </option>
                 ))}
               </select>
-              <p className="px-2 py-1 bg-customDark text-white rounded-lg w-52">
+              <label htmlFor="Städare" className="px-2 py-1 bg-customDark text-white rounded-lg w-52">
                 Välj en städare
-              </p>
+              </label>
             </div>
             <div className="flex flex-col space-y-2">
               <ul className="mt-2 items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
@@ -241,10 +266,17 @@ export default function KundSida(): JSX.Element {
                   />
                 ))}
               </ul>
-              <p className={`px-2 py-1 text-center text-white rounded-lg'bg-customDark`}>Välj en tjänst</p>
+              <p
+                className={`px-2 py-1 text-center text-white rounded-lgbg-customDark`}
+              >
+                Välj en tjänst
+              </p>
             </div>
           </div>
-          <button  type="submit" className="cursor-pointer bg-customDark text-white px-32 py-2 rounded-md hover:bg-customHoverDark duration-300 ease-in-out disabled:opacity-30 disabled:hover:bg-customDark disabled:cursor-auto">
+          <button
+            type="submit"
+            className="cursor-pointer bg-customDark text-white px-32 py-2 rounded-md hover:bg-customHoverDark duration-300 ease-in-out disabled:opacity-30 disabled:hover:bg-customDark disabled:cursor-auto"
+          >
             Boka nu
           </button>
         </form>
