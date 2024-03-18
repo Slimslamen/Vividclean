@@ -7,7 +7,6 @@ import { ContextType, UserAuthContextProps } from "../types/types";
 import UserAuthContext from "../UserAuthContext";
 
 export default function Register() {
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -16,7 +15,9 @@ export default function Register() {
     ProductContext
   )! as ContextType;
 
-  const { signUp, name, setName } = React.useContext(UserAuthContext)! as UserAuthContextProps;
+  const { signUp, name, setName } = React.useContext(
+    UserAuthContext
+  )! as UserAuthContextProps;
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -85,7 +86,8 @@ export default function Register() {
             <Label htmlFor="email" value="E-post:" className="text-xl" />
           </div>
           <input
-          id="email"
+            id="email"
+            name="email"
             type="email"
             placeholder="vividclean@gmail.com"
             onChange={(e) => setEmail(e.target.value)}
@@ -93,10 +95,15 @@ export default function Register() {
             className="font-DM rounded p-2"
           />
           <div className="mb-2 block font-DM">
-            <Label htmlFor="Username" value="Användarnamn:" className="text-xl" />
+            <Label
+              htmlFor="Username"
+              value="Användarnamn:"
+              className="text-xl"
+            />
           </div>
           <input
-          id="Username"
+            id="Username"
+            name="username"
             type="text"
             placeholder="VividClean"
             onChange={(e) => setName(e.target.value)}
@@ -107,7 +114,7 @@ export default function Register() {
             <Label htmlFor="password" value="Lösenord:" className="text-xl" />
           </div>
           <input
-          id="password"
+            id="password"
             type="password"
             placeholder="Lösenord"
             onChange={(e) => setPassword(e.target.value)}
@@ -135,5 +142,3 @@ export default function Register() {
     </div>
   );
 }
-
-
