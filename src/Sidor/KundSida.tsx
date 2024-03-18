@@ -92,9 +92,15 @@ export default function KundSida(): JSX.Element {
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      const { selectedName, selectedDate, time, cleaner, service, status } =
-        formData;
-        //add booking to selected cleaner
+      const {
+        selectedName,
+        selectedDate,
+        time,
+        cleaner,
+        service,
+        status,
+      } = formData;
+      //add booking to selected cleaner
       await addDoc(bookingsRef, {
         name: selectedName,
         date: selectedDate,
@@ -156,7 +162,7 @@ export default function KundSida(): JSX.Element {
     //changing state from true to false or other way around
     setReRender(!reRender);
   };
-//updating the fetched booking after each time we delete a booking
+  //updating the fetched booking after each time we delete a booking
   useEffect(() => {
     getBookings();
   }, [reRender]);
@@ -184,19 +190,21 @@ export default function KundSida(): JSX.Element {
     },
   ];
 
-
   return (
     <>
-      <div className="bg-customBeige mx-auto w-full md:w-1/2 my-52 py-10 px-20 flex items-center justify-center flex-col space-y-10 rounded-md shadow-lg">
-        <form
-          className="flex items-center justify-center flex-col space-y-10 p-10"
-          onSubmit={onSubmit}
-        >
-          <h1 className="text-5xl font-DM">{`${name}s`} bokningar</h1>
-          <div>
-            <h2 className="text-3xl font-DM mb-5">Boka städning</h2>
-            <div className="flex flex-col md:flex-row w-full justify-between space-y-4 md:space-y-0">
-              <div className="w-full flex flex-col items-start space-y-2">
+      <div className="mx-auto md:w-4/5 my-10 flex items-start justify-center flex-col md:flex-row space-y-10 rounded-md space-x-10">
+        <div className="w-1/3">
+            <div className="text-center my-4 bg-customDark text-white p-4 rounded-lg">
+              <h1 className="text-4xl font-DM">{`${name}s`} bokningar</h1>
+            </div>
+          <div className="bg-customBeige rounded-lg">
+          <form
+            className="flex items-center justify-center flex-col space-y-4 p-5"
+            onSubmit={onSubmit}
+          >
+            <h2 className="text-4xl font-DM mb-5">Boka städning</h2>
+            <div className="flex flex-col w-full space-y-3">
+              <div className="w-full flex flex-col items-center space-y-2">
                 <DatePicker
                   onChange={(date: Date) =>
                     setFormData((prev) => ({ ...prev, selectedDate: date }))
@@ -215,7 +223,7 @@ export default function KundSida(): JSX.Element {
                   Välj datum
                 </p>
               </div>
-              <div className="w-full flex flex-col md:items-end space-y-2">
+              <div className="w-full flex flex-col md:items-center space-y-2">
                 <input
                   required
                   onChange={(e) =>
@@ -227,22 +235,25 @@ export default function KundSida(): JSX.Element {
                   min="08:00"
                   max="15:00"
                   step="3600"
-                  className="p-1 rounded-lg w-5/12"
+                  className="p-1 rounded-lg w-1/2"
                 />
                 <p className="px-2 py-1 bg-customDark text-white rounded-lg">
                   Välj tid
                 </p>
               </div>
             </div>
-            <div className="flex flex-col space-y-2 my-9">
+            <div className="flex flex-col">
               <select
                 required
                 onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, cleaner: e.target.value }))
+                  setFormData((prev) => ({
+                    ...prev,
+                    cleaner: e.target.value,
+                  }))
                 }
                 value={formData.cleaner}
                 name="Städare"
-                className="p-1 rounded-lg w-4/12 bg-transparent focus:outline-none"
+                className="p-1 rounded-lg w-1/2 bg-transparent focus:outline-none"
               >
                 {cleaners.map((clean) => (
                   <option key={clean.id} value={clean.value}>
@@ -250,12 +261,15 @@ export default function KundSida(): JSX.Element {
                   </option>
                 ))}
               </select>
-              <label htmlFor="Städare" className="px-2 py-1 bg-customDark text-white rounded-lg w-52">
+              <label
+                htmlFor="Städare"
+                className="px-2 py-1 bg-customDark text-white rounded-lg w-52"
+              >
                 Välj en städare
               </label>
             </div>
-            <div className="flex flex-col space-y-2">
-              <ul className="mt-2 items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+            <div className="w-3/4 flex flex-col space-y-4">
+              <ul className="flex flex-col mt-2 items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                 {options.map((option) => (
                   <Services
                     key={option.id}
@@ -271,46 +285,49 @@ export default function KundSida(): JSX.Element {
                 Välj en tjänst
               </p>
             </div>
+            <button
+              type="submit"
+              className="cursor-pointer bg-customDark text-white px-32 py-2 rounded-md hover:bg-customHoverDark duration-300 ease-in-out disabled:opacity-30 disabled:hover:bg-customDark disabled:cursor-auto"
+            >
+              Boka nu
+            </button>
+          </form>
           </div>
-          <button
-            type="submit"
-            className="cursor-pointer bg-customDark text-white px-32 py-2 rounded-md hover:bg-customHoverDark duration-300 ease-in-out disabled:opacity-30 disabled:hover:bg-customDark disabled:cursor-auto"
-          >
-            Boka nu
-          </button>
-        </form>
-        <div className="space-y-5">
-          <h2 className="text-3xl my-2 font-DM">Kommande bokningar</h2>
-          {bookings.map(
-            (booking) =>
-              !booking.status && (
-                <div className="flex flex-row w-full">
-                  <BookingPage key={booking.id} booking={booking} />
-                  <button
-                    onClick={() => deleteBooking(booking.id)}
-                    className="ml-2 bg-customHoverDark rounded-lg hover:bg-customDark text-white duration-300 ease-in-out p-1 font-DM"
-                  >
-                    Ta bort bokning
-                  </button>
-                </div>
-              )
-          )}
         </div>
-        <div>
-          <h2 className="text-3xl my-2 font-DM">Utförda bokningar</h2>
-          <ul className="flex flex-col font-DM space-y-1">
+        <div className="">
+          <div className="space-y-5">
+            <h2 className="text-4xl my-2 font-DM text-center px-5 rounded-lg py-2 font-bold">Kommande bokningar</h2>
             {bookings.map(
               (booking) =>
-                booking.status && (
-                  <div
-                    key={booking.id}
-                    className="m-5 border-b border-black bg-customDark text-white font-DM p-5 rounded-lg"
-                  >
-                    <DoneAdminBookings key={booking.id} booking={booking} />
+                !booking.status && (
+                  <div className="flex flex-row w-full">
+                    <BookingPage key={booking.id} booking={booking} />
+                    <button
+                      onClick={() => deleteBooking(booking.id)}
+                      className="ml-2 bg-customHoverDark rounded-lg hover:bg-customDark text-white duration-300 ease-in-out p-1 font-DM"
+                    >
+                      Ta bort bokning
+                    </button>
                   </div>
                 )
             )}
-          </ul>
+          </div>
+          <div className="mt-5">
+            <h2 className="text-4xl my-2 font-DM text-center px-5 rounded-lg py-2 font-bold">Utförda bokningar</h2>
+            <ul className="flex flex-col font-DM space-y-1">
+              {bookings.map(
+                (booking) =>
+                  booking.status && (
+                    <div
+                      key={booking.id}
+                      className="m-5 border-b border-black bg-customDark text-white font-DM p-5 rounded-lg"
+                    >
+                      <DoneAdminBookings key={booking.id} booking={booking} />
+                    </div>
+                  )
+              )}
+            </ul>
+          </div>
         </div>
       </div>
     </>

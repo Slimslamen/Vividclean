@@ -19,8 +19,8 @@ export default function Services({option, formService, setFormData}:Iservice):JS
 const { type, service } = option
 
   return (
-    <li className="w-full px-2 hover:bg-customHoverDark duration-300 ease-in-out rounded-md" >
-    <div className="flex items-center ps-3">
+    <li className="w-full px-5 hover:bg-customHoverDark duration-300 ease-in-out rounded-md" >
+    <div className="flex items-center">
       <input
         onChange={(e) => setFormData(prev => ({...prev, service:e.target.value}))}
         id={type}
