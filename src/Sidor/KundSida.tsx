@@ -65,13 +65,14 @@ export default function KundSida(): JSX.Element {
   //state with all the bookings
   const [bookings, setBookings] = useState<Ibooking[]>([]);
   const [reRender, setReRender] = useState<boolean>(false);
-  const [checkError, setCheckError] = useState<boolean>(true);
 
   const bookingsRef = collection(db, "users", emailLogin, "booking");
 
   const getBookings = async () => {
     try {
+      //getting bookings on the logged in user
       const data = await getDocs(bookingsRef);
+      //mapping over info of the booking
       const filteredData: Ibooking[] = data.docs.map((doc) => ({
         id: doc.id,
         name: doc.data().name,
@@ -81,7 +82,7 @@ export default function KundSida(): JSX.Element {
         status: doc.data().status,
         service: doc.data().service,
       }));
-
+      //setting the mapped info in bookings
       setBookings(filteredData);
     } catch (error) {
       console.log(error);
@@ -93,6 +94,7 @@ export default function KundSida(): JSX.Element {
     try {
       const { selectedName, selectedDate, time, cleaner, service, status } =
         formData;
+        //add booking to selected cleaner
       await addDoc(bookingsRef, {
         name: selectedName,
         date: selectedDate,
@@ -131,8 +133,9 @@ export default function KundSida(): JSX.Element {
           status: status,
         });
       }
-
+      //get bookings
       getBookings();
+      //set inputs to default
       setFormData({
         selectedName: name,
         selectedDate: "",
@@ -147,22 +150,16 @@ export default function KundSida(): JSX.Element {
   };
 
   const deleteBooking = async (id: string) => {
+    //detelte booking based on selected id
     const bookingDoc = doc(db, "users", emailLogin, "booking", id);
     await deleteDoc(bookingDoc);
+    //changing state from true to false or other way around
     setReRender(!reRender);
   };
-  useEffect(() => {
-    const { service } = formData;
-    if (service === "Städare") {
-      setCheckError(true);
-    } else if (service !== "Städare") {
-      setCheckError(false);
-    }
-  }, []);
-
+//updating the fetched booking after each time we delete a booking
   useEffect(() => {
     getBookings();
-  }, [bookings]);
+  }, [reRender]);
 
   const cleaners: Icleaners[] = [
     {
@@ -187,11 +184,12 @@ export default function KundSida(): JSX.Element {
     },
   ];
 
+
   return (
     <>
       <div className="bg-customBeige mx-auto w-full md:w-1/2 my-52 py-10 px-20 flex items-center justify-center flex-col space-y-10 rounded-md shadow-lg">
         <form
-          className="flex items-center justify-center flex-col space-y-10"
+          className="flex items-center justify-center flex-col space-y-10 p-10"
           onSubmit={onSubmit}
         >
           <h1 className="text-5xl font-DM">{`${name}s`} bokningar</h1>
@@ -244,7 +242,6 @@ export default function KundSida(): JSX.Element {
                 }
                 value={formData.cleaner}
                 name="Städare"
-                id="Städare"
                 className="p-1 rounded-lg w-4/12 bg-transparent focus:outline-none"
               >
                 {cleaners.map((clean) => (
@@ -253,9 +250,9 @@ export default function KundSida(): JSX.Element {
                   </option>
                 ))}
               </select>
-              <p className="px-2 py-1 bg-customDark text-white rounded-lg w-52">
+              <label htmlFor="Städare" className="px-2 py-1 bg-customDark text-white rounded-lg w-52">
                 Välj en städare
-              </p>
+              </label>
             </div>
             <div className="flex flex-col space-y-2">
               <ul className="mt-2 items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
@@ -269,23 +266,20 @@ export default function KundSida(): JSX.Element {
                 ))}
               </ul>
               <p
-                className={`px-2 py-1 text-center text-white rounded-lg ${
-                  checkError ? "bg-red-500" : "bg-customDark"
-                } `}
+                className={`px-2 py-1 text-center text-white rounded-lg bg-customDark`}
               >
                 Välj en tjänst
               </p>
             </div>
           </div>
           <button
-            disabled={checkError}
             type="submit"
             className="cursor-pointer bg-customDark text-white px-32 py-2 rounded-md hover:bg-customHoverDark duration-300 ease-in-out disabled:opacity-30 disabled:hover:bg-customDark disabled:cursor-auto"
           >
             Boka nu
           </button>
         </form>
-        <div className="space-y-4">
+        <div className="space-y-5">
           <h2 className="text-3xl my-2 font-DM">Kommande bokningar</h2>
           {bookings.map(
             (booking) =>
@@ -302,23 +296,17 @@ export default function KundSida(): JSX.Element {
               )
           )}
         </div>
-        <div className="space-y-4">
+        <div>
           <h2 className="text-3xl my-2 font-DM">Utförda bokningar</h2>
-          <ul className="flex flex-col font-DM">
+          <ul className="flex flex-col font-DM space-y-1">
             {bookings.map(
               (booking) =>
                 booking.status && (
                   <div
                     key={booking.id}
-                    className="m-5 border-b border-black bg-customDark text-white font-DM p-5 rounded-lg flex flex-row items-center justify-between"
+                    className="m-5 border-b border-black bg-customDark text-white font-DM p-5 rounded-lg"
                   >
                     <DoneAdminBookings key={booking.id} booking={booking} />
-                    <button
-                      onClick={() => deleteBooking(booking.id)}
-                      className="ml-2 bg-customHoverDark rounded-lg hover:bg-customDark text-white duration-300 ease-in-out p-1 font-DM"
-                    >
-                      Ta bort bokning
-                    </button>
                   </div>
                 )
             )}

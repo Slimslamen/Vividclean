@@ -13,7 +13,7 @@ export default function Header() {
           src="src/assets/heroimage3.jpg"
           alt="heroimage"
         />
-        <div className="absolute top-0 w-full h-full flex justify-end items-end p-4 md:p-12">
+        <div className="absolute top-0 w-full h-full flex justify-end items-end p-4 md:p-12 mt-20">
           <div className="text-center md:mb-56">
             <h1 className="text-2xl md:text-5xl mr-5 text-black font-DM md:mt-5">
               Välkommen till VividClean
@@ -113,7 +113,7 @@ export default function Header() {
                 </div>
               </div>
             </div>
-            <button className="bg-customDark duration-300 ease-in-out hover:bg-gray-700 rounded p-1 md:p-2 font-DM text-white flex items-center ml-20 md:ml-36 md:mt-10">
+            <button className="bg-customDark duration-300 ease-in-out hover:bg-customHoverDark rounded p-1 md:p-2 font-DM text-white flex items-center ml-20 md:ml-36 md:mt-10">
               Ta del av erbjudandet nu
             </button>
           </div>

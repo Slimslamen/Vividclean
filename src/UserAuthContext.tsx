@@ -34,19 +34,18 @@ interface UserAuthContextProps {
   interface UserAuthContextProviderProps {
     children: ReactNode;
   }
-
+  //all the bookings for the cleaners
   const martaRef = collection(db, "users", "marta_malm_97@hotmail.se", "booking")
   const EstelleRef = collection(db, "users", "estelle.stenemur@gmail.com", "booking")
   const JimmyRef = collection(db, "users", "jimmy@gmail.com", "booking")
-
-
-
 
   export function UserAuthContextProvider({ children }: UserAuthContextProviderProps): JSX.Element {
     const [user, setUser] = useState<any>({}); // Replace 'any' with the actual type of your user object
     const [emailAdmin, setEmailAdmin] = useState("");
     const [name, setName] = useState<string>("");
+    //logged in user
     const [emailLogin, setEmailLogin] = useState<string>("");
+    //saved data from inputs
     const [formData, setFormData] = useState<IformData>({selectedName:name, selectedDate:"", time:"", cleaner:"", service:"", status:false})
   
     async function logIn(email: string, password: string):Promise<void> {
