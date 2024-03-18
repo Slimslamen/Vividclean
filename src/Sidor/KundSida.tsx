@@ -210,11 +210,10 @@ export default function KundSida(): JSX.Element {
                   }
                   selected={formData.selectedDate}
                   required
-                  id="date"
                 />
-                <label htmlFor="date" className="px-2 py-1 bg-customDark text-white rounded-lg">
+                <p className="px-2 py-1 bg-customDark text-white rounded-lg">
                   Välj datum
-                </label>
+                </p>
               </div>
               <div className="w-full flex flex-col md:items-end space-y-2">
                 <input
@@ -230,9 +229,9 @@ export default function KundSida(): JSX.Element {
                   step="3600"
                   className="p-1 rounded-lg w-5/12"
                 />
-                <label htmlFor="time" className="px-2 py-1 bg-customDark text-white rounded-lg">
+                <p className="px-2 py-1 bg-customDark text-white rounded-lg">
                   Välj tid
-                </label>
+                </p>
               </div>
             </div>
             <div className="flex flex-col space-y-2 my-9">

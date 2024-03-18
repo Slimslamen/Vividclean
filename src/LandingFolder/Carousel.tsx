@@ -33,9 +33,9 @@ const Carousel = ({ images }: CarouselProps): JSX.Element => {
   }
 
   return (
-    <div className="relative">
+    <div className="relative mt-28">
       <div className="flex items-center justify-center space-x-10 space-y-6 overflow-hidden ml-5 mr-5">
-        <div className="absolute left-0 top-1/2 transform -translate-y-1/2">
+        <div className="absolute left-0 top-1/2 -translate-y-1/2">
           <button
             className="text-customDark rounded text-4xl md:text-6xl mb-5 ml-4 md:ml-0"
             onClick={prevSlide}
