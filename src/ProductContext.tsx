@@ -48,12 +48,7 @@ const ProductContextProvider = ({ children }: ProductContextProviderProps) => {
   };
 
   const handleMenuItemClick = (label: string) => {
-    console.log(
-      "Before update - adminVisible:",
-      adminVisible,
-      "loginVisible",
-      loginVisible
-    );
+  
 
     if (label === "Logga in") {
       setLoginVisible(!loginVisible);
@@ -68,13 +63,6 @@ const ProductContextProvider = ({ children }: ProductContextProviderProps) => {
       logOut();
     }
 
-    console.log(
-      "After update - adminVisible:",
-      adminVisible,
-      "loginVisible",
-      loginVisible
-    );
-    console.log(auth?.currentUser?.email);
   };
 
   const LoginValue: ContextType = {
