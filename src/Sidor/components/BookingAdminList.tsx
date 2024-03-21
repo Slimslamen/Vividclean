@@ -8,11 +8,12 @@ interface IAdminBooking{
 export default function BookingAdminList({ booking }:IAdminBooking) {
   return (
     <>
-    <div className="flex flex-row space-x-4">
+    <ul className="flex flex-row space-x-4">
       <li><span className="font-semibold text-lg">Datum:</span> {booking.date.toLocaleDateString()}</li>
       <li><span className="font-semibold text-lg">Tid:</span> {booking.time}</li>
       <li><span className="font-semibold text-lg">Tjänst:</span> {booking.service}</li>
-    </div><div className="flex flex-row space-x-3">
+    </ul>
+    <div className="flex flex-row space-x-3">
      
       </div>
       </>

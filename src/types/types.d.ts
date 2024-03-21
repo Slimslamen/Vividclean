@@ -13,20 +13,22 @@ export type ContextType = {
 export type UserAuthContextProps = {
   googleSignIn: () => Promise<void>;
   logOut: () => void;
-  signUp: (email: string, name:string, password: string) => Promise<void>;
+  signUp: (email: string, name: string, password: string) => Promise<void>;
   logIn: (email: string, password: string) => Promise<void>;
   user: any;
-  name:string;
+  name: string;
   setName: React.Dispatch<React.SetStateAction<string>>;
   emailLogin: string;
-  setEmailLogin: React.Dispatch<React.SetStateAction<string>>
+  setEmailLogin: React.Dispatch<React.SetStateAction<string>>;
   martaRef: CollectionReference<DocumentData>;
   EstelleRef: CollectionReference<DocumentData>;
-  JimmyRef:CollectionReference<DocumentData>;
+  JimmyRef: CollectionReference<DocumentData>;
   emailAdmin: string;
-  setEmailAdmin: React.Dispatch<React.SetStateAction<string>>
+  setEmailAdmin: React.Dispatch<React.SetStateAction<string>>;
   formData: IformData;
-  setFormData: React.Dispatch<React.SetStateAction<IformData>>
+  setFormData: React.Dispatch<React.SetStateAction<IformData>>;
+  bookingId:  string | null | undefined;
+  setBookingId: React.Dispatch<React.SetStateAction<string | null | undefined>>;
 };
 
 //Interface for kundsida component
@@ -40,7 +42,6 @@ export interface Icleaners {
   id: string | number;
   value: string;
   name: string;
-
 }
 export interface IformData {
   selectedName: string;
@@ -49,14 +50,17 @@ export interface IformData {
   cleaner: string;
   service: string;
   status: boolean;
+  customerEmail: string
 }
 
-export interface Ibooking{
+export interface Ibooking {
   id: string;
   name: string;
   date: Date;
   cleaner: string;
   time: string;
   status: boolean;
-  service: string
+  service: string;
+  customerEmail: string;
+
 }
