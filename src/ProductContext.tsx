@@ -67,14 +67,6 @@ const ProductContextProvider = ({ children }: ProductContextProviderProps) => {
     if (label === "Logga ut") {
       logOut();
     }
-
-    console.log(
-      "After update - adminVisible:",
-      adminVisible,
-      "loginVisible",
-      loginVisible
-    );
-    console.log(auth?.currentUser?.email);
   };
 
   const LoginValue: ContextType = {

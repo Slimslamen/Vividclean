@@ -15,13 +15,13 @@ const images = [
 
 export default function Main(): JSX.Element {
   return (
-    <>
+    <div className="flex items-center justify-center flex-col">
       <div className="container flex items-center justify-center">
         <Carousel images={images} />
       </div>
       <Info />
       <Review />
       <Tips />
-    </>
+    </div>
   );
 }
