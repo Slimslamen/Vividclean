@@ -33,8 +33,8 @@ interface UserAuthContextProps {
   setEmailAdmin: React.Dispatch<React.SetStateAction<string>>;
   formData: IformData;
   setFormData: React.Dispatch<React.SetStateAction<IformData>>;
-  bookingId:  string | null | undefined;
-  setBookingId: React.Dispatch<React.SetStateAction<string | null | undefined>>
+  bookingId:  string;
+  setBookingId: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const UserAuthContext = createContext<UserAuthContextProps | undefined>(
@@ -74,7 +74,7 @@ export function UserAuthContextProvider({
     customerEmail: emailLogin,
   });
   
-  const [bookingId, setBookingId] = useState<string | null>();
+  const [bookingId, setBookingId] = useState<string>("");
   async function logIn(email: string, password: string): Promise<void> {
     await signInWithEmailAndPassword(auth, email, password);
   }
