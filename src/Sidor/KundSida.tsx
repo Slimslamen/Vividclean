@@ -57,6 +57,8 @@ export default function KundSida(): JSX.Element {
     JimmyRef,
     formData,
     setFormData,
+    setBookingId,
+    bookingId
   } = React.useContext(UserAuthContext)! as UserAuthContextProps;
 
   const placeHolderDates = new Date().toLocaleDateString();
@@ -81,6 +83,7 @@ export default function KundSida(): JSX.Element {
         time: doc.data().time,
         status: doc.data().status,
         service: doc.data().service,
+        customerEmail: doc.data().customerEmail,
       }));
       //setting the mapped info in bookings
       setBookings(filteredData);
@@ -92,6 +95,7 @@ export default function KundSida(): JSX.Element {
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
+    
       const {
         selectedName,
         selectedDate,
@@ -99,46 +103,35 @@ export default function KundSida(): JSX.Element {
         cleaner,
         service,
         status,
+        customerEmail,
       } = formData;
       //add booking to selected cleaner
-      await addDoc(bookingsRef, {
+      const bookingData = {
         name: selectedName,
         date: selectedDate,
         time: time,
         cleaner: cleaner,
         service: service,
         status: status,
-      });
-      if (cleaner == "Estelle") {
-        await addDoc(EstelleRef, {
-          name: selectedName,
-          date: selectedDate,
-          time: time,
-          cleaner: cleaner,
-          service: service,
-          status: status,
-        });
+        customerEmail: emailLogin,
+      };
+      console.log("Customer email:", customerEmail);
+   const docRef = await addDoc(bookingsRef, bookingData);
+   setBookingId(docRef.id)
+   console.log("NEw Booking ID", bookingId);
+   
+    
+      
+      if (cleaner === "Estelle") {
+        await addDoc(EstelleRef, bookingData);
       }
-      if (cleaner == "Märta") {
-        await addDoc(martaRef, {
-          name: selectedName,
-          date: selectedDate,
-          time: time,
-          cleaner: cleaner,
-          service: service,
-          status: status,
-        });
+      if (cleaner === "Märta") {
+        await addDoc(martaRef, bookingData);
       }
-      if (cleaner == "Jimmy") {
-        await addDoc(JimmyRef, {
-          name: selectedName,
-          date: selectedDate,
-          time: time,
-          cleaner: cleaner,
-          service: service,
-          status: status,
-        });
+      if (cleaner === "Jimmy") {
+        await addDoc(JimmyRef, bookingData);
       }
+  
       //get bookings
       getBookings();
       //set inputs to default
@@ -149,6 +142,7 @@ export default function KundSida(): JSX.Element {
         cleaner: cleaners[0].name,
         service: "",
         status: false,
+        customerEmail: emailLogin,
       });
     } catch (error) {
       console.log(error);
@@ -288,7 +282,7 @@ export default function KundSida(): JSX.Element {
             <button
               type="submit"
               className="cursor-pointer bg-customDark text-white px-32 py-2 rounded-md hover:bg-customHoverDark duration-300 ease-in-out disabled:opacity-30 disabled:hover:bg-customDark disabled:cursor-auto"
-            >
+           >
               Boka nu
             </button>
           </form>

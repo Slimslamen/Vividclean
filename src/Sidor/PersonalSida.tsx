@@ -20,7 +20,7 @@ export default function PersonalSida(): JSX.Element {
   >({});
   const [showBookings, setShowBookings] = useState<boolean>(true);
 
-  const { emailAdmin, emailLogin } = React.useContext(
+  const { emailAdmin, bookingId } = React.useContext(
     UserAuthContext
   ) as UserAuthContextProps;
 
@@ -42,11 +42,14 @@ export default function PersonalSida(): JSX.Element {
 
         const querySnapshot = await getDocs(bookingsRef);
 
-        const bookingsData: Ibooking[] = querySnapshot.docs.map((doc) => ({
-          ...(doc.data() as Ibooking),
-          id: doc.id,
-          date: doc.data().date.toDate(),
-        }));
+        const bookingsData: Ibooking[] = querySnapshot.docs.map((doc) => {
+          const data = doc.data();
+          return {
+            ...(data as Ibooking),
+            id: doc.id,
+            date: data.date ? data.date.toDate() : new Date(), 
+          };
+        });
 
         const filteredBookings = bookingsData.filter(
           (booking) => booking.cleaner === adminUser
@@ -66,25 +69,38 @@ export default function PersonalSida(): JSX.Element {
     };
 
     fetchBookings();
-  }, [emailAdmin]);
+  }, [emailAdmin, bookingId]);
 
-  const handleDoneBooking = async (id: string) => {
+  const handleDoneBooking = async (customerEmail: string, id: string, bookingId:string) => {
     try {
-      const batch = writeBatch(db);
-      const adminBookingRef = doc(db, "users", emailAdmin, "booking", id);
-      const customerBookingRef = doc(db, "users", emailLogin, "booking", id);
-      batch.update(adminBookingRef, { status: true });
-      batch.update(customerBookingRef, { status: true });
+      if (!customerEmail) {
+        console.error("Customer email is undefined");
+        return;
+      }
+    
+    const batch = writeBatch(db);
+    console.log("Admin", emailAdmin);
+    
+    const adminBookingRef = doc(db, "users", emailAdmin, "booking", id);
+    console.log("Admin booking reference path:", adminBookingRef.path);
+    batch.update(adminBookingRef, { status: true });
+    console.log("Value of emailLogin:", customerEmail);
+    const customerBookingRef = doc(db, "users", customerEmail, "booking", bookingId);
+    console.log("Customer booking reference path:", customerBookingRef.path);
+   
+    batch.update(customerBookingRef, { status: true });
 
-      await batch.commit();
+    await batch.commit();
 
-      setCleaner((prev) =>
-        prev.map((book) => (book.id === id ? { ...book, status: true } : book))
-      );
-    } catch (error) {
-      console.error("Error updating booking:", error);
-    }
-  };
+    setCleaner(prevBookings =>
+      prevBookings.map(booking =>
+        booking.id === bookingId ? { ...booking, status: true } : booking
+      )
+    );
+  } catch (error) {
+    console.error("Error updating booking:", error);
+  }
+};
 
   return (
     <div className="p-10 h-auto">
@@ -99,7 +115,7 @@ export default function PersonalSida(): JSX.Element {
           {showBookings && cleaner?.map(
             (booking) =>
               !booking.status && (
-                <li
+                <ul
                   key={booking.id}
                   className="m-4 border rounded-lg shadow-md bg-white"
                 >
@@ -110,7 +126,7 @@ export default function PersonalSida(): JSX.Element {
                         id={booking.id}
                         type="checkbox"
                         checked={booking.status}
-                        onChange={() => handleDoneBooking(booking.id)}
+                        onChange={() => handleDoneBooking(booking.customerEmail, booking.id, booking.bookingId)}
                         className="size-5 rounded-lg dark:ring-offset-gray-300 focus:ring-1 dark:bg-gray-700 dark:border-gray-600"
                       />
                       <label htmlFor={booking.id} className="ml-2">
@@ -118,7 +134,7 @@ export default function PersonalSida(): JSX.Element {
                       </label>
                     </div>
                   </div>
-                </li>
+                </ul>
               ))}
           </ul>
         </div>
