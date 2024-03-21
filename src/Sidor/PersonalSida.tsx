@@ -47,7 +47,7 @@ export default function PersonalSida(): JSX.Element {
           return {
             ...(data as Ibooking),
             id: doc.id,
-            date: data.date ? data.date.toDate() : new Date(), 
+            date: data.date ? data.date.toDate() : new Date(),
           };
         });
 
@@ -71,36 +71,48 @@ export default function PersonalSida(): JSX.Element {
     fetchBookings();
   }, [emailAdmin, bookingId]);
 
-  const handleDoneBooking = async (customerEmail: string, id: string, bookingId:string) => {
+  const handleDoneBooking = async (
+    customerEmail: string,
+    id: string
+  ) => {
     try {
       if (!customerEmail) {
         console.error("Customer email is undefined");
         return;
       }
-    
-    const batch = writeBatch(db);
-    console.log("Admin", emailAdmin);
-    
-    const adminBookingRef = doc(db, "users", emailAdmin, "booking", id);
-    console.log("Admin booking reference path:", adminBookingRef.path);
-    batch.update(adminBookingRef, { status: true });
-    console.log("Value of emailLogin:", customerEmail);
-    const customerBookingRef = doc(db, "users", customerEmail, "booking", bookingId);
-    console.log("Customer booking reference path:", customerBookingRef.path);
-   
-    batch.update(customerBookingRef, { status: true });
 
-    await batch.commit();
+      const batch = writeBatch(db);
+      console.log("Admin", emailAdmin);
 
-    setCleaner(prevBookings =>
-      prevBookings.map(booking =>
-        booking.id === bookingId ? { ...booking, status: true } : booking
-      )
-    );
-  } catch (error) {
-    console.error("Error updating booking:", error);
-  }
-};
+      const adminBookingRef = doc(db, "users", emailAdmin, "booking", id);
+      console.log("Admin booking reference path:", adminBookingRef.path);
+      console.log("Admin ID:", adminBookingRef.id);
+
+      batch.update(adminBookingRef, { status: true });
+      console.log("Value of emailLogin:", customerEmail);
+      const customerBookingRef = doc(
+        db,
+        "users",
+        customerEmail,
+        "booking",
+        bookingId
+      );
+      console.log("Customer booking reference path:", customerBookingRef.path);
+      console.log("customer ID:", bookingId);
+
+      batch.update(customerBookingRef, { status: true });
+
+      await batch.commit();
+
+      setCleaner((prevBookings) =>
+        prevBookings.map((booking) =>
+          booking.id === id ? { ...booking, status: true } : booking
+        )
+      );
+    } catch (error) {
+      console.error("Error updating booking:", error);
+    }
+  };
 
   return (
     <div className="p-10 h-auto">
@@ -108,65 +120,81 @@ export default function PersonalSida(): JSX.Element {
 
       <div className="grid grid-cols-1 gap-6 mt-8">
         <div className="border rounded-lg">
-          <h2 onClick={() => setShowBookings(true)} className=" cursor-pointer font-medium tracking-wide font-DM text-3xl text-center py-6 border-b border-gray-200">
+          <h2
+            onClick={() => setShowBookings(true)}
+            className=" cursor-pointer font-medium tracking-wide font-DM text-3xl text-center py-6 border-b border-gray-200"
+          >
             Dina kommande arbetspass
           </h2>
           <ul className="flex flex-wrap p-0">
-          {showBookings && cleaner?.map(
-            (booking) =>
-              !booking.status && (
-                <ul
-                  key={booking.id}
-                  className="m-4 border rounded-lg shadow-md bg-white"
-                >
-                  <div className="p-4">
-                    <BookingAdminList booking={booking} />
-                    <div className="flex items-center mt-2">
-                      <input
-                        id={booking.id}
-                        type="checkbox"
-                        checked={booking.status}
-                        onChange={() => handleDoneBooking(booking.customerEmail, booking.id, booking.bookingId)}
-                        className="size-5 rounded-lg dark:ring-offset-gray-300 focus:ring-1 dark:bg-gray-700 dark:border-gray-600"
-                      />
-                      <label htmlFor={booking.id} className="ml-2">
-                        Markera som utförd
-                      </label>
-                    </div>
-                  </div>
-                </ul>
-              ))}
+            {showBookings &&
+              cleaner?.map(
+                (booking) =>
+                  !booking.status && (
+                    <ul
+                      key={booking.id}
+                      className="m-4 border rounded-lg shadow-md bg-white"
+                    >
+                      <div className="p-4">
+                        <BookingAdminList booking={booking} />
+                        <div className="flex items-center mt-2">
+                          <input
+                            id={booking.id}
+                            type="checkbox"
+                            checked={booking.status}
+                            onChange={() =>
+                              handleDoneBooking(
+                                booking.customerEmail,
+                                booking.id
+                              )
+                            }
+                            className="size-5 rounded-lg dark:ring-offset-gray-300 focus:ring-1 dark:bg-gray-700 dark:border-gray-600"
+                          />
+                          <label htmlFor={booking.id} className="ml-2">
+                            Markera som utförd
+                          </label>
+                        </div>
+                      </div>
+                    </ul>
+                  )
+              )}
           </ul>
         </div>
 
         <div className="border rounded-lg mt-6">
-          <h2 onClick={() => setShowBookings(false)} className="cursor-pointer font-medium tracking-wide font-DM text-3xl text-center py-6 border-b border-gray-200">
+          <h2
+            onClick={() => setShowBookings(false)}
+            className="cursor-pointer font-medium tracking-wide font-DM text-3xl text-center py-6 border-b border-gray-200"
+          >
             Dina utförda arbetspass
           </h2>
           <ul className="flex flex-wrap p-0">
-          {!showBookings && cleaner?.map(
-            (booking) =>
-              booking.status &&(
-                <li
-                  key={booking.id}
-                  className="m-4 border rounded-lg shadow-md bg-white"
-                >
-               
-                  <div className="p-4">
-                    <DoneAdminBookings booking={booking} />
-                    <div className="flex items-center">
-                    <input
-                      id={booking.id}
-                      type="checkbox"
-                      checked={booking.status}
-                      onChange={() => handleDoneBooking(booking.id)}
-                      className="size-5 rounded-lg dark:ring-offset-gray-300 focus:ring-1 dark:bg-gray-700 dark:border-gray-600"
-                    />
-                    <label htmlFor={booking.id} className="ml-2">Utförd</label>
-                  </div>
-                  </div>
-                </li>
-              ))}
+            {!showBookings &&
+              cleaner?.map(
+                (booking) =>
+                  booking.status && (
+                    <li
+                      key={booking.id}
+                      className="m-4 border rounded-lg shadow-md bg-white"
+                    >
+                      <div className="p-4">
+                        <DoneAdminBookings booking={booking} />
+                        <div className="flex items-center">
+                          <input
+                            id={booking.id}
+                            type="checkbox"
+                            checked={booking.status}
+                            onChange={() => handleDoneBooking(booking.id)}
+                            className="size-5 rounded-lg dark:ring-offset-gray-300 focus:ring-1 dark:bg-gray-700 dark:border-gray-600"
+                          />
+                          <label htmlFor={booking.id} className="ml-2">
+                            Utförd
+                          </label>
+                        </div>
+                      </div>
+                    </li>
+                  )
+              )}
           </ul>
         </div>
       </div>

@@ -86,6 +86,7 @@ export default function KundSida(): JSX.Element {
         customerEmail: doc.data().customerEmail,
       }));
       //setting the mapped info in bookings
+  
       setBookings(filteredData);
     } catch (error) {
       console.log(error);
@@ -116,10 +117,11 @@ export default function KundSida(): JSX.Element {
         customerEmail: emailLogin,
       };
       console.log("Customer email:", customerEmail);
-   const docRef = await addDoc(bookingsRef, bookingData);
-   setBookingId(docRef.id)
-   console.log("NEw Booking ID", bookingId);
-   
+      const docRef = await addDoc(bookingsRef, bookingData);
+
+    const newBookingId = docRef.id;
+
+    setBookingId(newBookingId);
     
       
       if (cleaner === "Estelle") {
