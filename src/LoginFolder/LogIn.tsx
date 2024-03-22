@@ -110,6 +110,7 @@ export default function LogIn() {
             <Label htmlFor="email-address-icon" value="Din email" className="text-black" />
             <TextInput
               id="email-address-icon"
+              name="email"
               autoComplete="email"
               placeholder="Din email"
               addon={usernameIcon}
@@ -125,6 +126,7 @@ export default function LogIn() {
             />
             <TextInput
               id="password1"
+              name="password"
               autoComplete="current-password"
               placeholder="Lösenord"
               type="password"

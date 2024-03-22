@@ -27,8 +27,8 @@ export type UserAuthContextProps = {
   setEmailAdmin: React.Dispatch<React.SetStateAction<string>>;
   formData: IformData;
   setFormData: React.Dispatch<React.SetStateAction<IformData>>;
-  bookingId:  string | null | undefined;
-  setBookingId: React.Dispatch<React.SetStateAction<string | null | undefined>>;
+  bookingId:  string;
+  setBookingId: React.Dispatch<React.SetStateAction<string>>;
 };
 
 //Interface for kundsida component
@@ -62,5 +62,5 @@ export interface Ibooking {
   status: boolean;
   service: string;
   customerEmail: string;
-
+  bookingId: string;
 }

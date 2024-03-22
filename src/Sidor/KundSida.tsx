@@ -86,6 +86,7 @@ export default function KundSida(): JSX.Element {
         customerEmail: doc.data().customerEmail,
       }));
       //setting the mapped info in bookings
+  
       setBookings(filteredData);
     } catch (error) {
       console.log(error);
@@ -116,10 +117,11 @@ export default function KundSida(): JSX.Element {
         customerEmail: emailLogin,
       };
       console.log("Customer email:", customerEmail);
-   const docRef = await addDoc(bookingsRef, bookingData);
-   setBookingId(docRef.id)
-   console.log("NEw Booking ID", bookingId);
-   
+      const docRef = await addDoc(bookingsRef, bookingData);
+
+    const newBookingId = docRef.id;
+
+    setBookingId(newBookingId);
     
       
       if (cleaner === "Estelle") {
@@ -294,7 +296,7 @@ export default function KundSida(): JSX.Element {
             {bookings.map(
               (booking) =>
                 !booking.status && (
-                  <div className="flex flex-row w-full">
+                  <div key={booking.id} className="flex flex-row w-full">
                     <BookingPage key={booking.id} booking={booking} />
                     <button
                       onClick={() => deleteBooking(booking.id)}
@@ -316,7 +318,7 @@ export default function KundSida(): JSX.Element {
                       key={booking.id}
                       className="m-5 border-b border-black bg-customDark text-white font-DM p-5 rounded-lg"
                     >
-                      <DoneAdminBookings key={booking.id} booking={booking} />
+                      <DoneAdminBookings booking={booking} />
                     </div>
                   )
               )}
