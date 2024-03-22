@@ -296,7 +296,7 @@ export default function KundSida(): JSX.Element {
             {bookings.map(
               (booking) =>
                 !booking.status && (
-                  <div className="flex flex-row w-full">
+                  <div key={booking.id} className="flex flex-row w-full">
                     <BookingPage key={booking.id} booking={booking} />
                     <button
                       onClick={() => deleteBooking(booking.id)}
@@ -318,7 +318,7 @@ export default function KundSida(): JSX.Element {
                       key={booking.id}
                       className="m-5 border-b border-black bg-customDark text-white font-DM p-5 rounded-lg"
                     >
-                      <DoneAdminBookings key={booking.id} booking={booking} />
+                      <DoneAdminBookings booking={booking} />
                     </div>
                   )
               )}

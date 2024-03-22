@@ -71,10 +71,7 @@ export default function PersonalSida(): JSX.Element {
     fetchBookings();
   }, [emailAdmin, bookingId]);
 
-  const handleDoneBooking = async (
-    customerEmail: string,
-    id: string
-  ) => {
+  const handleDoneBooking = async (customerEmail: string, id: string) => {
     try {
       if (!customerEmail) {
         console.error("Customer email is undefined");
@@ -122,7 +119,7 @@ export default function PersonalSida(): JSX.Element {
         <div className="border rounded-lg">
           <h2
             onClick={() => setShowBookings(true)}
-            className=" cursor-pointer font-medium tracking-wide font-DM text-3xl text-center py-6 border-b border-gray-200"
+            className=" text-customDark  hover:text-customHoverDark cursor-pointer font-medium tracking-wide font-DM text-3xl text-center py-6 border-b border-gray-200"
           >
             Dina kommande arbetspass
           </h2>
@@ -131,7 +128,7 @@ export default function PersonalSida(): JSX.Element {
               cleaner?.map(
                 (booking) =>
                   !booking.status && (
-                    <ul
+                    <li
                       key={booking.id}
                       className="m-4 border rounded-lg shadow-md bg-white"
                     >
@@ -155,7 +152,7 @@ export default function PersonalSida(): JSX.Element {
                           </label>
                         </div>
                       </div>
-                    </ul>
+                    </li>
                   )
               )}
           </ul>
@@ -164,7 +161,7 @@ export default function PersonalSida(): JSX.Element {
         <div className="border rounded-lg mt-6">
           <h2
             onClick={() => setShowBookings(false)}
-            className="cursor-pointer font-medium tracking-wide font-DM text-3xl text-center py-6 border-b border-gray-200"
+            className="text-customDark hover:text-customHoverDark cursor-pointer font-medium tracking-wide font-DM text-3xl text-center py-6 border-b border-gray-200"
           >
             Dina utförda arbetspass
           </h2>
