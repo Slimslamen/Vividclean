@@ -118,7 +118,7 @@ export default function PersonalSida(): JSX.Element {
       <div className="grid grid-cols-1 gap-6 mt-8">
         <div className="border rounded-lg">
           <h2
-            onClick={() => setShowBookings(true)}
+            onMouseOver={() => setShowBookings(true)}
             className=" text-customDark  hover:text-customDark-800 hover:font-bold cursor-pointer font-medium tracking-wide font-DM text-3xl text-center py-6 border-b border-gray-200"
           >
             Dina kommande arbetspass
@@ -160,7 +160,7 @@ export default function PersonalSida(): JSX.Element {
 
         <div className="border rounded-lg mt-6">
           <h2
-            onClick={() => setShowBookings(false)}
+            onMouseOver={() => setShowBookings(false)}
             className="text-customDark hover:text-customDark-800 hover:font-bold cursor-pointer font-medium tracking-wide font-DM text-3xl text-center py-6 border-b border-gray-200"
           >
             Dina utförda arbetspass
