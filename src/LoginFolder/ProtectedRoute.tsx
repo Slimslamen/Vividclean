@@ -8,12 +8,12 @@ interface Children  {
     children: ReactNode;
 }
 export const ProtectedRoute = ({ children }:Children) => {
-    const { user } = React.useContext(
+    const { emailLogin } = React.useContext(
         UserAuthContext
       )! as UserAuthContextProps;
   
-    console.log("Check user in Private: ", user);
-    if (!user) {
+    console.log("Check user in Private: ", emailLogin);
+    if (!emailLogin) {
       return <Link to="/" />;
     }
     return children;

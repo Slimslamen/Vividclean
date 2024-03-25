@@ -112,7 +112,6 @@ export function UserAuthContextProvider({
   function logOut() {
     return signOut(auth);
   }
-
   async function googleSignIn(): Promise<void> {
     const googleAuthProvider = new GoogleAuthProvider();
     await signInWithPopup(auth, googleAuthProvider);
