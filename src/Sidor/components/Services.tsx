@@ -10,6 +10,7 @@ interface Iservice{
       cleaner: string;
       service: string;
       status: boolean;
+      customerEmail: string;
   }>>
     formService: string;
 }
