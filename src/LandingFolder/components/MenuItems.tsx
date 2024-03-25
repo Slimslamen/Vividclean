@@ -93,9 +93,9 @@ export const menuItems: MenuItem[] = [
         route: "",
       },
       {
-        label: "Inställningar",
-        description: "Anpassa dina kontoinställningar",
-        route: "",
+        label: "Mina sidor",
+        description: "Se dina bokningar",
+        route: "/kundsida",
       },
       {
         label: "Logga ut",

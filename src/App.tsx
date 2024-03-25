@@ -34,8 +34,8 @@ function App() {
             <Route path="/" element={<Landing />} />
             <Route path="/AboutUs" element={<AboutUs />} />
             <Route path="/Contact" element={<Contact />} />
-            {/* <Route path="/KundSida"  element={<ProtectedRoute><KundSida /></ProtectedRoute>}  /> */}
-            <Route path="/KundSida" element={<KundSida />} />
+            <Route path="/KundSida"  element={<ProtectedRoute><KundSida /></ProtectedRoute>}  />
+           {/*  <Route path="/KundSida" element={<KundSida />} /> */}
             <Route path="/PersonalSida" element={<PersonalSida />} />
             <Route path="*" element={<NoPageFound />} />
           </Routes>
