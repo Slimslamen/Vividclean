@@ -24,11 +24,12 @@ export default function DropdownItems({
   function currentUser(label: string) {
     if (label === "Logga in") {
       return !!auth.currentUser; // Return true if currentUser is set, otherwise false
-    } else if (label === "Logga ut") {
+    } else if (label === "Logga ut" || label === "Mina sidor") {
       return !auth.currentUser;
     }
     return false;
   }
+
 
   return (
     <div
