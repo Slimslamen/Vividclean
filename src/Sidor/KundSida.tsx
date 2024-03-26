@@ -19,6 +19,7 @@ import {
 import BookingPage from "./components/BookingPage";
 import UserAuthContext from "../UserAuthContext";
 import DoneAdminBookings from "./components/DoneAdminBookings";
+import { DoneBookings } from "./components/DoneBookings";
 
 const options: Ioptions[] = [
   {
@@ -318,7 +319,7 @@ export default function KundSida(): JSX.Element {
                       key={booking.id}
                       className="m-5 border-b border-black bg-customDark text-white font-DM p-5 rounded-lg"
                     >
-                      <DoneAdminBookings booking={booking} />
+                      <DoneBookings booking={booking} />
                     </div>
                   )
               )}

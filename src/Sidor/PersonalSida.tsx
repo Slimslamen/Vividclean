@@ -181,7 +181,7 @@ export default function PersonalSida(): JSX.Element {
                             id={booking.id}
                             type="checkbox"
                             checked={booking.status}
-                            onChange={() => handleDoneBooking(booking.id)}
+                            onChange={() => handleDoneBooking(booking.id, booking.customerEmail)}
                             className="size-5 rounded-lg dark:ring-offset-gray-300 focus:ring-1 dark:bg-gray-700 dark:border-gray-600"
                           />
                           <label htmlFor={booking.id} className="ml-2">

@@ -15,7 +15,6 @@ export default function DoneAdminBookings({ booking }: IAdminBooking) {
                 <li><span className="font-semibold text-lg">Tid:</span> {booking.time}</li>
                 <li><span className="font-semibold text-lg">Tjänst:</span> {booking.service}</li>
             </div>
-        
         </div>
     );
 }
