@@ -29,6 +29,10 @@ export type UserAuthContextProps = {
   setFormData: React.Dispatch<React.SetStateAction<IformData>>;
   bookingId:  string;
   setBookingId: React.Dispatch<React.SetStateAction<string>>;
+  cleaner: Ibooking[];
+  setCleaner:React.Dispatch<React.SetStateAction<Ibooking[]>>;
+  bookings: Ibooking[];
+  setBookings: React.Dispatch<React.SetStateAction<Ibooking[]>>;
 };
 
 //Interface for kundsida component

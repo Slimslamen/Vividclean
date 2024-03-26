@@ -13,14 +13,14 @@ import DoneAdminBookings from "./components/DoneAdminBookings";
 import { db } from "../config/firebase";
 
 export default function PersonalSida(): JSX.Element {
-  const [cleaner, setCleaner] = useState<Ibooking[]>([]);
+
   const [admin, setAdmin] = useState<string>("");
   const [cachedBookings, setCachedBookings] = useState<
     Record<string, Ibooking[]>
   >({});
   const [showBookings, setShowBookings] = useState<boolean>(true);
 
-  const { emailAdmin, bookingId } = React.useContext(
+  const { emailAdmin, bookingId, cleaner, setCleaner, setBookings, emailLogin } = React.useContext(
     UserAuthContext
   ) as UserAuthContextProps;
 
@@ -79,23 +79,23 @@ export default function PersonalSida(): JSX.Element {
       }
 
       const batch = writeBatch(db);
-      console.log("Admin", emailAdmin);
+      /* console.log("Admin", emailAdmin); */
 
       const adminBookingRef = doc(db, "users", emailAdmin, "booking", id);
-      console.log("Admin booking reference path:", adminBookingRef.path);
-      console.log("Admin ID:", adminBookingRef.id);
+      /* console.log("Admin booking reference path:", adminBookingRef.path);
+      console.log("Admin ID:", adminBookingRef.id); */
 
       batch.update(adminBookingRef, { status: true });
-      console.log("Value of emailLogin:", customerEmail);
+     /*  console.log("Value of emailLogin:", customerEmail); */
       const customerBookingRef = doc(
         db,
         "users",
-        customerEmail,
+        (customerEmail || emailLogin),
         "booking",
         bookingId
       );
-      console.log("Customer booking reference path:", customerBookingRef.path);
-      console.log("customer ID:", bookingId);
+      /* console.log("Customer booking reference path:", customerBookingRef.path);
+      console.log("customer ID:", bookingId); */
 
       batch.update(customerBookingRef, { status: true });
 
@@ -105,11 +105,18 @@ export default function PersonalSida(): JSX.Element {
         prevBookings.map((booking) =>
           booking.id === id ? { ...booking, status: true } : booking
         )
-      );
+        );
+        setBookings((prevBookings) =>
+        prevBookings.map((booking) =>
+          booking.id === bookingId ? { ...booking, status: true } : booking
+        ))
     } catch (error) {
       console.error("Error updating booking:", error);
     }
   };
+
+
+
 
   return (
     <div className="p-10 h-auto">

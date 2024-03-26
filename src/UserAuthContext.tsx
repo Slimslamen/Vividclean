@@ -14,7 +14,7 @@ import {
   doc,
   setDoc,
 } from "firebase/firestore";
-import { IformData } from "./types/types";
+import { Ibooking, IformData } from "./types/types";
 
 interface UserAuthContextProps {
   user: any; // Replace 'any' with the actual type of your user object
@@ -35,6 +35,10 @@ interface UserAuthContextProps {
   setFormData: React.Dispatch<React.SetStateAction<IformData>>;
   bookingId:  string;
   setBookingId: React.Dispatch<React.SetStateAction<string>>;
+  cleaner: Ibooking[];
+  setCleaner:React.Dispatch<React.SetStateAction<Ibooking[]>>;
+  bookings: Ibooking[];
+  setBookings: React.Dispatch<React.SetStateAction<Ibooking[]>>;
 }
 
 export const UserAuthContext = createContext<UserAuthContextProps | undefined>(
@@ -58,6 +62,8 @@ const JimmyRef = collection(db, "users", "jimmy@gmail.com", "booking");
 export function UserAuthContextProvider({
   children,
 }: UserAuthContextProviderProps): JSX.Element {
+  const [bookings, setBookings] = useState<Ibooking[]>([]);
+  const [cleaner, setCleaner] = useState<Ibooking[]>([]);
   const [user, setUser] = useState<any>({}); // Replace 'any' with the actual type of your user object
   const [emailAdmin, setEmailAdmin] = useState("");
   const [name, setName] = useState<string>("");
@@ -136,6 +142,10 @@ export function UserAuthContextProvider({
     setFormData,
     bookingId,
     setBookingId,
+    cleaner, 
+    setCleaner,
+    bookings, 
+    setBookings
   };
   return (
     <UserAuthContext.Provider value={FireBaseValues}>

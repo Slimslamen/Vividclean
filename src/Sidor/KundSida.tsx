@@ -15,6 +15,7 @@ import {
   addDoc,
   deleteDoc,
   doc,
+  onSnapshot,
 } from "firebase/firestore";
 import BookingPage from "./components/BookingPage";
 import UserAuthContext from "../UserAuthContext";
@@ -59,22 +60,38 @@ export default function KundSida(): JSX.Element {
     formData,
     setFormData,
     setBookingId,
-    bookingId
+    cleaner,
+    bookingId,
+    bookings,
+    setBookings
   } = React.useContext(UserAuthContext)! as UserAuthContextProps;
 
   const placeHolderDates = new Date().toLocaleDateString();
   //State to handle the form data
 
   //state with all the bookings
-  const [bookings, setBookings] = useState<Ibooking[]>([]);
+
   const [reRender, setReRender] = useState<boolean>(false);
 
   const bookingsRef = collection(db, "users", emailLogin, "booking");
 
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(bookingsRef, (snapshot) => {
+      const data = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setBookings(data);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   const getBookings = async () => {
     try {
       //getting bookings on the logged in user
-      const data = await getDocs(bookingsRef);
+    /*   const data = await getDocs(bookingsRef);
       //mapping over info of the booking
       const filteredData: Ibooking[] = data.docs.map((doc) => ({
         id: doc.id,
@@ -88,7 +105,7 @@ export default function KundSida(): JSX.Element {
       }));
       //setting the mapped info in bookings
   
-      setBookings(filteredData);
+      setBookings(filteredData); */
     } catch (error) {
       console.log(error);
     }
@@ -96,6 +113,7 @@ export default function KundSida(): JSX.Element {
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setFormData(prev => ({...prev, selectedName:name}))
     try {
     
       const {
@@ -159,6 +177,7 @@ export default function KundSida(): JSX.Element {
     //changing state from true to false or other way around
     setReRender(!reRender);
   };
+
   //updating the fetched booking after each time we delete a booking
   useEffect(() => {
     getBookings();
@@ -200,8 +219,9 @@ export default function KundSida(): JSX.Element {
             onSubmit={onSubmit}
           >
             <h2 className="text-4xl font-DM mb-5">Boka städning</h2>
-            <div className="flex flex-col w-full space-y-3">
-              <div className="w-full flex flex-col items-center space-y-2">
+            <div className="flex flex-col w-full space-y-5">
+              <div className="w-full flex flex-col items-center">
+                <p className="font-DM">Välj Datum</p>
                 <DatePicker
                   onChange={(date: Date) =>
                     setFormData((prev) => ({ ...prev, selectedDate: date }))
@@ -216,11 +236,9 @@ export default function KundSida(): JSX.Element {
                   selected={formData.selectedDate}
                   required
                 />
-                <p className="px-2 py-1 bg-customDark text-white rounded-lg">
-                  Välj datum
-                </p>
               </div>
-              <div className="w-full flex flex-col md:items-center space-y-2">
+              <div className="w-full flex flex-col md:items-center">
+                <p className="font-DM">Välj tid</p>
                 <input
                   required
                   onChange={(e) =>
@@ -234,12 +252,10 @@ export default function KundSida(): JSX.Element {
                   step="3600"
                   className="p-1 rounded-lg w-1/2"
                 />
-                <p className="px-2 py-1 bg-customDark text-white rounded-lg">
-                  Välj tid
-                </p>
               </div>
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col w-52 items-center justify-center">
+              <p className="font-DM">Välj städare</p>
               <select
                 required
                 onChange={(e) =>
@@ -258,15 +274,10 @@ export default function KundSida(): JSX.Element {
                   </option>
                 ))}
               </select>
-              <label
-                htmlFor="Städare"
-                className="px-2 py-1 bg-customDark text-white rounded-lg w-52"
-              >
-                Välj en städare
-              </label>
             </div>
-            <div className="w-3/4 flex flex-col space-y-4">
-              <ul className="flex flex-col mt-2 items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+            <div className="w-3/4 flex flex-col space-y-4 border border-customHover shadow-sm rounded-lg">
+              <p className="font-DM text-center p-2 mb-[-20px]">Välj tjänst</p>
+              <ul className="flex flex-col mt-2 items-center w-full text-sm font-medium text-gray-900  rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                 {options.map((option) => (
                   <Services
                     key={option.id}
@@ -276,11 +287,6 @@ export default function KundSida(): JSX.Element {
                   />
                 ))}
               </ul>
-              <p
-                className={`px-2 py-1 text-center text-white rounded-lg bg-customDark`}
-              >
-                Välj en tjänst
-              </p>
             </div>
             <button
               type="submit"
@@ -294,11 +300,11 @@ export default function KundSida(): JSX.Element {
         <div className="">
           <div className="space-y-5">
             <h2 className="text-4xl my-2 font-DM text-center px-5 rounded-lg py-2 font-bold">Kommande bokningar</h2>
-            {bookings.map(
+            {bookings?.map(
               (booking) =>
                 !booking.status && (
                   <div key={booking.id} className="flex flex-row w-full">
-                    <BookingPage key={booking.id} booking={booking} />
+                    <BookingPage booking={booking} />
                     <button
                       onClick={() => deleteBooking(booking.id)}
                       className="ml-2 bg-customHoverDark rounded-lg hover:bg-customDark text-white duration-300 ease-in-out p-1 font-DM"
@@ -312,7 +318,7 @@ export default function KundSida(): JSX.Element {
           <div className="mt-5">
             <h2 className="text-4xl my-2 font-DM text-center px-5 rounded-lg py-2 font-bold">Utförda bokningar</h2>
             <ul className="flex flex-col font-DM space-y-1">
-              {bookings.map(
+              {cleaner?.map(
                 (booking) =>
                   booking.status && (
                     <div
