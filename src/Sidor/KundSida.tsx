@@ -66,6 +66,11 @@ export default function KundSida(): JSX.Element {
     setBookings
   } = React.useContext(UserAuthContext)! as UserAuthContextProps;
 
+  // useEffect ställer in selectedName till name så att den hinner sätta name på första bokningen
+  useEffect(() => {
+    setFormData(prev => ({...prev, selectedName: name}));
+  }, []);
+
   const placeHolderDates = new Date().toLocaleDateString();
   //State to handle the form data
 
@@ -333,5 +338,5 @@ export default function KundSida(): JSX.Element {
         </div>
       </div>
     </>
-  );
+  )
 }
