@@ -15,6 +15,7 @@ import {
   addDoc,
   deleteDoc,
   doc,
+  setDoc,
 } from "firebase/firestore";
 import BookingPage from "./components/BookingPage";
 import UserAuthContext from "../UserAuthContext";
@@ -125,14 +126,26 @@ export default function KundSida(): JSX.Element {
         customerEmail: emailLogin,
       };
       console.log("Customer email:", customerEmail);
-      const docRef = await addDoc(bookingsRef, bookingData);
-
-    const newBookingId = docRef.id;
+  /*     const docRef = await addDoc(bookingsRef, bookingData); */
+    const newBookingId = uuidv4();
+    const newBookingRef = doc(bookingsRef, newBookingId);
+    await setDoc(newBookingRef, bookingData);
 
     setBookingId(newBookingId);
     
-      
-      if (cleaner === "Estelle") {
+    if (cleaner === "Estelle") {
+      const estelleBookingRef = doc(EstelleRef, newBookingId);
+      await setDoc(estelleBookingRef, bookingData);
+    }
+    if (cleaner === "Märta") {
+      const martaBookingRef = doc(martaRef, newBookingId);
+      await setDoc(martaBookingRef, bookingData);
+    }
+    if (cleaner === "Jimmy") {
+      const jimmyBookingRef = doc(JimmyRef, newBookingId);
+      await setDoc(jimmyBookingRef, bookingData);
+    }
+     /*  if (cleaner === "Estelle") {
         await addDoc(EstelleRef, bookingData);
       }
       if (cleaner === "Märta") {
@@ -140,7 +153,7 @@ export default function KundSida(): JSX.Element {
       }
       if (cleaner === "Jimmy") {
         await addDoc(JimmyRef, bookingData);
-      }
+      } */
   
       //get bookings
       getBookings();
