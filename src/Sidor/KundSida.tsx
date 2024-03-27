@@ -113,7 +113,6 @@ export default function KundSida(): JSX.Element {
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setFormData(prev => ({...prev, selectedName:name}))
     try {
     
       const {

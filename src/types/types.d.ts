@@ -60,7 +60,7 @@ export interface IformData {
 export interface Ibooking {
   id: string;
   name: string;
-  date: date;
+  date: asdas;
   cleaner: string;
   time: string;
   status: boolean;
