@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import {
   collection,
   getDocs,
@@ -71,7 +71,7 @@ export default function PersonalSida(): JSX.Element {
     fetchBookings();
   }, [emailAdmin, bookingId]);
 
-  const handleDoneBooking = async (customerEmail: string, id: string) => {
+  const handleDoneBooking = async (customerEmail: string, bookingId: string ) => {
     try {
       if (!customerEmail) {
         console.error("Customer email is undefined");
@@ -79,14 +79,9 @@ export default function PersonalSida(): JSX.Element {
       }
 
       const batch = writeBatch(db);
-      /* console.log("Admin", emailAdmin); */
+       console.log("Admin", emailAdmin); 
 
-      const adminBookingRef = doc(db, "users", emailAdmin, "booking", id);
-      /* console.log("Admin booking reference path:", adminBookingRef.path);
-      console.log("Admin ID:", adminBookingRef.id); */
-
-      batch.update(adminBookingRef, { status: true });
-     /*  console.log("Value of emailLogin:", customerEmail); */
+      const adminBookingRef = doc(db, "users", emailAdmin, "booking", bookingId);
       const customerBookingRef = doc(
         db,
         "users",
@@ -94,16 +89,23 @@ export default function PersonalSida(): JSX.Element {
         "booking",
         bookingId
       );
-      /* console.log("Customer booking reference path:", customerBookingRef.path);
-      console.log("customer ID:", bookingId); */
+       console.log("Admin booking reference path:", adminBookingRef.path);
+      console.log("Admin ID:", adminBookingRef.id); 
 
+      batch.update(adminBookingRef, { status: true });
       batch.update(customerBookingRef, { status: true });
+       console.log("Value of emailLogin:", customerEmail); 
+    
+       console.log("Customer booking reference path:", customerBookingRef.path);
+      console.log("customer ID:", bookingId); 
+
+   
 
       await batch.commit();
 
       setCleaner((prevBookings) =>
         prevBookings.map((booking) =>
-          booking.id === id ? { ...booking, status: true } : booking
+          booking.id === bookingId ? { ...booking, status: true } : booking
         )
         );
         setBookings((prevBookings) =>
@@ -143,18 +145,16 @@ export default function PersonalSida(): JSX.Element {
                         <BookingAdminList booking={booking} />
                         <div className="flex items-center mt-2">
                           <input
-                            id={booking.id}
+                            id={booking.bookingId}
                             type="checkbox"
                             checked={booking.status}
-                            onChange={() =>
-                              handleDoneBooking(
-                                booking.customerEmail,
-                                booking.id
-                              )
-                            }
+                            onChange={(event) => {
+                              event.preventDefault();
+                              handleDoneBooking(booking.customerEmail, booking.bookingId);
+                            }}
                             className="size-5 rounded-lg dark:ring-offset-gray-300 focus:ring-1 dark:bg-gray-700 dark:border-gray-600"
                           />
-                          <label htmlFor={booking.id} className="ml-2">
+                          <label htmlFor={booking.bookingId} className="ml-2">
                             Markera som utförd
                           </label>
                         </div>
