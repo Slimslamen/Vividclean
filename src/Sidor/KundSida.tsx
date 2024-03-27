@@ -96,7 +96,7 @@ export default function KundSida(): JSX.Element {
   const getBookings = async () => {
     try {
       //getting bookings on the logged in user
-    /*   const data = await getDocs(bookingsRef);
+      const data = await getDocs(bookingsRef);
       //mapping over info of the booking
       const filteredData: Ibooking[] = data.docs.map((doc) => ({
         id: doc.id,
@@ -110,7 +110,7 @@ export default function KundSida(): JSX.Element {
       }));
       //setting the mapped info in bookings
   
-      setBookings(filteredData); */
+      setBookings(filteredData);
     } catch (error) {
       console.log(error);
     }
