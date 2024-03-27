@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  collection,
-  getDocs,
-  getDoc,
-  doc,
-  writeBatch,
-} from "firebase/firestore";
+import { collection, getDocs, getDoc, doc, writeBatch } from "firebase/firestore";
 import { Ibooking, UserAuthContextProps } from "../types/types";
 import UserAuthContext from "../UserAuthContext";
 import BookingAdminList from "./components/BookingAdminList";
@@ -13,11 +7,8 @@ import DoneAdminBookings from "./components/DoneAdminBookings";
 import { db } from "../config/firebase";
 
 export default function PersonalSida(): JSX.Element {
-
   const [admin, setAdmin] = useState<string>("");
-  const [cachedBookings, setCachedBookings] = useState<
-    Record<string, Ibooking[]>
-  >({});
+  const [cachedBookings, setCachedBookings] = useState<Record<string, Ibooking[]>>({});
   const [showBookings, setShowBookings] = useState<boolean>(true);
 
   const { emailAdmin, bookingId, cleaner, setCleaner, setBookings, emailLogin } = React.useContext(
@@ -51,12 +42,8 @@ export default function PersonalSida(): JSX.Element {
           };
         });
 
-        const filteredBookings = bookingsData.filter(
-          (booking) => booking.cleaner === adminUser
-        );
-        const newBookings = filteredBookings.sort(
-          (a, b) => a.date.getTime() - b.date.getTime()
-        );
+        const filteredBookings = bookingsData.filter((booking) => booking.cleaner === adminUser);
+        const newBookings = filteredBookings.sort((a, b) => a.date.getTime() - b.date.getTime());
         setCleaner(newBookings);
 
         setCachedBookings((prev) => ({
@@ -86,14 +73,8 @@ export default function PersonalSida(): JSX.Element {
       console.log("Admin ID:", adminBookingRef.id); */
 
       batch.update(adminBookingRef, { status: true });
-     /*  console.log("Value of emailLogin:", customerEmail); */
-      const customerBookingRef = doc(
-        db,
-        "users",
-        (customerEmail || emailLogin),
-        "booking",
-        bookingId
-      );
+      /*  console.log("Value of emailLogin:", customerEmail); */
+      const customerBookingRef = doc(db, "users", customerEmail || emailLogin, "booking", id);
       /* console.log("Customer booking reference path:", customerBookingRef.path);
       console.log("customer ID:", bookingId); */
 
@@ -102,21 +83,16 @@ export default function PersonalSida(): JSX.Element {
       await batch.commit();
 
       setCleaner((prevBookings) =>
-        prevBookings.map((booking) =>
-          booking.id === id ? { ...booking, status: true } : booking
-        )
-        );
-        setBookings((prevBookings) =>
-        prevBookings.map((booking) =>
-          booking.id === bookingId ? { ...booking, status: true } : booking
-        ))
+        prevBookings.map((booking) => (booking.id === id ? { ...booking, status: true } : booking))
+      );
+      setBookings((prevBookings) =>
+        prevBookings.map((booking) => (booking.id === id ? { ...booking, status: true } : booking))
+      );
+      console.log("checkbox id:" + id);
     } catch (error) {
       console.error("Error updating booking:", error);
     }
   };
-
-
-
 
   return (
     <div className="p-10 h-auto">
@@ -135,10 +111,7 @@ export default function PersonalSida(): JSX.Element {
               cleaner?.map(
                 (booking) =>
                   !booking.status && (
-                    <li
-                      key={booking.id}
-                      className="m-4 border rounded-lg shadow-md bg-white"
-                    >
+                    <li key={booking.id} className="m-4 border rounded-lg shadow-md bg-white">
                       <div className="p-4">
                         <BookingAdminList booking={booking} />
                         <div className="flex items-center mt-2">
@@ -146,12 +119,7 @@ export default function PersonalSida(): JSX.Element {
                             id={booking.id}
                             type="checkbox"
                             checked={booking.status}
-                            onChange={() =>
-                              handleDoneBooking(
-                                booking.customerEmail,
-                                booking.id
-                              )
-                            }
+                            onChange={() => handleDoneBooking(booking.customerEmail, booking.id)}
                             className="size-5 rounded-lg dark:ring-offset-gray-300 focus:ring-1 dark:bg-gray-700 dark:border-gray-600"
                           />
                           <label htmlFor={booking.id} className="ml-2">
@@ -177,10 +145,7 @@ export default function PersonalSida(): JSX.Element {
               cleaner?.map(
                 (booking) =>
                   booking.status && (
-                    <li
-                      key={booking.id}
-                      className="m-4 border rounded-lg shadow-md bg-white"
-                    >
+                    <li key={booking.id} className="m-4 border rounded-lg shadow-md bg-white">
                       <div className="p-4">
                         <DoneAdminBookings booking={booking} />
                         <div className="flex items-center">
