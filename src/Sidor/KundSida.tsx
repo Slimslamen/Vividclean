@@ -15,11 +15,9 @@ import {
   addDoc,
   deleteDoc,
   doc,
-  onSnapshot,
 } from "firebase/firestore";
 import BookingPage from "./components/BookingPage";
 import UserAuthContext from "../UserAuthContext";
-import DoneAdminBookings from "./components/DoneAdminBookings";
 import { DoneBookings } from "./components/DoneBookings";
 
 const options: Ioptions[] = [
@@ -60,9 +58,7 @@ export default function KundSida(): JSX.Element {
     formData,
     setFormData,
     setBookingId,
-    bookingId,
     cleaner,
- 
     bookings,
     setBookings
   } = React.useContext(UserAuthContext)! as UserAuthContextProps;
@@ -80,23 +76,8 @@ export default function KundSida(): JSX.Element {
   const [reRender, setReRender] = useState<boolean>(false);
 
   const bookingsRef = collection(db, "users", emailLogin, "booking");
-  useEffect(() => {
-    const unsubscribe = onSnapshot(bookingsRef, (snapshot) => {
-      const data: Ibooking[] = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        name: doc.data().name,
-        date: doc.data().date,
-        cleaner: doc.data().cleaner,
-        time: doc.data().time,
-        status: doc.data().status,
-        service: doc.data().service,
-        customerEmail: doc.data().customerEmail,
-      }));
-      setBookings(data);
-    });
 
-    return () => unsubscribe(); // Avsluta prenumerationen när komponenten avmonteras
-  }, []);
+
   const getBookings = async () => {
     try {
       //getting bookings on the logged in user
@@ -114,7 +95,7 @@ export default function KundSida(): JSX.Element {
       }));
       //setting the mapped info in bookings
   
-      setBookings(filteredData); 
+      setBookings(filteredData);
     } catch (error) {
       console.log(error);
     }
@@ -152,13 +133,13 @@ export default function KundSida(): JSX.Element {
     
       
       if (cleaner === "Estelle") {
-        await addDoc(EstelleRef, { ...bookingData, id: bookingId });
+        await addDoc(EstelleRef, bookingData);
       }
       if (cleaner === "Märta") {
-        await addDoc(martaRef, { ...bookingData, id: bookingId });
+        await addDoc(martaRef, bookingData);
       }
       if (cleaner === "Jimmy") {
-        await addDoc(JimmyRef, { ...bookingData, id: bookingId });
+        await addDoc(JimmyRef, bookingData);
       }
   
       //get bookings
