@@ -25,16 +25,15 @@ const AdminLogin = () => {
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    handleMenuItemClick("Medarbetar Portal")
 
     try {
       const auth = getAuth();
       const firestore = getFirestore();
       
-
       // Logga in användaren med e-post och lösenord
       await signInWithEmailAndPassword(auth, emailAdmin, password);
       navigate("/PersonalSida");
+      handleMenuItemClick("Medarbetar Portal")
       // Hämta användarens dokument från Firestore baserat på e-postadressen
       const userQuery = doc(firestore, "users", emailAdmin);
       const userDocSnap = await getDoc(userQuery);
