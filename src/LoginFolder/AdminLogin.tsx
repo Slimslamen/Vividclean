@@ -94,6 +94,7 @@ const AdminLogin = () => {
     handleMenuItemClick("Medarbetar Portal");
   }
 
+
   if (!adminVisible) {
     return null;
   }

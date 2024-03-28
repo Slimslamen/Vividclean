@@ -64,30 +64,25 @@ export default function PersonalSida(): JSX.Element {
         console.error("Customer email is undefined");
         return;
       }
-
+      //writting batch to our database
       const batch = writeBatch(db);
-      /* console.log("Admin", emailAdmin); */
-
+      
       const adminBookingRef = doc(db, "users", emailAdmin, "booking", id);
-      /* console.log("Admin booking reference path:", adminBookingRef.path);
-      console.log("Admin ID:", adminBookingRef.id); */
-
+      //updating done status on booking
       batch.update(adminBookingRef, { status: true });
-      /*  console.log("Value of emailLogin:", customerEmail); */
       const customerBookingRef = doc(db, "users", customerEmail || emailLogin, "booking", id);
-      /* console.log("Customer booking reference path:", customerBookingRef.path);
-      console.log("customer ID:", bookingId); */
-
+      //updating done status on booking
       batch.update(customerBookingRef, { status: true });
-
+      //making the changes on status togheter, at the same time throught the commit
       await batch.commit();
-
+      //sorting out the bookings that have done status
       setCleaner((prevBookings) =>
         prevBookings.map((booking) => (booking.id === id ? { ...booking, status: true } : booking))
       );
+      //sorting out the bookings that have done status
       setBookings((prevBookings) =>
         prevBookings.map((booking) => (booking.id === id ? { ...booking, status: true } : booking))
-      );
+        );
       console.log("checkbox id:" + id);
     } catch (error) {
       console.error("Error updating booking:", error);
@@ -170,3 +165,10 @@ export default function PersonalSida(): JSX.Element {
     </div>
   );
 }
+
+/* console.log("Admin", emailAdmin); */
+/* console.log("Admin booking reference path:", adminBookingRef.path);
+console.log("Admin ID:", adminBookingRef.id); */
+/*  console.log("Value of emailLogin:", customerEmail); */
+/* console.log("Customer booking reference path:", customerBookingRef.path);
+console.log("customer ID:", bookingId); */

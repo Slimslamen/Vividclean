@@ -12,7 +12,6 @@ import { db } from "../config/firebase";
 import {
   collection,
   getDocs,
-  addDoc,
   deleteDoc,
   doc,
   setDoc,
@@ -20,8 +19,6 @@ import {
 import BookingPage from "./components/BookingPage";
 import UserAuthContext from "../UserAuthContext";
 import { DoneBookings } from "./components/DoneBookings";
-import AdminLogin from "../LoginFolder/AdminLogin";
-import { getDoc } from "firebase/firestore/lite";
 
 const options: Ioptions[] = [
   {
@@ -64,7 +61,6 @@ export default function KundSida(): JSX.Element {
     cleaner,
     bookings,
     setBookings,
-    emailAdmin
   } = React.useContext(UserAuthContext)! as UserAuthContextProps;
 
   // useEffect ställer in selectedName till name så att den hinner sätta name på första bokningen
@@ -73,9 +69,9 @@ export default function KundSida(): JSX.Element {
   }, []);
 
   const placeHolderDates = new Date().toLocaleDateString();
-  //State to handle the form data
+  // State to handle the form data
 
-  //state with all the bookings
+  // state with all the bookings
 
   const [reRender, setReRender] = useState<boolean>(false);
 
@@ -84,9 +80,9 @@ export default function KundSida(): JSX.Element {
 
   const getBookings = async () => {
     try {
-      //getting bookings on the logged in user
+      // getting bookings on the logged in user
       const data = await getDocs(bookingsRef);
-      //mapping over info of the booking
+      // mapping over info of the booking
       const filteredData: Ibooking[] = data.docs.map((doc) => ({
         id: doc.id,
         name: doc.data().name,
@@ -97,7 +93,7 @@ export default function KundSida(): JSX.Element {
         service: doc.data().service,
         customerEmail: doc.data().customerEmail,
       }));
-      //setting the mapped info in bookings
+      // setting the mapped info in bookings
   
       setBookings(filteredData);
     } catch (error) {
@@ -116,7 +112,7 @@ export default function KundSida(): JSX.Element {
       status,
       customerEmail,
     } = formData;
-    //add booking to selected cleaner
+    //add formdata to selected booking
     const bookingData = {
       name: selectedName,
       date: selectedDate,
@@ -129,13 +125,17 @@ export default function KundSida(): JSX.Element {
     try {
     
       console.log("Customer email:", customerEmail);
-      const docRef = await doc(bookingsRef);
+    // fetching booking
+    const docRef = await doc(bookingsRef);
+    // setting id of booking on a variabel
     const newBookingId = docRef.id
+    // adding the saved id to the booking
     const newBookingRef = doc(bookingsRef, newBookingId);
     await setDoc(newBookingRef, bookingData);
-
+    // setting id in a new variable
     setBookingId(newBookingId);
     
+    // adding the booking to the selected cleaner
     if (cleaner === "Estelle") {
       const estelleBookingRef = doc(EstelleRef, newBookingId);
       await setDoc(estelleBookingRef, bookingData);

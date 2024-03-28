@@ -62,10 +62,13 @@ const JimmyRef = collection(db, "users", "jimmy@gmail.com", "booking");
 export function UserAuthContextProvider({
   children,
 }: UserAuthContextProviderProps): JSX.Element {
+  //state for bookings in kundsida
   const [bookings, setBookings] = useState<Ibooking[]>([]);
+  //state for bookings in personalsida
   const [cleaner, setCleaner] = useState<Ibooking[]>([]);
   const [user, setUser] = useState<any>({}); // Replace 'any' with the actual type of your user object
   const [emailAdmin, setEmailAdmin] = useState("");
+  //state for name in registration, that we use in kundsida and personalsida
   const [name, setName] = useState<string>("");
   //logged in user
   const [emailLogin, setEmailLogin] = useState<string>("");
@@ -79,16 +82,11 @@ export function UserAuthContextProvider({
     status: false,
     customerEmail: emailLogin,
   });
-  
+  //state for the specific id of the made booking of the customer
   const [bookingId, setBookingId] = useState<string>("");
   async function logIn(email: string, password: string): Promise<void> {
     await signInWithEmailAndPassword(auth, email, password);
   }
-
-  // async function signUp(email: string, password: string):Promise<void> {
-  //   await createUserWithEmailAndPassword(auth, email, password);
-  // }
-
   async function signUp(
     email: string,
     name: string,
