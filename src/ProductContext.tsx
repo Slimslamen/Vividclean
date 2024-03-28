@@ -61,6 +61,7 @@ const ProductContextProvider = ({ children }: ProductContextProviderProps) => {
     }
     if (label === "Logga ut") {
       logOut();
+      alert("Du har nu loggat ut, välkommen åter!")
     }
 
   };

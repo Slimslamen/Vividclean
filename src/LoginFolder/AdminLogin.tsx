@@ -57,9 +57,17 @@ const AdminLogin = () => {
         }
       }
     } catch (error) {
-      setError(error.message);
-    }
-  };
+      // Fel vid inloggning
+      if (
+        error.code === "auth/wrong-password" ||
+        error.code === "auth/invalid-credential" ||
+        error.code === "auth/user-not-found"
+      ) {
+        setError("Fel användarnamn eller lösenord. Vänligen försök igen.");
+      } else {
+        setError("Ett fel uppstod vid inloggningen. Vänligen försök igen senare.");
+      }
+    }}
 
 
 
