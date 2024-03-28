@@ -67,15 +67,18 @@ export default function PersonalSida(): JSX.Element {
       //writting batch to our database
       const batch = writeBatch(db);
       
+      //Admin path
       const adminBookingRef = doc(db, "users", emailAdmin, "booking", id);
-      //updating done status on booking
+      //updating status on admin booking to true 
       batch.update(adminBookingRef, { status: true });
+      //Customer path
       const customerBookingRef = doc(db, "users", customerEmail || emailLogin, "booking", id);
-      //updating done status on booking
+      //updating status on customer booking to true
       batch.update(customerBookingRef, { status: true });
       //making the changes on status togheter, at the same time throught the commit
       await batch.commit();
-      //sorting out the bookings that have done status
+
+      //sorting out the bookings that have done status 
       setCleaner((prevBookings) =>
         prevBookings.map((booking) => (booking.id === id ? { ...booking, status: true } : booking))
       );

@@ -7,7 +7,7 @@ export default function AboutUs(): JSX.Element {
   return (
     <main>
       <article
-        className=" h-screen relative bg-center bg-cover flex items-start"
+        className="h-full relative bg-center bg-cover flex flex-col md:flex-row items-start"
         style={{
           backgroundImage: `url(${backgroundImage1})`,
         }}
@@ -17,16 +17,17 @@ export default function AboutUs(): JSX.Element {
           style={{
             background: `linear-gradient(${backgroundOverlayColor}, ${backgroundOverlayColor})`,
           }}
-        ></div>
+        >
+            </div>
 
-        <h2 className="text-black font-medium z-10 font-DM text-7xl text-center whitespace-nowrap transform -rotate-90 origin-bottom-right">
+        <h2 className="ml-4 mt-4 md:mt-0 md:ml-0 text-black font-medium z-10 font-DM text-7xl text-center whitespace-nowrap md:transform md:-rotate-90 md:origin-bottom-right">
           Vår historia
         </h2>
 
-        <p className="flex text-xl text-left justify-center mt-16 mb-32 mx-32 z-10">
+        <p className="mb-4 flex flex-wrap text-xl text-left justify-center md:mt-16 md:mb-32 ml-4 md:mx-32 z-10">
           Ledande, engagerade och dedikerade - vår historia är själva
-          drivkraften bakom vår framtid. <br /> <br /> Vivid Clean grundades av tre
-          vänner: Märta, Jim och Estelle. Vår historia började med en djup
+          drivkraften bakom vår framtid. <br /> <br /> Vivid Clean grundades av
+          tre vänner: Märta, Jim och Estelle. Vår historia började med en djup
           passion för miljön och en önskan att göra en verklig skillnad. Märta,
           med en bakgrund inom miljövetenskap och en vetskap om de potentiella
           miljökonsekvenserna av traditionella städtjänster, inspirerade henne
@@ -49,9 +50,11 @@ export default function AboutUs(): JSX.Element {
           städtjänster av absolut högsta kvalitet med minimal påverkan på
           miljön.
         </p>
+      
       </article>
+      
       <article
-        className=" h-screen relative bg-center bg-cover flex items-start"
+        className="h-screen relative bg-center bg-cover flex  flex-col md:flex-row items-start"
         style={{
           backgroundImage: `url(${backgroundImage2})`,
         }}
@@ -62,7 +65,10 @@ export default function AboutUs(): JSX.Element {
             background: `linear-gradient(${backgroundOverlayColor}, ${backgroundOverlayColor})`,
           }}
         ></div>
-        <p className="flex text-xl text-left justify-center m-32 z-10">
+             <h2 className="ml-4 mt-4 md:mt-0 md:ml-0 text-black font-medium z-10 font-DM text-7xl text-center md:whitespace-nowrap md:transform md:rotate-90 md:origin-bottom-left md:order-2">
+          Hållbarhet
+        </h2>
+        <p className="ml-4 flex text-xl text-left justify-center md:m-32 z-10 md:order-1">
           I vår värld är det detaljerna som gör skillnaden, och för oss innebär
           det att sätta hållbarhet i första rummet. Genom våra tjänster,
           inklusive löpande hemstädning och specialiserade tjänster som
@@ -71,12 +77,10 @@ export default function AboutUs(): JSX.Element {
           miljövänliga produkter och metoder för att säkerställa att varje
           städning är ett grönt steg mot en mer hållbar framtid.
         </p>
-        <h2 className="text-black font-medium z-10 font-DM text-7xl text-center whitespace-nowrap transform rotate-90 origin-bottom-left">
-          Hållbarhet
-        </h2>
+   
       </article>
       <article
-        className=" h-screen relative bg-center bg-cover flex items-start"
+        className="h-screen relative bg-center bg-cover flex flex-col md:flex-row items-start"
         style={{
           backgroundImage: `url(${backgroundImage3})`,
         }}
@@ -88,11 +92,11 @@ export default function AboutUs(): JSX.Element {
           }}
         ></div>
 
-        <h2 className="text-black font-medium z-10 font-DM text-7xl text-center whitespace-nowrap transform -rotate-90 origin-bottom-right">
+        <h2 className="mt-4 ml-4 md:ml-0 md:mt-0 text-black font-medium z-10 font-DM text-7xl text-center md:whitespace-nowrap md:transform md:-rotate-90 md:origin-bottom-right">
           Trygghet
         </h2>
 
-        <p className="flex text-xl text-left justify-center m-32 z-10">
+        <p className="ml-4 flex text-xl text-left justify-center md:m-32 z-10">
           Vi förstår vikten av trygghet - både för våra kunder och planeten.
           Därför kan du känna dig säker med både vår personal och kvaliteten på
           våra tjänster. Vårt team består av noggrant utvalda och utbildade

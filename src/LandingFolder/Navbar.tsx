@@ -45,7 +45,7 @@ export default function Navbar(): JSX.Element {
         <button
           onClick={toggleMegaMenu}
           type="button"
-          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-customHover focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          className="inline-flex items-center ml-auto p-2 md:w-10 md:h-10 w-auto h-auto justify-self-start md:justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-customHover focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
           aria-controls="mega-menu-full"
           aria-expanded={isMegaMenuOpen}
         >
