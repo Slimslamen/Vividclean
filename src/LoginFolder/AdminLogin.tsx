@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { Label, TextInput } from "flowbite-react";
@@ -12,6 +12,7 @@ const AdminLogin = () => {
  
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [userRole, setUserRole] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
@@ -32,8 +33,7 @@ const AdminLogin = () => {
       
       // Logga in användaren med e-post och lösenord
       await signInWithEmailAndPassword(auth, emailAdmin, password);
-      navigate("/PersonalSida");
-      handleMenuItemClick("Medarbetar Portal")
+    
       // Hämta användarens dokument från Firestore baserat på e-postadressen
       const userQuery = doc(firestore, "users", emailAdmin);
       const userDocSnap = await getDoc(userQuery);
@@ -41,23 +41,20 @@ const AdminLogin = () => {
 
       if (userDocSnap.exists()) {
         // Kontrollera användarrollen
-        const userRole = userDocSnap.data()?.role;
-
-        if (userRole === "cleaner") {
+        setUserRole(userDocSnap.data()?.role); // Uppdatera userRole
+        if (userDocSnap.data()?.role === "cleaner") {
           // Om användaren har rollen 'employee', logga in användaren
           console.log("User logged in as cleaner");
-
           alert(`Inloggad som medarbetare ${username}`);
-
-        } else if (userRole === "customer") {
-          setError("Du har inte rätt behörighet att logga in.");
+          navigate("/PersonalSida");
+          handleMenuItemClick("Medarbetar Portal")
         } else {
-          setError("Användaren hittades inte");
+          setError("Användaren hittades inte eller har inte rätt behörighet att logga in");
         }
       }
     } catch (error) {
       // Fel vid inloggning
-      if (
+    if (
         error.code === "auth/wrong-password" ||
         error.code === "auth/invalid-credential" ||
         error.code === "auth/user-not-found"
@@ -66,9 +63,15 @@ const AdminLogin = () => {
       } else {
         setError("Ett fel uppstod vid inloggningen. Vänligen försök igen senare.");
       }
-    }}
-
-
+    }
+  }
+    useEffect(() => {
+      // Om användarrollen är "customer", sätt felmeddelandet
+      if (userRole === "customer") {
+        setError("Du har inte rätt behörighet att logga in.");
+      }
+    }, [userRole]);
+  
 
   const usernameIcon = (
     <svg
