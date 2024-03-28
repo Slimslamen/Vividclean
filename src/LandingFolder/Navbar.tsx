@@ -31,14 +31,14 @@ export default function Navbar(): JSX.Element {
 
   return (
     <nav className=" z-20 sticky top-0 bg-customBeige border-gray-200 dark:border-gray-600 dark:bg-gray-900">
-      <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-0">
+      <div className="ml-2 flex flex-wrap justify-center lg:justify-between items-center xl:mx-auto max-w-screen-xl p-0">
         <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
           <img
             src="src/assets/Vivid.png"
             className="h-24 p-0"
             alt="Vivid Clean Logo"
           />
-          <span className="self-center text-2xl font-semibold whitespace-nowrap text-customDark dark:text-white">
+          <span className="self-center text-wrap text-xl md:text-2xl font-semibold whitespace-nowrap text-customDark dark:text-white">
             Hållbar Renlighet, Ditt Hem i Perfekt Harmoni
           </span>
         </Link>
@@ -68,11 +68,11 @@ export default function Navbar(): JSX.Element {
         </button>
         <div
           id="mega-menu-full"
-          className={`items-center justify-between font-medium w-full md:flex md:w-auto md:order-1 ${
+          className={`items-center justify-center md:justify-between font-medium w-full md:flex md:w-auto md:order-1 ${
             isMegaMenuOpen ? "block" : "hidden"
           }`}
         >
-          <ul className="flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-customBeige md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-customBeige dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+          <ul className=" flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-customBeige md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-customBeige dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
           {menuItems.map((item, index) => (
               <li key={index}>
                 <button
@@ -82,7 +82,7 @@ export default function Navbar(): JSX.Element {
                   }}
                   aria-expanded={activeDropdown === index}
                   className={
-                    "flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded md:w-auto hover:bg-customHover md:hover:bg-transparent md:border-0 md:hover:text-customDark md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"
+                    "flex items-center justify-center md:justify-between w-full py-2 px-3 text-gray-900 rounded md:w-auto hover:bg-customHover md:hover:bg-transparent md:border-0 md:hover:text-customDark md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"
                   }
                   id={`dropdown-button-${index}`}
                 >

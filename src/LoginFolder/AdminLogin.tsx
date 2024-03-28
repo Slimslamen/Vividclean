@@ -33,6 +33,7 @@ const AdminLogin = () => {
       // Logga in användaren med e-post och lösenord
       await signInWithEmailAndPassword(auth, emailAdmin, password);
       handleMenuItemClick("Medarbetar Portal")
+    
       // Hämta användarens dokument från Firestore baserat på e-postadressen
       const userQuery = doc(firestore, "users", emailAdmin);
       const userDocSnap = await getDoc(userQuery);
@@ -43,10 +44,15 @@ const AdminLogin = () => {
         const userRole = userDocSnap.data()?.role;
         
         if (userRole === "cleaner") {
+        setUserRole(userDocSnap.data()?.role); // Uppdatera userRole
+        if (userDocSnap.data()?.role === "cleaner") {
           // Om användaren har rollen 'employee', logga in användaren
           console.log("User logged in as cleaner");
           
+          navigate("/PersonalSida");
           alert(`Inloggad som medarbetare ${username}`);
+          navigate("/PersonalSida");
+          handleMenuItemClick("Medarbetar Portal")
           navigate("/PersonalSida");
           
         } else if (userRole === "customer") {
