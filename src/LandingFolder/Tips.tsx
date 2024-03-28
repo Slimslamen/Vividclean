@@ -9,7 +9,7 @@ export default function Tips(): JSX.Element {
       <h2 className="text-4xl md:text-4xl font-DM">Tips och Inspiration</h2>
       <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 md:space-x-5 justify-center items-center my-10">
         <Card
-          className=" md:size-[380px] rounded-none cursor-pointer"
+          className="size-4/6 md:size-[380px] rounded-none cursor-pointer"
           imgAlt="A sponge"
           imgSrc={Sponge}
         >

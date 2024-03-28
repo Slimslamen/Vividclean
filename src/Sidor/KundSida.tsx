@@ -216,7 +216,7 @@ export default function KundSida(): JSX.Element {
   return (
     <>
       <div className="mx-auto md:w-4/5 my-10 flex items-start justify-center flex-col md:flex-row space-y-10 rounded-md space-x-10">
-        <div className="w-1/3">
+        <div className="md:ml-0 ml-5 flex md:block items-center justify-center flex-col w-11/12 md:w-1/3">
             <div className="text-center my-4 bg-customDark text-white p-4 rounded-lg">
               <h1 className="text-4xl font-DM">{`${name}s`} bokningar</h1>
             </div>
@@ -244,7 +244,7 @@ export default function KundSida(): JSX.Element {
                   required
                 />
               </div>
-              <div className="w-full flex flex-col md:items-center">
+              <div className="w-full flex flex-col items-center">
                 <p className="font-DM">Välj tid</p>
                 <input
                   required
@@ -304,7 +304,7 @@ export default function KundSida(): JSX.Element {
           </form>
           </div>
         </div>
-        <div className="">
+        <div>
           <div className="space-y-5">
             <h2 className="text-4xl my-2 font-DM text-center px-5 rounded-lg py-2 font-bold">Kommande bokningar</h2>
             {bookings?.map(
