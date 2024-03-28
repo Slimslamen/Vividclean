@@ -69,9 +69,9 @@ export default function KundSida(): JSX.Element {
   }, []);
 
   const placeHolderDates = new Date().toLocaleDateString();
-  //State to handle the form data
+  // State to handle the form data
 
-  //state with all the bookings
+  // state with all the bookings
 
   const [reRender, setReRender] = useState<boolean>(false);
 
@@ -80,9 +80,9 @@ export default function KundSida(): JSX.Element {
 
   const getBookings = async () => {
     try {
-      //getting bookings on the logged in user
+      // getting bookings on the logged in user
       const data = await getDocs(bookingsRef);
-      //mapping over info of the booking
+      // mapping over info of the booking
       const filteredData: Ibooking[] = data.docs.map((doc) => ({
         id: doc.id,
         name: doc.data().name,
@@ -93,7 +93,7 @@ export default function KundSida(): JSX.Element {
         service: doc.data().service,
         customerEmail: doc.data().customerEmail,
       }));
-      //setting the mapped info in bookings
+      // setting the mapped info in bookings
   
       setBookings(filteredData);
     } catch (error) {
