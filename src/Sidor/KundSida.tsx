@@ -20,6 +20,8 @@ import {
 import BookingPage from "./components/BookingPage";
 import UserAuthContext from "../UserAuthContext";
 import { DoneBookings } from "./components/DoneBookings";
+import AdminLogin from "../LoginFolder/AdminLogin";
+import { getDoc } from "firebase/firestore/lite";
 
 const options: Ioptions[] = [
   {
@@ -61,7 +63,8 @@ export default function KundSida(): JSX.Element {
     setBookingId,
     cleaner,
     bookings,
-    setBookings
+    setBookings,
+    emailAdmin
   } = React.useContext(UserAuthContext)! as UserAuthContextProps;
 
   // useEffect ställer in selectedName till name så att den hinner sätta name på första bokningen
@@ -101,33 +104,33 @@ export default function KundSida(): JSX.Element {
       console.log(error);
     }
   };
-
+  
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    const {
+      selectedName,
+      selectedDate,
+      time,
+      cleaner,
+      service,
+      status,
+      customerEmail,
+    } = formData;
+    //add booking to selected cleaner
+    const bookingData = {
+      name: selectedName,
+      date: selectedDate,
+      time: time,
+      cleaner: cleaner,
+      service: service,
+      status: status,
+      customerEmail: emailLogin,
+    };
     try {
     
-      const {
-        selectedName,
-        selectedDate,
-        time,
-        cleaner,
-        service,
-        status,
-        customerEmail,
-      } = formData;
-      //add booking to selected cleaner
-      const bookingData = {
-        name: selectedName,
-        date: selectedDate,
-        time: time,
-        cleaner: cleaner,
-        service: service,
-        status: status,
-        customerEmail: emailLogin,
-      };
       console.log("Customer email:", customerEmail);
-  /*     const docRef = await addDoc(bookingsRef, bookingData); */
-    const newBookingId = uuidv4();
+      const docRef = await doc(bookingsRef);
+    const newBookingId = docRef.id
     const newBookingRef = doc(bookingsRef, newBookingId);
     await setDoc(newBookingRef, bookingData);
 
@@ -145,16 +148,7 @@ export default function KundSida(): JSX.Element {
       const jimmyBookingRef = doc(JimmyRef, newBookingId);
       await setDoc(jimmyBookingRef, bookingData);
     }
-     /*  if (cleaner === "Estelle") {
-        await addDoc(EstelleRef, bookingData);
-      }
-      if (cleaner === "Märta") {
-        await addDoc(martaRef, bookingData);
-      }
-      if (cleaner === "Jimmy") {
-        await addDoc(JimmyRef, bookingData);
-      } */
-  
+    
       //get bookings
       getBookings();
       //set inputs to default
@@ -175,7 +169,17 @@ export default function KundSida(): JSX.Element {
   const deleteBooking = async (id: string) => {
     //detelte booking based on selected id
     const bookingDoc = doc(db, "users", emailLogin, "booking", id);
-    await deleteDoc(bookingDoc);
+    const estelleBookingRef = doc(EstelleRef, id);
+    const martaBookingRef = doc(martaRef, id);
+    const jimmyBookingRef = doc(JimmyRef, id);
+
+    if (bookingDoc.id === estelleBookingRef.id || martaBookingRef.id || jimmyBookingRef.id) {
+      await deleteDoc(bookingDoc);
+      await deleteDoc(estelleBookingRef)
+      await deleteDoc(martaBookingRef)
+      await deleteDoc(jimmyBookingRef)
+    }
+
     //changing state from true to false or other way around
     setReRender(!reRender);
   };
@@ -184,6 +188,7 @@ export default function KundSida(): JSX.Element {
   useEffect(() => {
     getBookings();
   }, [reRender]);
+
 
   const cleaners: Icleaners[] = [
     {
