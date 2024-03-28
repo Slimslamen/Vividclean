@@ -12,7 +12,7 @@ export const ProtectedRoute = ({ children }:Children) => {
         UserAuthContext
       )! as UserAuthContextProps;
   
-    console.log("Check user in Private: ", emailLogin);
+    // console.log("Check user in Private: ", emailLogin);
     if (!emailLogin) {
       return <Link to="/" />;
     }
