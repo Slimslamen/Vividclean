@@ -55,6 +55,8 @@ export default function LogIn() {
       handleMenuItemClick("Logga in")
     } catch (error: unknown) {
       if (error instanceof Error) {
+        alert("Användaren hittades inte, skapa ett konto")
+        handleMenuItemClick("Skapa nytt konto")
         console.log(error.message); 
       } else {
         console.error("Ett okänt fel inträffade:", error);
