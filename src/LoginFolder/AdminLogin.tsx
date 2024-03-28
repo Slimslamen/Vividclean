@@ -26,7 +26,7 @@ const AdminLogin = () => {
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    setError(null);
     try {
       const auth = getAuth();
       const firestore = getFirestore();
