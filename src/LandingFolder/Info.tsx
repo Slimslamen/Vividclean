@@ -38,7 +38,7 @@ export default function Info(): JSX.Element {
           </div>
         </div>
       </div>
-      <div className="flex flex-col md:flex-row justify-center items-center ">
+      <div className="flex md:flex-row justify-center items-center flex-col-reverse">
         <div className="flex flex-col space-y-2 items-center p-10 w-5/6">
           <h3 className="text-center text-4xl md:text-5xl font-DM mb-10">
             I vår värld är det detaljerna som gör skillnaden.
