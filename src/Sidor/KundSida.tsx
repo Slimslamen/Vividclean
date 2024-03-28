@@ -12,7 +12,6 @@ import { db } from "../config/firebase";
 import {
   collection,
   getDocs,
-  addDoc,
   deleteDoc,
   doc,
   setDoc,
@@ -20,8 +19,6 @@ import {
 import BookingPage from "./components/BookingPage";
 import UserAuthContext from "../UserAuthContext";
 import { DoneBookings } from "./components/DoneBookings";
-import AdminLogin from "../LoginFolder/AdminLogin";
-import { getDoc } from "firebase/firestore/lite";
 
 const options: Ioptions[] = [
   {
@@ -64,7 +61,6 @@ export default function KundSida(): JSX.Element {
     cleaner,
     bookings,
     setBookings,
-    emailAdmin
   } = React.useContext(UserAuthContext)! as UserAuthContextProps;
 
   // useEffect ställer in selectedName till name så att den hinner sätta name på första bokningen
@@ -116,7 +112,7 @@ export default function KundSida(): JSX.Element {
       status,
       customerEmail,
     } = formData;
-    //add booking to selected cleaner
+    //add formdata to selected booking
     const bookingData = {
       name: selectedName,
       date: selectedDate,
@@ -129,13 +125,17 @@ export default function KundSida(): JSX.Element {
     try {
     
       console.log("Customer email:", customerEmail);
-      const docRef = await doc(bookingsRef);
+    // fetching booking
+    const docRef = await doc(bookingsRef);
+    // setting id of booking on a variabel
     const newBookingId = docRef.id
+    // adding the saved id to the booking
     const newBookingRef = doc(bookingsRef, newBookingId);
     await setDoc(newBookingRef, bookingData);
-
+    // setting id in a new variable
     setBookingId(newBookingId);
     
+    // adding the booking to the selected cleaner
     if (cleaner === "Estelle") {
       const estelleBookingRef = doc(EstelleRef, newBookingId);
       await setDoc(estelleBookingRef, bookingData);
