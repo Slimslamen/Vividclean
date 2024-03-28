@@ -127,15 +127,15 @@ export default function KundSida(): JSX.Element {
       console.log("Customer email:", customerEmail);
     // fetching booking
     const docRef = await doc(bookingsRef);
-    // setting id of booking on a variabel
+    // setting the booking id
     const newBookingId = docRef.id
-    // adding the saved id to the booking
+    // adding the saved id (newBookingId) to the bookings (bookingsRef)
     const newBookingRef = doc(bookingsRef, newBookingId);
     await setDoc(newBookingRef, bookingData);
     // setting id in a new variable
     setBookingId(newBookingId);
     
-    // adding the booking to the selected cleaner
+    // adding the booking to the selected cleaner and singu setDoc so we dont get a new ID to the admin booking
     if (cleaner === "Estelle") {
       const estelleBookingRef = doc(EstelleRef, newBookingId);
       await setDoc(estelleBookingRef, bookingData);
