@@ -13,9 +13,9 @@ export default function Header() {
           src="src/assets/heroimage3.jpg"
           alt="heroimage"
         />
-        <div className="absolute top-0 w-full h-full flex justify-end items-end p-4 md:p-12 md:mt-20">
+        <div className="absolute top-0 w-full h-full flex justify-end items-end p-4 md:p-12 lg:mt-20 md:mt-64 mb-20">
           <div className="text-center md:mb-56">
-            <h1 className="text-2xl md:text-5xl mr-5 text-black font-DM md:mt-5">
+            <h1 className="text-2xl lg:text-5xl md:text-xxl mr-5 text-black font-DM lg:mt-5">
               Välkommen till VividClean
             </h1>
             <p className="text-l md:text-lg md:mb-12 font-DM ">
