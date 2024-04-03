@@ -2,7 +2,7 @@ import { Label, TextInput } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 import { UserAuthContextProps } from "../types/types";
 import { UserAuthContext } from "../UserAuthContext";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import React from "react";
 import { ProductContext } from "../ProductContext";
 import { ContextType } from "../types/types";

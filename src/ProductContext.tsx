@@ -3,7 +3,6 @@ import { ContextType, User, RegisterUser } from "./types/types";
 import { v4 as getId } from "uuid";
 import { UserAuthContextProps } from "./types/types";
 import { UserAuthContext } from "./UserAuthContext";
-import { auth } from "./config/firebase";
 
 const ProductContext = createContext<ContextType | null>(null);
 

@@ -52,9 +52,9 @@ const AdminLogin = () => {
           setError("Användaren hittades inte eller har inte rätt behörighet att logga in");
         }
       }
-    } catch (error) {
+    } catch (error: any) {
       // Fel vid inloggning
-    if (
+      if (
         error.code === "auth/wrong-password" ||
         error.code === "auth/invalid-credential" ||
         error.code === "auth/user-not-found"

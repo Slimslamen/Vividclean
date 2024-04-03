@@ -92,6 +92,7 @@ export default function KundSida(): JSX.Element {
         status: doc.data().status,
         service: doc.data().service,
         customerEmail: doc.data().customerEmail,
+        bookingId: doc.id
       }));
       // setting the mapped info in bookings
   

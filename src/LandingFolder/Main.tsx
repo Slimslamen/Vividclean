@@ -1,4 +1,3 @@
-import React from "react";
 import Carousel from "./Carousel";
 import Info from "./Info";
 import Review from "./Review";

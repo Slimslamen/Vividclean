@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 interface CarouselProps {
   images: { url: string; title: string }[];

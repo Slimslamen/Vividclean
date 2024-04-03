@@ -1,4 +1,3 @@
-import React from 'react'
 import { Ioptions } from '../../types/types';
 
 interface Iservice{
