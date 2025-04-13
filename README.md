@@ -1,30 +1,27 @@
-# React + TypeScript + Vite
+# ✨ VividClean 🧼
+VividClean is a modern web platform built for a professional cleaning services firm 🧽. Customers can create accounts to book and manage cleaning appointments 🗓️, while admins can oversee and manage all bookings from a dedicated dashboard 🧑‍💼.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🔑 Features
+👤 Customer Portal
+📝 Account Creation – Sign up and manage your own customer profile
 
-Currently, two official plugins are available:
+🧼 Service Booking – Schedule cleaning appointments with ease
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+🔁 Booking Management – Modify or cancel your bookings anytime
 
-## Expanding the ESLint configuration
+📜 Booking History – View upcoming cleaning appointments
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+🛠️ Admin Dashboard
+🧑‍💼 Admin Account – Secure admin login to access the dashboard
 
-- Configure the top-level `parserOptions` property like this:
+📋 Booking Oversight – Monitor all customer bookings
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+✏️ Booking Control – Modify or cancel bookings when needed
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+🧰 Tech Stack
+🖥️ Frontend: React
+
+🗄️ Database: Firebase Firestore  ☁️
+
+🔐 Authentication: Firebase Authentication 🔑
+
